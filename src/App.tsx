@@ -1,11 +1,12 @@
 import React from 'react';
-import './style.css';
-import { SignInPage } from './pages/signInPage/signInPage';
+import './theme.css'
+import './index.css'
+import { MainPage } from './pages/main-page/main-page'
 
 function App() {
   return (
-    <div className="App">
-      <SignInPage />
+    <div className='root body-dark body'>
+      <MainPage />
     </div>
   );
 }

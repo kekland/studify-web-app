@@ -1,0 +1,39 @@
+.root {
+  font-family: 'Roboto';
+  
+  width: 100vw;
+  height: 100vh;
+
+  --color-primary-lightest: #A9DAFF;
+  --color-primary-light: #79C5FF;
+  --color-primary: #1097FF;
+  --color-primary-dark: #004F8B;
+  --color-primary-darkest: #003D6B; 
+  
+  --color-success-lightest: #4BFF99;
+  --color-success-light: #1AFF7E;
+  --color-success: #00D45C;
+  --color-success-dark: #005E29;
+  --color-success-darkest: #003617;
+  
+  --color-warning-lightest: #FFD570;
+  --color-warning-light: #FFC741;
+  --color-warning: #FFB400;
+  --color-warning-dark: #A97700;
+  --color-warning-darkest: #775400;
+  
+  --color-error-lightest: #FF7077;
+  --color-error-light: #FF414B;
+  --color-error: #FF000D;
+  --color-error-dark: #A60008;
+  --color-error-darkest: #750006;
+
+  --color-group-1: #EE2837;
+  --color-group-2: #F47F29;
+  --color-group-3: #F4BE29;
+  --color-group-4: #1FB941;
+  --color-group-5: #1A988A;
+  --color-group-6: #3039A9;
+  --color-group-7: #6D25A4;
+  --color-group-8: #D32468;
+}

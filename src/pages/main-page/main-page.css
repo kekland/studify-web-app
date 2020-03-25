@@ -1,0 +1,39 @@
+.host {
+  width: 100vw;
+  height: 100vh;
+  
+  display: grid;
+  grid-template-columns: 25% 75%;
+  grid-template-rows: 64px 1fr 64px;
+
+  grid-template-areas:
+    "header header"
+    "tab main"
+    "user message";
+}
+
+.app-bar {
+  grid-area: header;
+  background-color: var(--color-group-1);
+}
+
+
+.tab-panel {
+  grid-area: tab;
+  background-color: var(--color-surface);
+}
+
+.message-panel {
+  grid-area: main;
+  flex: 3;
+}
+
+.user-panel {
+  grid-area: user;
+  background-color: var(--color-surface);
+}
+
+.message-field-panel {
+  grid-area: message;
+  background-color: var(--color-surface);
+}
