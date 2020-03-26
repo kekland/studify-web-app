@@ -6,6 +6,7 @@ import { Center } from '../../components/center/center'
 import { SignInForm } from '../../components/sign-in-form/sign-in-form'
 import { SignUpForm } from '../../components/sign-up-form/sign-up-form'
 import { useAlert } from 'react-alert'
+import { api } from '../../api/api'
 
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
@@ -20,7 +21,10 @@ export const AuthPage: React.FC = (props) => {
         <Center>
           {
             isSignInShown ?
-              <SignInForm onSubmit={(data) => alert.error(data.email)} /> :
+              <SignInForm onSubmit={async (data) => {
+                const res = await api.signIn(data)
+                console.log(res)
+              }} /> :
               <SignUpForm onSubmit={(data) => console.log(data)}
                 onBackTap={() => setIsSignInShown(true)} />
           }
