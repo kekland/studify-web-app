@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Icons from './icons'
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+Icons.forEach(icon => library.add(icon))
 
 ReactDOM.render(
   <React.StrictMode>

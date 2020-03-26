@@ -6,13 +6,15 @@ export interface ISizedBoxProps {
   className?: string;
   padding?: string;
   onTap?: () => void;
+  style?: React.CSSProperties
 }
 
 export const SizedBox: React.FC<ISizedBoxProps> = (props) => {
+  let style = props.style ?? {}
   return (
     <div
       className={props.className}
-      style={{ width: props.width, height: props.height, padding: props.padding }}
+      style={Object.assign(style, { width: props.width, height: props.height, padding: props.padding })}
       onClick={props.onTap}>
       {props.children}
     </div>
