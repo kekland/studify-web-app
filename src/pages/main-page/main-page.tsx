@@ -8,6 +8,7 @@ import { UserAvatar } from '../../components/user-avatar/user-avatar';
 import { UserOwnerComponent } from '../../components/user-component/user-component';
 import { MessageBar } from '../../components/message-bar/message-bar';
 import { Column, Flexible } from '../../components/flex/flex';
+import { Message } from '../../components/message/message';
 
 export const MainPage: React.FC = (props) => {
   return (
@@ -81,6 +82,19 @@ export const MainPage: React.FC = (props) => {
       <div className='message-panel'>
         <Column mainAxisSize='max'>
           <Flexible>
+            <Message padding='12px' message={{
+              body: 'Hello, world!',
+              created: new Date(),
+              user: {
+                username: 'kekland',
+                name: 'Erzhan',
+                email: 'kk.erzhan@gmail.com',
+                id: 'aa'
+              },
+              groupId: 'aaa',
+              id: 'aaa',
+              attachments: [],
+            }} />
           </Flexible>
           <div style={{ padding: '12px', width: '100%' }}>
             <MessageBar />

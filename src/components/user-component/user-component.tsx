@@ -27,7 +27,7 @@ export const UserOwnerComponent: React.FC<IUserOwnerComponentProps> = (props) =>
           <StyledText type='caption'>{props.user.name}</StyledText>
         </Column>
         <Flexible />
-        <IconButton onTap={props.onTapSettings} size='40px' icon={faCog} />
+        <IconButton onTap={props.onTapSettings} size='40px' icon={faCog} iconSize='lg' />
       </Row>
     </SizedBox>
   )
