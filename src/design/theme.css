@@ -30,11 +30,11 @@
   --color-warning-dark: #A97700;
   --color-warning-darkest: #775400;
   
-  --color-error-lightest: #FF7077;
-  --color-error-light: #FF414B;
-  --color-error: #FF000D;
-  --color-error-dark: #A60008;
-  --color-error-darkest: #750006;
+  --color-danger-lightest: #FF7077;
+  --color-danger-light: #FF414B;
+  --color-danger: #FF000D;
+  --color-danger-dark: #A60008;
+  --color-danger-darkest: #750006;
 
   --color-group-1: #EE2837;
   --color-group-2: #F47F29;

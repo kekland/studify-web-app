@@ -3,7 +3,7 @@
   height: 100%;
   background-image: url('../../tileable-background.svg');
   background-size: 64px;
-  background-color: var(--color-canvas-dark);
+  background-color: var(--color-surface-dark);
 
   display: flex;
   flex-direction: row;
@@ -15,6 +15,8 @@
   background-color: var(--color-surface);
 
   padding: 24px;
+
+  box-shadow: 8px 0px 36px rgba(0, 0, 0, 0.25);
 }
 
 .decoration {

@@ -1,6 +1,10 @@
 .tappable {
-  transition: box-shadow 0.05s cubic-bezier(0.645, 0.045, 0.355, 1);
   cursor: pointer;
+}
+
+.disabled {
+  background-color: var(--color-control);
+  color: var(--color-text-disabled);
 }
 
 .tappable:hover {
@@ -17,6 +21,18 @@ input, textarea {
 
   font-size: 16px;
   color: var(--color-text-primary);
+
+  transition: all 0.15s ease-in-out;
+}
+
+button {
+  transition: all 0.15s ease-in-out;
+  border: 0;  
+  background-color: transparent;
+}
+
+button:focus {
+  outline: 0;
 }
 
 input:focus, textarea:focus {

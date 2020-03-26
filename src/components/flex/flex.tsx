@@ -18,7 +18,7 @@ export interface IFlexProps {
 export const Flex: React.FC<IFlexProps & IFlexType> = (props) => {
   let width = 'auto'
   let height = 'auto'
-  if (props.type == 'row') {
+  if (props.type === 'row') {
     width = (props.mainAxisSize === 'max') ? '100%' : 'auto'
     height = (props.crossAxisSize === 'max') ? '100%' : 'auto'
   }

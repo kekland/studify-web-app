@@ -31,6 +31,6 @@ export const AppLogoHorizontal: React.FC<IAppLogoProps & IAppLogoHorizontalProps
 export const AppLogo: React.FC<IAppLogoProps> = (props) => {
   return (
     <img src={props.logoType === 'transparent' ? StudifyLogoTransparent : StudifyLogo}
-      height={props.size} />
+      height={props.size} alt='Studify logo' />
   )
 }
