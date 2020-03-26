@@ -21,6 +21,7 @@
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
     "rebass": "^4.0.7",
+    "redux": "^4.0.5",
     "typeface-roboto": "0.0.75",
     "typescript": "^3.7.5"
   },
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@types/rebass": "^4.0.4"
+    "@types/rebass": "^4.0.4",
+    "redux-devtools": "^3.5.0"
   }
 }
