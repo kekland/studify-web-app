@@ -34,7 +34,7 @@ export const IconButton: React.FC<IButtonProps & IIconButtonProps> = (props) => 
       borderRadius: '999px',
     }} disabled={props.disabled}
       onClick={props.onTap}
-      type={props.type}>
+      type={props.type ?? 'button'}>
       <Center>
         <FontAwesomeIcon icon={props.icon} color={`var(--color-${color})`} size={props.iconSize ?? 'sm'} />
       </Center>
@@ -62,7 +62,7 @@ export const RaisedButton: React.FC<IButtonProps & IRaisedButtonProps> = (props)
       borderRadius: '12px',
       backgroundColor: `var(--color-${style})`
     }} disabled={props.disabled}
-      type={props.type}>
+      type={props.type ?? 'button'}>
       <Center>
         <StyledText surface='dark' type='button' color={textColor}>
           {props.label}
@@ -87,7 +87,7 @@ export const FlatButton: React.FC<IButtonProps & IFlatButtonProps> = (props) => 
       height: props.height ?? '36px',
       borderRadius: '12px',
       backgroundColor: 'transparent',
-    }} disabled={props.disabled} type={props.type} onClick={props.onTap}>
+    }} disabled={props.disabled} type={props.type ?? 'button'} onClick={props.onTap}>
       <Center>
         <StyledText type='button' color={props.disabled ? 'disabled' : 'primary'}>
           {props.label}

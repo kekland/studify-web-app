@@ -12,10 +12,9 @@ function App() {
     <AlertProvider
       template={AlertTemplate}
       position='bottom right'
-      timeout={5000}
-      offset='24px'
+      timeout={3500}
       transition='scale'
-      containerStyle={{ pointerEvents: 'all' }}>
+      containerStyle={{ pointerEvents: 'auto', zIndex: 0 }}>
       <div className='root root-dark'>
         <AuthPage />
       </div>
