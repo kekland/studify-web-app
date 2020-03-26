@@ -7,6 +7,8 @@ import { SignInForm, ISignInData } from '../../components/sign-in-form/sign-in-f
 import { SignUpForm } from '../../components/sign-up-form/sign-up-form'
 import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
+import { setAuth } from '../../state/auth'
+import { store } from '../../state/store'
 
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
@@ -15,6 +17,7 @@ export const AuthPage: React.FC = (props) => {
   const signIn = async (data: ISignInData) => {
     try {
       const user = await api.signIn(data)
+      store.dispatch(setAuth(user))
     }
     catch (e) {
       alert.error(e.message ?? JSON.stringify(e))

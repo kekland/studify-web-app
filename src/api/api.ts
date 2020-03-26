@@ -8,11 +8,10 @@ export const api = {
     try {
       const response = await request.post(`${api.url}/auth/signIn`).send(data)
 
-      console.log(response.body.token)
-      return response.body.user as IUserOwner
+      return { user: response.body.user as IUserOwner, token: response.body.token }
     }
     catch (e) {
-      if(e?.response?.body) throw e.response.body
+      if (e?.response?.body) throw e.response.body
       throw e
     }
   }

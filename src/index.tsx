@@ -4,13 +4,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Icons from './icons'
 import './design/index.css'
+import { store } from './state/store'
+import { Provider as ReduxProvider } from 'react-redux'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-
 Icons.forEach(icon => library.add(icon))
 
 ReactDOM.render(
-  <App />,
+  <ReduxProvider store={store}>
+    <App />
+  </ReduxProvider>,
   document.getElementById('root')
 );
 
