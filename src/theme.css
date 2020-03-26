@@ -36,4 +36,12 @@
   --color-group-6: #3039A9;
   --color-group-7: #6D25A4;
   --color-group-8: #D32468;
+
+  --color-on-light-text-primary: #111111;
+  --color-on-light-text-muted: #777777;
+  --color-on-light-text-disabled: #DBDBDB;
+
+  --color-on-dark-text-primary: #FEFEFE;
+  --color-on-dark-text-muted: #777777;
+  --color-on-dark-text-disabled: #707070;
 }

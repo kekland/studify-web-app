@@ -7,13 +7,18 @@
   grid-template-rows: 64px 1fr 64px;
 
   grid-template-areas:
-    "header header"
+    "header header-group"
     "tab main"
     "user message";
 }
 
-.app-bar {
+.app-bar-main {
   grid-area: header;
+  background-color: var(--color-group-1);
+}
+
+.app-bar-group {
+  grid-area: header-group;
   background-color: var(--color-group-1);
 }
 

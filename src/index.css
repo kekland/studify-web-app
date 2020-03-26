@@ -11,9 +11,9 @@ body {
   --color-canvas: #E7EEF4;
   --color-control: #F7F7F7;
 
-  --color-text-primary: #111111;
-  --color-text-muted: #777777;
-  --color-text-disabled: #DBDBDB;
+  --color-text-primary: var(--color-on-light-text-primary);
+  --color-text-muted: var(--color-on-light-text-muted);
+  --color-text-disabled: var(--color-on-light-text-disabled);
 }
 
 .body-dark {
@@ -21,7 +21,7 @@ body {
   --color-canvas: #0A1115;
   --color-control: #151A1E;
 
-  --color-text-primary: #FEFEFE;
-  --color-text-muted: #777777;
-  --color-text-disabled: #707070;
+  --color-text-primary: var(--color-on-dark-text-primary);
+  --color-text-muted: var(--color-on-dark-text-muted);
+  --color-text-disabled: var(--color-on-dark-text-disabled);
 }
