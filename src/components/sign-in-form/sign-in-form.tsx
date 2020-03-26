@@ -3,12 +3,12 @@ import { Column } from '../flex/flex'
 import { SizedBox } from '../sized-box/sized-box'
 import { StyledText } from '../text/text'
 import { InputField } from '../input-field/input-field'
-import { faAt, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faAt, faLock, faUser, faUserAlt } from '@fortawesome/free-solid-svg-icons'
 import { RaisedButton } from '../button/button'
 import { useForm } from 'react-hook-form'
 
 export interface ISignInData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -27,12 +27,12 @@ export const SignInForm: React.FC<ISignInFormProps> = (props) => {
         <SizedBox height='24px' />
 
         <InputField
-          name="email"
+          name="username"
           ref={register({ required: true })}
-          placeholder="Email"
-          icon={faAt}
-          type='email'
-          errored={errors.email != null}
+          placeholder="Username"
+          icon={faUser}
+          type='text'
+          errored={errors.username != null}
           removeBorderBottom />
         <InputField
           name='password'

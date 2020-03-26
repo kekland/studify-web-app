@@ -3,7 +3,7 @@ import './auth-page.css'
 import { AppLogoHorizontal } from '../../components/app-logo/app-logo'
 import { FlatButton } from '../../components/button/button'
 import { Center } from '../../components/center/center'
-import { SignInForm } from '../../components/sign-in-form/sign-in-form'
+import { SignInForm, ISignInData } from '../../components/sign-in-form/sign-in-form'
 import { SignUpForm } from '../../components/sign-up-form/sign-up-form'
 import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
@@ -11,6 +11,15 @@ import { api } from '../../api/api'
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
   const [isSignInShown, setIsSignInShown] = useState(true)
+
+  const signIn = async (data: ISignInData) => {
+    try {
+      const user = await api.signIn(data)
+    }
+    catch (e) {
+      alert.error(e.message ?? JSON.stringify(e))
+    }
+  }
 
   return (
     <div className='host'>
@@ -21,10 +30,7 @@ export const AuthPage: React.FC = (props) => {
         <Center>
           {
             isSignInShown ?
-              <SignInForm onSubmit={async (data) => {
-                const res = await api.signIn(data)
-                console.log(res)
-              }} /> :
+              <SignInForm onSubmit={signIn} /> :
               <SignUpForm onSubmit={(data) => console.log(data)}
                 onBackTap={() => setIsSignInShown(true)} />
           }

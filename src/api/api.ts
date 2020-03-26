@@ -5,9 +5,15 @@ import { IUserOwner } from "./data/user";
 export const api = {
   url: 'http://localhost:8080',
   signIn: async (data: ISignInData) => {
-    const response = await request.post(`${api.url}/auth/signIn`).send(data)
-    
-    console.log(response.body.token)
-    return response.body.user as IUserOwner
+    try {
+      const response = await request.post(`${api.url}/auth/signIn`).send(data)
+
+      console.log(response.body.token)
+      return response.body.user as IUserOwner
+    }
+    catch (e) {
+      if(e?.response?.body) throw e.response.body
+      throw e
+    }
   }
 }
