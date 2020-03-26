@@ -46,10 +46,14 @@
   --color-on-dark-text-disabled: #707070;
 }
 
+.tappable {
+  transition: box-shadow 0.05s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
 .tappable:hover {
-  background-color: rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.125);
 }
 
 .selected {
-  background-color: rgba(255, 255, 255, 0.125);
+  background-color: var(--color-control);
 }
