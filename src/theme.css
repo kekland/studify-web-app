@@ -57,3 +57,15 @@
 .selected {
   background-color: var(--color-control);
 }
+
+input, textarea {
+  background-color: transparent;
+  border: 0;
+
+  font-size: 18px;
+  color: var(--color-text-primary);
+}
+
+input:focus, textarea:focus {
+  outline: 0;
+}

@@ -9,7 +9,7 @@
   grid-template-areas:
     "header header-group"
     "tab main"
-    "user message";
+    "user main";
 }
 
 .app-bar-main {
@@ -35,10 +35,5 @@
 
 .user-panel {
   grid-area: user;
-  background-color: var(--color-surface);
-}
-
-.message-field-panel {
-  grid-area: message;
   background-color: var(--color-surface);
 }

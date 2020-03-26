@@ -16,6 +16,8 @@ export interface ITextProps {
   surface?: SurfaceBrightness;
 
   textAlign?: TextAlign;
+
+  unselectable?: boolean;
 }
 
 export const StyledText: React.FC<ITextProps> = (props) => {
@@ -64,6 +66,7 @@ export const StyledText: React.FC<ITextProps> = (props) => {
       fontWeight: fontWeight,
       color: `var(--color-${color})`,
       textAlign: props.textAlign,
+      userSelect: props.unselectable? 'none' : undefined,
     }}>
       {props.children}
     </div>

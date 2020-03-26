@@ -7,6 +7,7 @@ export interface IIconButtonProps {
   size: string;
   icon: IconDefinition;
   onTap: () => void;
+  iconSize?: 'xs' | 'sm' | 'lg';
 }
 
 export const IconButton: React.FC<IIconButtonProps> = (props) => {
@@ -18,7 +19,7 @@ export const IconButton: React.FC<IIconButtonProps> = (props) => {
       zIndex: 1,
     }} onClick={props.onTap}>
       <Center>
-        <FontAwesomeIcon icon={props.icon} color='var(--color-text-muted)' />
+        <FontAwesomeIcon icon={props.icon} color='var(--color-text-muted)' size={props.iconSize ?? 'sm'} />
       </Center>
     </div>
   )

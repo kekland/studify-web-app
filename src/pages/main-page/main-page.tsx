@@ -6,6 +6,8 @@ import { ListItemButton } from '../../components/list-item-button/list-item-butt
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { UserAvatar } from '../../components/user-avatar/user-avatar';
 import { UserOwnerComponent } from '../../components/user-component/user-component';
+import { MessageBar } from '../../components/message-bar/message-bar';
+import { Column, Flexible } from '../../components/flex/flex';
 
 export const MainPage: React.FC = (props) => {
   return (
@@ -74,13 +76,16 @@ export const MainPage: React.FC = (props) => {
           createdGroups: [],
           groups: [],
         }} padding='12px'>
-
         </UserOwnerComponent>
       </div>
       <div className='message-panel'>
-
-      </div>
-      <div className='message-field-panel'>
+        <Column mainAxisSize='max'>
+          <Flexible>
+          </Flexible>
+          <div style={{ padding: '12px', width: '100%' }}>
+            <MessageBar />
+          </div>
+        </Column>
 
       </div>
     </div>

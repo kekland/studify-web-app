@@ -25,11 +25,11 @@ export const GroupAvatar: React.FC<IGroupAvatarProps> = (props) => {
       <Column mainAxisSize='max'>
         <Flexible style={{ width: '100%' }}>
           <Center>
-            <FontAwesomeIcon icon={props.icon} size='lg' color='rgba(255, 255, 255, 0.25)' />
+            <FontAwesomeIcon icon={props.icon} size='lg' color='rgba(255, 255, 255, 0.625)' />
           </Center>
         </Flexible>
         <div style={{ width: '100%' }}>
-          <StyledText type='body' fontWeight={700} surface='dark' textAlign='end'>
+          <StyledText type='body' fontWeight={700} surface='dark' textAlign='end' unselectable>
             {GroupUtils.getShortName(props.name)}
           </StyledText>
         </div>
