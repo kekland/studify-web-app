@@ -1,8 +1,6 @@
-.root {
+body {
   font-family: 'Roboto';
-  
-  width: 100vw;
-  height: 100vh;
+  margin: 0;
 
   --color-canvas-light: #E7EEF4;
   --color-surface-light: #FDFDFD;
@@ -52,4 +50,9 @@
   --color-on-dark-text-primary: #FEFEFE;
   --color-on-dark-text-muted: #777777;
   --color-on-dark-text-disabled: #707070;
+}
+
+.root {
+  width: 100vw;
+  height: 100vh;
 }

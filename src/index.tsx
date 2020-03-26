@@ -10,9 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 Icons.forEach(icon => library.add(icon))
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 

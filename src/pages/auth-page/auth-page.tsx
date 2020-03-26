@@ -5,9 +5,11 @@ import { FlatButton } from '../../components/button/button'
 import { Center } from '../../components/center/center'
 import { SignInForm } from '../../components/sign-in-form/sign-in-form'
 import { SignUpForm } from '../../components/sign-up-form/sign-up-form'
+import { useAlert } from 'react-alert'
 
 export const AuthPage: React.FC = (props) => {
-  const [isSignInShown, setIsSignInShown] = useState(false)
+  const alert = useAlert()
+  const [isSignInShown, setIsSignInShown] = useState(true)
 
   return (
     <div className='host'>
@@ -18,7 +20,7 @@ export const AuthPage: React.FC = (props) => {
         <Center>
           {
             isSignInShown ?
-              <SignInForm onSubmit={(data) => console.log(data)} /> :
+              <SignInForm onSubmit={(data) => alert.error(data.email)} /> :
               <SignUpForm onSubmit={(data) => console.log(data)}
                 onBackTap={() => setIsSignInShown(true)} />
           }
