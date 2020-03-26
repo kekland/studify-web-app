@@ -25,3 +25,7 @@ body {
   --color-text-muted: var(--color-on-dark-text-muted);
   --color-text-disabled: var(--color-on-dark-text-disabled);
 }
+
+* {
+  box-sizing: border-box;
+}

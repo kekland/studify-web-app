@@ -3,6 +3,7 @@ import React from 'react'
 type TextType = 'body' | 'heading' | 'caption' | 'button';
 type TextColor = 'primary' | 'muted' | 'disabled';
 type SurfaceBrightness = 'light' | 'dark';
+type TextAlign = 'start' | 'center' | 'end'
 
 export interface ITextProps {
   type?: TextType;
@@ -13,13 +14,16 @@ export interface ITextProps {
 
   color?: TextColor;
   surface?: SurfaceBrightness;
+
+  textAlign?: TextAlign;
 }
 
-export const Text: React.FC<ITextProps> = (props) => {
+export const StyledText: React.FC<ITextProps> = (props) => {
   let fontSize = '16px'
   let fontWeight = 400
   let fontFamily = 'Roboto'
-  let color = 'color-text-primary'
+  let surface = props.surface
+  let color = 'primary'
 
   if (props.type) {
     if (props.type === 'body') {
@@ -37,21 +41,20 @@ export const Text: React.FC<ITextProps> = (props) => {
     else if (props.type === 'caption') {
       fontSize = '14px'
       fontWeight = 400
-      color = 'color-text-muted'
+      color = 'muted'
     }
   }
 
+  color = props.color ?? color
   fontSize = props.fontSize ?? fontSize
   fontWeight = props.fontWeight ?? fontWeight
   fontFamily = props.fontFamily ?? fontFamily
 
-  if (props.color) {
-    if (props.surface) {
-      color = `color-on-${props.surface}-text-${props.color}`
-    }
-    else {
-      color = `color-text-${props.color}`
-    }
+  if (surface) {
+    color = `on-${props.surface}-text-${color}`
+  }
+  else {
+    color = `text-${color}`
   }
 
   return (
@@ -59,7 +62,8 @@ export const Text: React.FC<ITextProps> = (props) => {
       fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      color: color,
+      color: `var(--color-${color})`,
+      textAlign: props.textAlign,
     }}>
       {props.children}
     </div>

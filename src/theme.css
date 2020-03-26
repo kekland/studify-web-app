@@ -45,3 +45,11 @@
   --color-on-dark-text-muted: #777777;
   --color-on-dark-text-disabled: #707070;
 }
+
+.tappable:hover {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
+.selected {
+  background-color: rgba(255, 255, 255, 0.125);
+}
