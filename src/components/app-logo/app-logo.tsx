@@ -1,18 +1,36 @@
 import React from 'react'
 import { Row } from '../flex/flex'
-import StudifyLogo from '../../studify-logo-transparent.svg'
+import StudifyLogo from '../../studify-logo-default.svg'
+import StudifyLogoTransparent from '../../studify-logo-transparent.svg'
 import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
 
-export const AppLogoHorizontal: React.FC = (props) => {
+export interface IAppLogoProps {
+  logoType?: 'default' | 'transparent';
+  size?: string;
+}
+
+export interface IAppLogoHorizontalProps {
+  surface?: 'light' | 'dark';
+  fontSize?: string;
+}
+
+export const AppLogoHorizontal: React.FC<IAppLogoProps & IAppLogoHorizontalProps> = (props) => {
   return (
     <Row crossAxisAlignment='center'>
-      <img src={StudifyLogo} width={40} height={40} />
-      <SizedBox width="8px" />
+      <AppLogo logoType={props.logoType} size={props.size ?? '40px'} />
+      <SizedBox width="16px" />
       <StyledText
         fontFamily='Righteous'
-        fontSize='20px'
-        surface='dark'>STUDIFY</StyledText>
+        fontSize={props.fontSize ?? '20px'}
+        surface={props.surface}>STUDIFY</StyledText>
     </Row>
+  )
+}
+
+export const AppLogo: React.FC<IAppLogoProps> = (props) => {
+  return (
+    <img src={props.logoType === 'transparent' ? StudifyLogoTransparent : StudifyLogo}
+      height={props.size} />
   )
 }

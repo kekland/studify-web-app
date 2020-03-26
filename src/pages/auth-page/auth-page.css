@@ -1,0 +1,23 @@
+.host {
+  width: 100%;
+  height: 100%;
+  background-image: url('../../tileable-background.svg');
+  background-size: 64px;
+  background-color: var(--color-canvas-dark);
+
+  display: flex;
+  flex-direction: row;
+}
+
+.surface {
+  width: 500px;
+  height: 100%;
+  background-color: var(--color-surface);
+
+  padding: 24px;
+}
+
+.decoration {
+  flex: 1;
+  height: 100%;
+}

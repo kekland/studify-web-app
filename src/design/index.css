@@ -7,10 +7,10 @@ body {
 }
 
 .body-light {
-  --color-surface: #FDFDFD;
+  --color-surface: var(--color-surface-light);
   --color-surface-primary: var(--color-primary-lightest);
-  --color-canvas: #E7EEF4;
-  --color-control: #F7F7F7;
+  --color-canvas: var(--color-canvas-light);
+  --color-control: var(--color-control-light);
 
   --color-text-primary: var(--color-on-light-text-primary);
   --color-text-muted: var(--color-on-light-text-muted);
@@ -18,10 +18,10 @@ body {
 }
 
 .body-dark {
-  --color-surface: #1B2024;
+  --color-surface: var(--color-surface-dark);
   --color-surface-primary: var(--color-primary-darkest);
-  --color-canvas: #0A1115;
-  --color-control: #151A1E;
+  --color-canvas: var(--color-canvas-dark);
+  --color-control: var(--color-control-dark);
 
   --color-text-primary: var(--color-on-dark-text-primary);
   --color-text-muted: var(--color-on-dark-text-muted);

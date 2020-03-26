@@ -4,6 +4,14 @@
   width: 100vw;
   height: 100vh;
 
+  --color-canvas-light: #E7EEF4;
+  --color-surface-light: #FDFDFD;
+  --color-control-light: #F7F7F7;
+
+  --color-canvas-dark: #0A1115;
+  --color-surface-dark: #1B2024;
+  --color-control-dark: #151A1E;
+
   --color-primary-lightest: #A9DAFF;
   --color-primary-light: #79C5FF;
   --color-primary: #1097FF;

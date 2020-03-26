@@ -1,5 +1,6 @@
 .tappable {
   transition: box-shadow 0.05s cubic-bezier(0.645, 0.045, 0.355, 1);
+  cursor: pointer;
 }
 
 .tappable:hover {
@@ -14,10 +15,33 @@ input, textarea {
   background-color: transparent;
   border: 0;
 
-  font-size: 18px;
+  font-size: 16px;
   color: var(--color-text-primary);
 }
 
 input:focus, textarea:focus {
   outline: 0;
+}
+
+.surface {
+  background-color: var(--color-surface);
+}
+
+.control {
+  background-color: var(--color-control);
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  font-size: 16px;
+  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+  -webkit-transition-delay: 9999s;
 }
