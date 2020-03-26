@@ -8,9 +8,31 @@ import { StyledText } from '../text/text'
 export interface IMessageProps {
   message: IMessageSocket;
   padding: string;
+  fromSelf: boolean;
 }
 
 export const Message: React.FC<IMessageProps> = (props) => {
+  let color = (props.fromSelf) ? 'surface-primary' : 'surface'
+
+  if (props.fromSelf) {
+    return (
+      <SizedBox width='100%' padding={props.padding}>
+        <Column mainAxisSize='min' crossAxisSize='max' crossAxisAlignment='flex-end'>
+          <SizedBox padding='12px' style={{
+            backgroundColor: `var(--color-surface-primary)`,
+            borderRadius: '12px',
+          }}>
+            <StyledText>
+              {props.message.body}
+            </StyledText>
+          </SizedBox>
+          <SizedBox height='6px' />
+          <StyledText type='caption'>Today at 12:03AM</StyledText>
+        </Column>
+      </SizedBox>
+    )
+  }
+
   return (
     <SizedBox padding={props.padding}>
       <Row mainAxisSize='max'>
@@ -24,7 +46,7 @@ export const Message: React.FC<IMessageProps> = (props) => {
           </Row>
           <SizedBox height='6px' />
           <SizedBox padding='12px' style={{
-            backgroundColor: 'var(--color-surface)',
+            backgroundColor: `var(--color-surface)`,
             borderRadius: '12px',
           }}>
             <StyledText>

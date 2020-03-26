@@ -5,7 +5,7 @@ import { MainPage } from './pages/main-page/main-page'
 
 function App() {
   return (
-    <div className='root body-dark body'>
+    <div className='root body-light body'>
       <MainPage />
     </div>
   );

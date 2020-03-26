@@ -9,6 +9,7 @@ import { UserOwnerComponent } from '../../components/user-component/user-compone
 import { MessageBar } from '../../components/message-bar/message-bar';
 import { Column, Flexible } from '../../components/flex/flex';
 import { Message } from '../../components/message/message';
+import { GroupAppBar } from '../../components/group-app-bar/group-app-bar';
 
 export const MainPage: React.FC = (props) => {
   return (
@@ -17,6 +18,14 @@ export const MainPage: React.FC = (props) => {
         <AppBarMain />
       </div>
       <div className='app-bar-group'>
+        <GroupAppBar group={{
+          id: 'aaaaaa',
+          colorId: 1,
+          name: 'AP Science 2',
+          description: 'Discussion of AP Science',
+          icon: 'atom',
+          userCount: 3,
+        }} />
       </div>
       <div className='tab-panel'>
         <GroupHorizontal group={{
@@ -64,7 +73,7 @@ export const MainPage: React.FC = (props) => {
           onTap={() => console.log('alih')}
           padding='12px' />
         <ListItemButton icon={faPlus} label='Create a new group' onTap={() => { }} padding='12px' iconWidth='56px' />
-        <ListItemButton icon={faSearch} label='Search groups' onTap={() => { }} padding='12px' iconWidth='56px' />
+        <ListItemButton icon={faSearch} label='Search for groups' onTap={() => { }} padding='12px' iconWidth='56px' />
       </div>
       <div className='user-panel'>
         <UserOwnerComponent onTap={() => { }} onTapSettings={() => { }} user={{
@@ -81,20 +90,35 @@ export const MainPage: React.FC = (props) => {
       </div>
       <div className='message-panel'>
         <Column mainAxisSize='max'>
-          <Flexible>
-            <Message padding='12px' message={{
-              body: 'Hello, world!',
-              created: new Date(),
-              user: {
-                username: 'kekland',
-                name: 'Erzhan',
-                email: 'kk.erzhan@gmail.com',
-                id: 'aa'
-              },
-              groupId: 'aaa',
-              id: 'aaa',
-              attachments: [],
-            }} />
+          <Flexible style={{ width: '100%' }}>
+            <Column mainAxisSize='max' crossAxisSize='max' mainAxisAlignment='flex-end'>
+              <Message padding='12px' message={{
+                body: 'Hello, world!',
+                created: new Date(),
+                user: {
+                  username: 'kekland',
+                  name: 'Erzhan',
+                  email: 'kk.erzhan@gmail.com',
+                  id: 'aa'
+                },
+                groupId: 'aaa',
+                id: 'aaa',
+                attachments: [],
+              }} fromSelf={false} />
+              <Message padding='12px' message={{
+                body: 'Hello, world!',
+                created: new Date(),
+                user: {
+                  username: 'kekland',
+                  name: 'Erzhan',
+                  email: 'kk.erzhan@gmail.com',
+                  id: 'aa'
+                },
+                groupId: 'aaa',
+                id: 'aaa',
+                attachments: [],
+              }} fromSelf />
+            </Column>
           </Flexible>
           <div style={{ padding: '12px', width: '100%' }}>
             <MessageBar />

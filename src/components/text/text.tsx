@@ -1,6 +1,6 @@
 import React from 'react'
 
-type TextType = 'body' | 'heading' | 'caption' | 'button';
+type TextType = 'body' | 'heading' | 'subhead' | 'caption' | 'button';
 type TextColor = 'primary' | 'muted' | 'disabled';
 type SurfaceBrightness = 'light' | 'dark';
 type TextAlign = 'start' | 'center' | 'end'
@@ -18,6 +18,8 @@ export interface ITextProps {
   textAlign?: TextAlign;
 
   unselectable?: boolean;
+
+  customColor?: string;
 }
 
 export const StyledText: React.FC<ITextProps> = (props) => {
@@ -36,8 +38,12 @@ export const StyledText: React.FC<ITextProps> = (props) => {
       fontSize = '24px'
       fontWeight = 700
     }
+    else if (props.type === 'subhead') {
+      fontSize = '20px'
+      fontWeight = 500
+    }
     else if (props.type === 'button') {
-      fontSize = '18px'
+      fontSize = '16px'
       fontWeight = 500
     }
     else if (props.type === 'caption') {
@@ -64,9 +70,9 @@ export const StyledText: React.FC<ITextProps> = (props) => {
       fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      color: `var(--color-${color})`,
+      color: props.customColor ?? `var(--color-${color})`,
       textAlign: props.textAlign,
-      userSelect: props.unselectable? 'none' : undefined,
+      userSelect: props.unselectable ? 'none' : undefined,
     }}>
       {props.children}
     </div>
