@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, configureStore } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUserOwner } from '../api/data/user'
 
 export interface IUserSliceState {

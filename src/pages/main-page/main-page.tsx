@@ -9,83 +9,59 @@ import { MessageBar } from '../../components/message-bar/message-bar';
 import { Column, Flexible } from '../../components/flex/flex';
 import { Message } from '../../components/message/message';
 import { GroupAppBar } from '../../components/group-app-bar/group-app-bar';
+import { RootState } from '../../state/store';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-export const MainPage: React.FC = (props) => {
+import { List, AutoSizer } from 'react-virtualized'
+
+export const MainPage: React.FC = ((props) => {
+  const auth = useSelector((state: RootState) => state.auth)
+  // const [selectedGroup, setSelectedGroup] = useState(-1)
+
+  if (!auth.user) return <Redirect to='/auth' />
+  const groups = auth.user.groups
+
   return (
     <div className='main-page'>
       <div className='app-bar-main'>
         <AppBarMain />
       </div>
       <div className='app-bar-group'>
-        <GroupAppBar group={{
-          id: 'aaaaaa',
-          colorId: 1,
-          name: 'AP Science 2',
-          description: 'Discussion of AP Science',
-          icon: 'atom',
-          userCount: 3,
-        }} />
+        <GroupAppBar group={groups[0]} />
       </div>
       <div className='tab-panel'>
-        <GroupHorizontal group={{
-          id: 'aaaaaa',
-          colorId: 1,
-          name: 'AP Science 2',
-          description: 'Discussion of AP Science',
-          icon: 'atom',
-          userCount: 3,
-        }}
-          selected={true}
-          onTap={() => console.log('alih')}
-          padding='12px' />
-        <GroupHorizontal group={{
-          id: 'aaaaaa',
-          colorId: 2,
-          name: 'Geometry',
-          description: 'All about geometry',
-          icon: 'shapes',
-          userCount: 3,
-        }}
-          selected={false}
-          onTap={() => console.log('alih')}
-          padding='12px' />
-        <GroupHorizontal group={{
-          id: 'aaaaaa',
-          colorId: 3,
-          name: 'Science Basics',
-          description: 'Basics of Science',
-          icon: 'frog',
-          userCount: 3,
-        }}
-          selected={false}
-          onTap={() => console.log('alih')}
-          padding='12px' />
-        <GroupHorizontal group={{
-          id: 'aaaaaa',
-          colorId: 4,
-          name: 'World History',
-          description: 'History of the world',
-          icon: 'chess',
-          userCount: 3,
-        }}
-          selected={false}
-          onTap={() => console.log('alih')}
-          padding='12px' />
-        <ListItemButton icon={faPlus} label='Create a new group' onTap={() => { }} padding='12px' iconWidth='56px' />
-        <ListItemButton icon={faSearch} label='Search for groups' onTap={() => { }} padding='12px' iconWidth='56px' />
+        <Column mainAxisSize='max' crossAxisSize='max'>
+          <Flexible style={{ width: '100%' }}>
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  rowCount={groups.length}
+                  rowHeight={80}
+                  width={width}
+                  height={height}
+                  rowRenderer={props =>
+                    <GroupHorizontal
+                      key={props.key}
+                      group={groups[props.index]}
+                      selected={false}
+                      padding='12px'
+                      onTap={() => { }} />
+                  }
+                />
+              )}
+            </AutoSizer>
+          </Flexible>
+          <ListItemButton icon={faPlus} label='Create a new group' onTap={() => { }} padding='12px' iconWidth='56px' />
+          <ListItemButton icon={faSearch} label='Search for groups' onTap={() => { }} padding='12px' iconWidth='56px' />
+        </Column>
       </div>
       <div className='user-panel'>
-        <UserOwnerComponent onTap={() => { }} onTapSettings={() => { }} user={{
-          id: 'aaa',
-          username: 'kekland',
-          name: 'Erzhan',
-          email: 'kk.erzhan@gmail.com',
-          created: new Date(),
-          updated: new Date(),
-          createdGroups: [],
-          groups: [],
-        }} padding='12px'>
-        </UserOwnerComponent>
+        <UserOwnerComponent
+          onTap={() => { }}
+          onTapSettings={() => { }}
+          user={auth.user}
+          padding='12px' />
       </div>
       <div className='message-panel'>
         <Column mainAxisSize='max'>
@@ -127,4 +103,4 @@ export const MainPage: React.FC = (props) => {
       </div>
     </div>
   )
-}
+})

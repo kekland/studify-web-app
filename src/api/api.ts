@@ -8,7 +8,10 @@ export const api = {
     try {
       const response = await request.post(`${api.url}/auth/signIn`).send(data)
 
-      return { user: response.body.user as IUserOwner, token: response.body.token }
+      const result = { user: response.body.user as IUserOwner, token: response.body.token }
+      result.user.groups.forEach(group => group.messages = [])
+
+      return result
     }
     catch (e) {
       if (e?.response?.body) throw e.response.body

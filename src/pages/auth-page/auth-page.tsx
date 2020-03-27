@@ -9,15 +9,18 @@ import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
 import { setAuth } from '../../state/auth'
 import { store } from '../../state/store'
+import { useHistory } from 'react-router-dom'
 
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
+  const history = useHistory()
   const [isSignInShown, setIsSignInShown] = useState(true)
 
   const signIn = async (data: ISignInData) => {
     try {
       const user = await api.signIn(data)
       store.dispatch(setAuth(user))
+      history.replace('/main')
     }
     catch (e) {
       alert.error(e.message ?? JSON.stringify(e))

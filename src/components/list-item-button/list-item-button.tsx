@@ -16,7 +16,7 @@ export interface IListItemButtonProps {
 
 export const ListItemButton: React.FC<IListItemButtonProps> = (props) => {
   return (
-    <SizedBox className='tappable' padding={props.padding} onTap={props.onTap}>
+    <SizedBox className='tappable' padding={props.padding} onTap={props.onTap} width='100%'>
       <Row crossAxisAlignment='center'>
         <SizedBox width={props.iconWidth} height='36px'>
           <Center>

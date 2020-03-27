@@ -1,10 +1,13 @@
 import { IUser } from "./user";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
+import { IMessageSocket } from "./message";
 
 export interface IGroup extends IGroupMinimal {
   creator: IUser;
   created: Date;
   updated: Date;
+
+  messages: IMessageSocket[];
 }
 
 export interface IGroupMinimal {
