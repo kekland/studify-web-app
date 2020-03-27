@@ -3,8 +3,8 @@ import './auth-page.css'
 import { AppLogoHorizontal } from '../../components/app-logo/app-logo'
 import { FlatButton } from '../../components/button/button'
 import { Center } from '../../components/center/center'
-import { SignInForm, ISignInData } from '../../components/sign-in-form/sign-in-form'
-import { SignUpForm } from '../../components/sign-up-form/sign-up-form'
+import { SignInForm, ISignInFormData } from '../../components/sign-in-form/sign-in-form'
+import { SignUpForm, ISignUpFormData } from '../../components/sign-up-form/sign-up-form'
 import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
 import { setAuth } from '../../state/auth'
@@ -17,16 +17,22 @@ export const AuthPage: React.FC = (props) => {
   const history = useHistory()
   const [isSignInShown, setIsSignInShown] = useState(true)
 
-  const signIn = async (data: ISignInData) => {
-    try {
+  const signIn = async (data: ISignInFormData) => {
+    api.use(alert, async () => {
       const result = await api.signIn(data)
       store.dispatch(setAuth(result))
       store.dispatch(setGroups(result.user.groups))
       history.replace('/main')
-    }
-    catch (e) {
-      alert.error(e.message ?? JSON.stringify(e))
-    }
+    })
+  }
+
+  const signUp = async (data: ISignUpFormData) => {
+    api.use(alert, async () => {
+      const result = await api.signUp(data)
+      store.dispatch(setAuth(result))
+      store.dispatch(setGroups(result.user.groups))
+      history.replace('/main')
+    })
   }
 
   return (
@@ -39,7 +45,7 @@ export const AuthPage: React.FC = (props) => {
           {
             isSignInShown ?
               <SignInForm onSubmit={signIn} /> :
-              <SignUpForm onSubmit={(data) => console.log(data)}
+              <SignUpForm onSubmit={signUp}
                 onBackTap={() => setIsSignInShown(true)} />
           }
         </Center>

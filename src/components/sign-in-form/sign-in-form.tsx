@@ -7,17 +7,17 @@ import { faAt, faLock, faUser, faUserAlt } from '@fortawesome/free-solid-svg-ico
 import { RaisedButton } from '../button/button'
 import { useForm } from 'react-hook-form'
 
-export interface ISignInData {
+export interface ISignInFormData {
   username: string;
   password: string;
 }
 
 export interface ISignInFormProps {
-  onSubmit: (data: ISignInData) => void;
+  onSubmit: (data: ISignInFormData) => void;
 }
 
 export const SignInForm: React.FC<ISignInFormProps> = (props) => {
-  const { register, errors, handleSubmit } = useForm<ISignInData>()
+  const { register, errors, handleSubmit } = useForm<ISignInFormData>()
   const onSubmit = (data: any) => props.onSubmit(data)
 
   return (
