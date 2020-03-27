@@ -3,11 +3,9 @@ import { useSelector } from 'react-redux'
 import { RootState, store } from '../../state/store'
 import './message-panel.css'
 import {
-  AutoSizer, List, InfiniteLoader, IndexRange, CellMeasurer, ListRowProps,
-  CellMeasurerCache
+  AutoSizer
 } from 'react-virtualized'
-import { CustomScrollbarsVirtualList } from '../smart-list/smart-list'
-import { Message, MessageSkeleton } from '../message/message'
+import { Message } from '../message/message'
 import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
 import { addGroupMessages } from '../../state/main'
@@ -17,16 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentSlash } from '@fortawesome/free-solid-svg-icons'
 import { Column } from '../flex/flex'
 import { StyledText } from '../text/text'
-import InfiniteScroll from 'react-infinite-scroller'
 import { SizedBox } from '../sized-box/sized-box'
-import { Scrollbars } from 'react-custom-scrollbars'
 import Infinite from 'react-infinite'
-
-const cache = new CellMeasurerCache({
-  defaultHeight: 88,
-  fixedWidth: true
-});
-
 
 export const MessagePanel: React.FC = () => {
   const alert = useAlert()
