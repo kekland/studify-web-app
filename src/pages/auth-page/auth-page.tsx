@@ -10,6 +10,7 @@ import { api } from '../../api/api'
 import { setAuth } from '../../state/auth'
 import { store } from '../../state/store'
 import { useHistory } from 'react-router-dom'
+import { setGroups } from '../../state/main'
 
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
@@ -18,8 +19,9 @@ export const AuthPage: React.FC = (props) => {
 
   const signIn = async (data: ISignInData) => {
     try {
-      const user = await api.signIn(data)
-      store.dispatch(setAuth(user))
+      const result = await api.signIn(data)
+      store.dispatch(setAuth(result))
+      store.dispatch(setGroups(result.user.groups))
       history.replace('/main')
     }
     catch (e) {

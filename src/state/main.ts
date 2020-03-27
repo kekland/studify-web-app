@@ -1,32 +1,23 @@
-import { createSlice, PayloadAction, Action } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IGroup } from '../api/data/group'
-import { ILoadable } from '../api/loadableState'
 
 export interface IMainSliceState {
-  groups: ILoadable<IGroup[]>;
+  groups: IGroup[];
   selectedGroup?: IGroup;
 }
 
 const mainSlice = createSlice({
   name: 'main',
   initialState: {
-    groups: {
-      loading: false,
-      hasNoMore: false,
-      items: [],
-    },
+    groups: [],
     selectedGroup: undefined,
   } as IMainSliceState,
   reducers: {
-    loadGroups(state, action: Action) {
-      state.groups.loading = true
-    },
     setGroups(state, action: PayloadAction<IGroup[]>) {
-      state.groups.items = action.payload
-      state.groups.loading = false
+      state.groups = action.payload
     },
   },
 })
 
-export const { loadGroups, setGroups } = mainSlice.actions
+export const { setGroups } = mainSlice.actions
 export default mainSlice.reducer
