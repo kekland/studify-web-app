@@ -20,6 +20,20 @@
   --color-text-disabled: var(--color-on-dark-text-disabled);
 }
 
+.root {
+  background-color: var(--color-canvas);
+}
+
 * {
   box-sizing: border-box;
+}
+
+.switch-wrapper {
+  position: relative;
+}
+
+.switch-wrapper > div {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }

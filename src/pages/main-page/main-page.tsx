@@ -4,7 +4,6 @@ import { AppBarMain } from '../../components/main-page/app-bar-main';
 import { GroupHorizontal } from '../../components/group-component/group-component';
 import { ListItemButton } from '../../components/list-item-button/list-item-button';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { UserAvatar } from '../../components/user-avatar/user-avatar';
 import { UserOwnerComponent } from '../../components/user-component/user-component';
 import { MessageBar } from '../../components/message-bar/message-bar';
 import { Column, Flexible } from '../../components/flex/flex';
@@ -13,7 +12,7 @@ import { GroupAppBar } from '../../components/group-app-bar/group-app-bar';
 
 export const MainPage: React.FC = (props) => {
   return (
-    <div className='host'>
+    <div className='main-page'>
       <div className='app-bar-main'>
         <AppBarMain />
       </div>
