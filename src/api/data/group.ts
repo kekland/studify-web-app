@@ -21,6 +21,9 @@ export interface IGroupMinimal {
 
 export const GroupUtils = {
   getShortName: (name: string) => {
+    if(!name) return ''
+    if(name.length === 0) return ''
+
     const words = name.split(' ')
 
     let shortName = ''

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Column, Row, Wrap, Flexible } from '../flex/flex'
 import { StyledText } from '../text/text'
 import { GroupAvatar } from '../group-avatar/group-avatar'
@@ -6,6 +6,8 @@ import { SizedBox } from '../sized-box/sized-box'
 import groupIcons from '../../icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Center } from '../center/center'
+import { IconName } from '@fortawesome/fontawesome-svg-core'
+import { GroupUtils } from '../../api/data/group'
 
 interface IGroupSelector<T> {
   selected: T;
@@ -35,14 +37,14 @@ const GroupColorSelector: React.FC<IGroupSelector<number>> = (props) => {
     </Wrap>)
 }
 
-const GroupIconSelector: React.FC<IGroupSelector<number>> = (props) => {
+const GroupIconSelector: React.FC<IGroupSelector<IconName>> = (props) => {
   return (
     <Wrap>
       {
         groupIcons.map((icon, i) => <div
           key={i}
           className='tappable'
-          onClick={() => props.onSelected(i)}
+          onClick={() => props.onSelected(icon.iconName)}
           style={{
             width: '36px', height: '36px',
             borderRadius: '6px',
@@ -52,37 +54,43 @@ const GroupIconSelector: React.FC<IGroupSelector<number>> = (props) => {
             <FontAwesomeIcon
               icon={icon}
               size='lg'
-              color={props.selected === i ? 'var(--color-text-primary)' : 'var(--color-text-muted)'} />
+              color={props.selected === icon.iconName ?
+                'var(--color-text-primary)' : 'var(--color-text-muted)'} />
           </Center>
         </div>)
       }
     </Wrap>)
 }
 
-export const GroupAvatarSelector: React.FC = () => {
-  const [color, setColor] = useState(1)
-  const [icon, setIcon] = useState(0)
+export interface IGroupAvatarSelectorProps {
+  groupName: string;
+  color: number;
+  icon: IconName;
+  onColorChanged: (color: number) => void;
+  onIconChanged: (icon: IconName) => void;
+}
 
+export const GroupAvatarSelector: React.FC<IGroupAvatarSelectorProps> = (props) => {
   return (
     <div style={{ backgroundColor: 'var(--color-control)', borderRadius: '12px', padding: '16px' }}>
       <Row>
         <GroupAvatar
           size='56px'
-          colorId={color}
-          icon={groupIcons[icon].iconName}
-          name='AP'
+          colorId={props.color}
+          icon={props.icon}
+          name={GroupUtils.getShortName(props.groupName)}
         />
-        <SizedBox width='16px' />
+        <SizedBox flexSize='16px' />
         <Flexible>
           <Column>
             <StyledText fontWeight={500} color='muted'>Create your style</StyledText>
             <SizedBox height='4px' />
             <StyledText type='caption'>Choose a color</StyledText>
             <SizedBox height='4px' />
-            <GroupColorSelector selected={color} onSelected={setColor} />
+            <GroupColorSelector selected={props.color} onSelected={props.onColorChanged} />
             <SizedBox height='12px' />
             <StyledText type='caption'>Choose an icon</StyledText>
-            <GroupIconSelector selected={icon} onSelected={setIcon} />
+            <GroupIconSelector selected={props.icon} onSelected={props.onIconChanged} />
           </Column>
         </Flexible>
       </Row>

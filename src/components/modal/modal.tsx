@@ -4,16 +4,19 @@ import { Center } from '../center/center'
 import { Surface } from '../surface/surface'
 import { IconButton } from '../button/button'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import './modal.css'
 
 export interface IModalProps {
   isOpen: boolean;
+  onClose: () => void;
 }
 
 export const Modal: React.FC<IModalProps> = (props) => {
   return (<ReactModal
     ariaHideApp={false}
     isOpen={props.isOpen}
-    closeTimeoutMS={500}
+    closeTimeoutMS={150}
+    onRequestClose={(_) => props.onClose()}
     parentSelector={() => document.querySelector('#app') as HTMLElement}
     style={{
       overlay: {
@@ -40,10 +43,10 @@ export const Modal: React.FC<IModalProps> = (props) => {
         borderRadius: '24px',
         padding: '36px',
         border: 0,
-        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.16)',
-        minWidth: '25vw',
+        boxShadow: '0 12px 24px rgba(0, 0, 0, 0.16)',
+        minWidth: '35vw',
         minHeight: '30vh',
-        maxWidth: '50vw',
+        maxWidth: '60vw',
         maxHeight: '70vh',
         position: 'relative'
       }}>
@@ -52,7 +55,9 @@ export const Modal: React.FC<IModalProps> = (props) => {
           right: '24px',
           top: '24px',
         }}>
-          <IconButton icon={faTimes} size='48px' />
+          <IconButton icon={faTimes}
+            size='48px'
+            onTap={props.onClose} />
         </div>
         {props.children}
       </Surface>

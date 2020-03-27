@@ -16,8 +16,11 @@ const mainSlice = createSlice({
     setGroups(state, action: PayloadAction<IGroup[]>) {
       state.groups = action.payload
     },
+    selectGroup(state, action: PayloadAction<IGroup>) {
+      state.selectedGroup = action.payload
+    }
   },
 })
 
-export const { setGroups } = mainSlice.actions
+export const { setGroups, selectGroup } = mainSlice.actions
 export default mainSlice.reducer

@@ -1,13 +1,18 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../state/store'
+import { RootState, store } from '../../state/store'
 import { Column, Flexible } from '../flex/flex'
 import { GroupHorizontal } from '../group-component/group-component'
 import { ListItemButton } from '../list-item-button/list-item-button'
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { AutoSizer, List } from 'react-virtualized'
+import { selectGroup } from '../../state/main'
 
-export const TabPanel: React.FC = () => {
+export interface ITabPanelProps {
+  onCreateNewGroup: () => void;
+}
+
+export const TabPanel: React.FC<ITabPanelProps> = (props) => {
   const groups = useSelector((state: RootState) => state.main.groups)
   return (
     <Column mainAxisSize='max' crossAxisSize='max'>
@@ -25,7 +30,7 @@ export const TabPanel: React.FC = () => {
                   group={groups[props.index]}
                   selected={false}
                   padding='12px'
-                  onTap={() => { }} />
+                  onTap={() => store.dispatch(selectGroup(groups[props.index]))} />
               }
             />
           )}
@@ -35,9 +40,8 @@ export const TabPanel: React.FC = () => {
         icon={faPlus}
         padding='12px'
         iconWidth='56px'
-        label='Create a new group' onTap={() => {
-
-        }} />
+        label='Create a new group'
+        onTap={props.onCreateNewGroup} />
       <ListItemButton
         icon={faSearch}
         padding='12px'

@@ -3,7 +3,6 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Row, Flexible } from '../flex/flex'
 import { SizedBox } from '../sized-box/sized-box'
-import { Center } from '../center/center'
 import { IconButton } from '../button/button'
 import { faEye, faEyeSlash, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { Alignment } from '../alignment/alignment'
@@ -15,6 +14,7 @@ export interface IInputFieldProps {
   type?: string;
   name?: string;
   ref?: React.Ref<HTMLInputElement>;
+  onChanged?: (data: string) => void;
 }
 
 export interface IInputFieldOpaqueProps {
@@ -31,7 +31,14 @@ export const InputFieldTransparent: React.ForwardRefExoticComponent<IInputFieldP
     return (
       <input style={{
         width: props.width ?? '100%', height: props.height ?? '48px',
-      }} placeholder={props.placeholder} type={props.type} name={props.name} ref={ref} />
+      }} placeholder={props.placeholder}
+        type={props.type}
+        name={props.name}
+        ref={ref}
+        onChange={(e) => {
+          if (props.onChanged)
+            props.onChanged(e.target.value)
+        }} />
     )
   })
 
@@ -66,7 +73,11 @@ export const InputField: React.ForwardRefExoticComponent<IInputFieldOpaqueProps 
           <Flexible>
             <input style={{
               width: '100%', height: props.height ?? '48px',
-            }} placeholder={props.placeholder} type={type} name={props.name} ref={ref} />
+            }} placeholder={props.placeholder} type={type} name={props.name} ref={ref}
+              onChange={(e) => {
+                if (props.onChanged)
+                  props.onChanged(e.target.value)
+              }} />
           </Flexible>
 
           {

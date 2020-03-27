@@ -10,15 +10,19 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { TabPanel } from '../../components/main-page/tab-panel';
 import { ModalCreateGroup } from '../../components/modal-create-group/modal-create-group';
+import { useModal } from '../../components/modal/modal-hook';
 
 export const MainPage: React.FC = ((props) => {
   const auth = useSelector((state: RootState) => state.auth)
+  const createGroupModal = useModal(false)
 
   if (!auth.user) return <Redirect to='/auth' />
 
   return (
     <div className='main-page'>
-      <ModalCreateGroup />
+      <ModalCreateGroup
+        isOpen={createGroupModal.isOpen}
+        onClose={createGroupModal.close} />
       <div className='app-bar-main'>
         <AppBarMain />
       </div>
@@ -26,7 +30,9 @@ export const MainPage: React.FC = ((props) => {
         <GroupAppBar />
       </div>
       <div className='tab-panel'>
-        <TabPanel />
+        <TabPanel
+          onCreateNewGroup={createGroupModal.open}
+        />
       </div>
       <div className='user-panel'>
         <UserOwnerComponent
@@ -40,7 +46,7 @@ export const MainPage: React.FC = ((props) => {
           <Flexible style={{ width: '100%' }}>
           </Flexible>
           <div style={{ padding: '12px', width: '100%' }}>
-            <MessageBar />
+            <MessageBar onSendTap={() => { }} />
           </div>
         </Column>
 

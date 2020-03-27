@@ -37,7 +37,7 @@ export const GroupAvatar: React.FC<IGroupAvatarProps> = (props) => {
         bottom: '4px',
       }}>
         <StyledText type='body' fontWeight={700} surface='dark' textAlign='end' unselectable style={{
-          backgroundColor: `var(--color-group-${props.colorId})`,
+          backgroundColor: props.name.length > 0? `var(--color-group-${props.colorId})` : 'transparent',
           padding: '2px',
           borderRadius: '6px',
         }}>

@@ -7,6 +7,7 @@ export interface ISizedBoxProps {
   padding?: string;
   onTap?: () => void;
   style?: React.CSSProperties
+  flexSize?: string;
 }
 
 export const SizedBox: React.FC<ISizedBoxProps> = (props) => {
@@ -18,7 +19,7 @@ export const SizedBox: React.FC<ISizedBoxProps> = (props) => {
         width: props.width,
         height: props.height,
         padding: props.padding,
-        flex: `0 0 ${props.width}`
+        flex: `0 0 ${props.flexSize}`
       })}
       onClick={props.onTap}>
       {props.children}
