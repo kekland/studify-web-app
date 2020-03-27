@@ -9,6 +9,7 @@ export interface IGroup extends IGroupMinimal {
 
   messages: IMessageSocket[];
   isLoaded: boolean;
+  hasMore: boolean;
 }
 
 export interface IGroupMinimal {

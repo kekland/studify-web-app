@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Flexible } from '../flex/flex'
 import { IconButton } from '../button/button'
 import { faPaperclip, faShare } from '@fortawesome/free-solid-svg-icons'
@@ -8,11 +8,13 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../state/store'
 
 export interface IMessageBarProps {
-  onSendTap: (message: string) => void;
+  onSend: (message: string) => void;
 }
 
 export const MessageBar: React.FC<IMessageBarProps> = (props) => {
   const selectedGroup = useSelector((state: RootState) => state.main.selectedGroup)
+  const [message, setMessage] = useState('')
+
   if (selectedGroup) {
     return (
       <SizedBox width='100%' style={{
@@ -23,10 +25,19 @@ export const MessageBar: React.FC<IMessageBarProps> = (props) => {
           <IconButton icon={faPaperclip} onTap={() => { }} size='64px' iconSize='lg' />
           <SizedBox width="6px" />
           <Flexible>
-            <InputFieldTransparent width='100%' height='48px' placeholder={`Message in ${selectedGroup.name}`} />
+            <InputFieldTransparent
+              width='100%'
+              height='48px'
+              placeholder={`Message in ${selectedGroup.name}`}
+              onChanged={setMessage} />
           </Flexible>
           <SizedBox width="6px" />
-          <IconButton icon={faShare} onTap={() => { }} size='64px' iconSize='lg' />
+          <IconButton
+            icon={faShare}
+            onTap={() => props.onSend(message)}
+            size='64px'
+            iconSize='lg'
+            disabled={message.length === 0} />
         </Row>
       </SizedBox>
     )

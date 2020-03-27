@@ -30,13 +30,15 @@
     "react-scripts": "3.4.1",
     "react-virtualized": "^9.21.2",
     "react-window": "^1.8.5",
+    "react-window-infinite-loader": "^1.0.5",
     "rebass": "^4.0.7",
     "redux": "^4.0.5",
     "simplebar": "^5.1.0",
     "socket.io-client": "^2.3.0",
     "superagent": "^5.2.2",
     "typeface-roboto": "0.0.75",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "uuidv4": "^6.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -69,7 +71,9 @@
     "@types/react-transition-group": "^4.2.4",
     "@types/react-virtualized": "^9.21.8",
     "@types/react-window": "^1.8.1",
+    "@types/react-window-infinite-loader": "^1.0.2",
     "@types/rebass": "^4.0.4",
+    "@types/socket.io-client": "^1.4.32",
     "@types/superagent": "^4.1.7",
     "react-hot-loader": "^4.12.20",
     "redux-devtools": "^3.5.0"

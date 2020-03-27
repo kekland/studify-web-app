@@ -5,13 +5,17 @@ import { ISignUpFormData } from "../components/sign-up-form/sign-up-form";
 import { AlertManager } from "react-alert";
 import { IGroup, IGroupMinimal } from "./data/group";
 import { ICreateGroupFormData } from "../components/modal-create-group/modal-create-group";
-import { IMessageSocket } from "./data/message";
+import { IMessageSocket, ISendMessageFormData } from "./data/message";
+import io from 'socket.io-client'
+import { uuid } from 'uuidv4'
 
 export const api = {
   url: 'http://localhost:8080',
   socketUrl: 'http://localhost:5005',
   token: '',
-  use: async (alert: AlertManager, method: () => Promise<void>, afterMethod: () => void) => {
+  messageLimit: 20,
+  socket: undefined as undefined | SocketIOClient.Socket,
+  use: async (alert: AlertManager, method: () => Promise<void>, afterMethod?: () => void) => {
     try {
       await method()
     }
@@ -19,7 +23,8 @@ export const api = {
       alert.error(e.message ?? JSON.stringify(e))
     }
     finally {
-      afterMethod()
+      if (afterMethod)
+        afterMethod()
     }
   },
   requestWrapper: async <T>(method: () => Promise<T>): Promise<T> => {
@@ -70,22 +75,59 @@ export const api = {
         const result = response.body as IGroup
         result.messages = []
         result.isLoaded = true
+        result.hasMore = false
 
         return result
       })
     }
   },
   messaging: {
-    loadMessages: async (group: IGroupMinimal, skip: number, limit: number) => {
+    loadMessages: async (group: IGroupMinimal, skip: number) => {
       return api.requestWrapper(async () => {
         const response = await api.setHeader(
           request.get(`${api.url}/group/${group.id}/messages`)
-            .query({ skip, limit })
+            .query({ skip, limit: api.messageLimit })
         )
 
-        const result = response.body.messages as IMessageSocket[]
-        return result
+        const messages = response.body.messages as IMessageSocket[]
+        return { id: group.id, messages }
       })
+    },
+    attach: async (
+      callbacks: {
+        onNewGroupMessage: (message: IMessageSocket) => void,
+        onMessageSent: (message: IMessageSocket) => void
+      }) => {
+      api.socket = io(api.socketUrl, { query: { token: api.token } })
+
+      api.socket.on('onNewGroupMessage', (data: { message: IMessageSocket }) => {
+        callbacks.onNewGroupMessage(data.message)
+      })
+
+      api.socket.on('onMessageSent', (data: { message: IMessageSocket, idempotencyId: string }) => {
+        let message = { ...data.message, idempotencyId: data.idempotencyId, loading: false }
+        callbacks.onMessageSent(message)
+      })
+
+      api.socket.connect()
+    },
+    updateRooms: async () => {
+      api.socket?.emit('updateRooms')
+    },
+    sendMessage: async (user: IUserOwner, data: ISendMessageFormData) => {
+      const idempotencyId = uuid()
+
+      api.socket?.emit('sendMessage', { ...data, idempotencyId })
+      return {
+        id: 'loading',
+        groupId: data.groupId,
+        body: data.body,
+        attachments: data.attachments,
+        created: new Date().toISOString(),
+        idempotencyId,
+        loading: true,
+        user,
+      } as IMessageSocket
     }
   },
 }
