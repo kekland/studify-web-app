@@ -26,3 +26,9 @@ export interface ISendMessageFormData {
   body: string;
   attachments?: string;
 }
+
+export const MessageUtils = {
+  convertDateToString: (date: Date | string) => {
+    
+  }
+}

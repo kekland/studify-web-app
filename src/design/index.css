@@ -38,3 +38,7 @@
   width: 100vw;
   height: 100vh;
 }
+
+.transition-background {
+  transition: background 1000ms ease-in-out;
+}

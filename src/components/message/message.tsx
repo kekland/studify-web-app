@@ -4,6 +4,7 @@ import { Row, Column } from '../flex/flex'
 import { UserAvatar } from '../user-avatar/user-avatar'
 import { SizedBox } from '../sized-box/sized-box'
 import { StyledText } from '../text/text'
+import { prettifyDate } from '../../api/pretty-date'
 
 export interface IMessageProps {
   message: IMessageSocket;
@@ -18,8 +19,10 @@ export const Message: React.FC<IMessageProps> = (props) => {
     return (
       <SizedBox width='100%' padding={props.padding}>
         <Column mainAxisSize='min' crossAxisSize='max' crossAxisAlignment='flex-end'>
-          <SizedBox padding='12px' style={{
-            backgroundColor: `var(--color-surface-primary)`,
+          <SizedBox className='transition-background' padding='12px' style={{
+            backgroundColor: props.message.loading ?
+              `var(--color-surface)` :
+              `var(--color-surface-primary)`,
             borderRadius: '12px',
           }}>
             <StyledText>
@@ -27,7 +30,7 @@ export const Message: React.FC<IMessageProps> = (props) => {
             </StyledText>
           </SizedBox>
           <SizedBox height='6px' />
-          <StyledText type='caption'>Today at 12:03AM</StyledText>
+          <StyledText type='caption'>{prettifyDate(props.message.created)}</StyledText>
         </Column>
       </SizedBox>
     )

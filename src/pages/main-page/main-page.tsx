@@ -52,7 +52,7 @@ export const MainPage: React.FC = ((props) => {
           store.dispatch(addGroupMessage(message))
         },
         onMessageSent: (message) => {
-          // store.dispatch(replaceGroupMessageByIdempotency(message))
+          store.dispatch(replaceGroupMessageByIdempotency(message))
         },
       })
     })
