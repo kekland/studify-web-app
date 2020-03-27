@@ -20,6 +20,8 @@ export interface ITextProps {
   unselectable?: boolean;
 
   customColor?: string;
+
+  style?: React.CSSProperties;
 }
 
 export const StyledText: React.FC<ITextProps> = (props) => {
@@ -66,15 +68,15 @@ export const StyledText: React.FC<ITextProps> = (props) => {
   }
 
   return (
-    <div style={{
+    <span style={Object.assign({
       fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: props.customColor ?? `var(--color-${color})`,
       textAlign: props.textAlign,
       userSelect: props.unselectable ? 'none' : undefined,
-    }}>
+    }, props.style ?? {})}>
       {props.children}
-    </div>
+    </span>
   )
 }

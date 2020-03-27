@@ -22,6 +22,7 @@
 
 .root {
   background-color: var(--color-canvas);
+  overflow: hidden;
 }
 
 * {

@@ -9,3 +9,9 @@
 .column {
   flex-direction: column;
 }
+
+.wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

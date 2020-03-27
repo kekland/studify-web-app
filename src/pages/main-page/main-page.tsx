@@ -9,6 +9,7 @@ import { RootState } from '../../state/store';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { TabPanel } from '../../components/main-page/tab-panel';
+import { ModalCreateGroup } from '../../components/modal-create-group/modal-create-group';
 
 export const MainPage: React.FC = ((props) => {
   const auth = useSelector((state: RootState) => state.auth)
@@ -17,6 +18,7 @@ export const MainPage: React.FC = ((props) => {
 
   return (
     <div className='main-page'>
+      <ModalCreateGroup />
       <div className='app-bar-main'>
         <AppBarMain />
       </div>

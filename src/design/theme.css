@@ -2,6 +2,8 @@ body {
   font-family: 'Roboto';
   margin: 0;
 
+  overflow: hidden;
+
   --color-canvas-light: #E7EEF4;
   --color-surface-light: #FDFDFD;
   --color-control-light: #F7F7F7;

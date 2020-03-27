@@ -63,6 +63,14 @@ export const Column: React.FC<IFlexProps> = (props) => {
   )
 }
 
+export const Wrap: React.FC = (props) => {
+  return (
+    <div className='wrap'>
+      {props.children}
+    </div>
+  )
+}
+
 export interface IFlexibleProps {
   flex?: number;
   style?: React.CSSProperties;

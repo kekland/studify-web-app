@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { MainPage } from './pages/main-page/main-page';
 import { IntroPage } from './pages/intro-page/intro-page';
 import { AnimatedSwitch } from 'react-router-transition'
+import { hot } from 'react-hot-loader/root'
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
       timeout={3500}
       transition='scale'
       containerStyle={{ pointerEvents: 'auto', zIndex: 0 }}>
-      <div className='root root-dark'>
+      <div id='app' className='root root-dark'>
         <Router>
           <AnimatedSwitch
             atEnter={{ opacity: 0 }}
@@ -35,4 +36,5 @@ const App = () => {
   );
 }
 
-export default App;
+export const AppElement = App
+export default hot(App);

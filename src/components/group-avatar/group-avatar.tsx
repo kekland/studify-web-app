@@ -2,7 +2,6 @@ import React from 'react'
 import { StyledText } from '../text/text'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconName } from "@fortawesome/fontawesome-svg-core";
-import { Column, Flexible } from '../flex/flex'
 import { Center } from '../center/center'
 import { GroupUtils } from '../../api/data/group'
 
@@ -18,22 +17,33 @@ export const GroupAvatar: React.FC<IGroupAvatarProps> = (props) => {
     <div style={{
       width: props.size,
       height: props.size,
+      flex: `0 0 ${props.size}`,
       borderRadius: '16px',
       backgroundColor: `var(--color-group-${props.colorId})`,
-      padding: '6px'
+      position: 'relative',
     }}>
-      <Column mainAxisSize='max'>
-        <Flexible style={{ width: '100%' }}>
-          <Center>
-            <FontAwesomeIcon icon={props.icon} size='lg' color='rgba(255, 255, 255, 0.625)' />
-          </Center>
-        </Flexible>
-        <div style={{ width: '100%' }}>
-          <StyledText type='body' fontWeight={700} surface='dark' textAlign='end' unselectable>
-            {GroupUtils.getShortName(props.name)}
-          </StyledText>
-        </div>
-      </Column>
+      <div style={{
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+      }}>
+        <Center>
+          <FontAwesomeIcon icon={props.icon} size='2x' color='rgba(255, 255, 255, 0.425)' />
+        </Center>
+      </div>
+      <div style={{
+        position: 'absolute',
+        right: '4px',
+        bottom: '4px',
+      }}>
+        <StyledText type='body' fontWeight={700} surface='dark' textAlign='end' unselectable style={{
+          backgroundColor: `var(--color-group-${props.colorId})`,
+          padding: '2px',
+          borderRadius: '6px',
+        }}>
+          {GroupUtils.getShortName(props.name)}
+        </StyledText>
+      </div>
     </div >
   )
 }
