@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IGroup } from '../api/data/group'
+import { IMessageSocket } from '../api/data/message'
 
 export interface IMainSliceState {
   groups: IGroup[];
@@ -21,7 +22,14 @@ const mainSlice = createSlice({
     },
     selectGroup(state, action: PayloadAction<IGroup>) {
       state.selectedGroup = action.payload
-    }
+    },
+    setGroupMessages(state, action: PayloadAction<{ id: string, messages: IMessageSocket[] }>) {
+      const group = state.groups.find(group => group.id === action.payload.id)
+
+      if(!group) return
+      group.messages = action.payload.messages
+      group.isLoaded = true
+    },
   },
 })
 

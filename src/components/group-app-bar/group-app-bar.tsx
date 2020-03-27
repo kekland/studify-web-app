@@ -7,6 +7,7 @@ import { IconButton } from '../button/button'
 import { faInfoCircle, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../state/store'
+import { GroupUtils } from '../../api/data/group'
 
 export const GroupAppBar: React.FC = () => {
   const selectedGroup = useSelector((state: RootState) => state.main.selectedGroup)
@@ -19,7 +20,9 @@ export const GroupAppBar: React.FC = () => {
         <SizedBox width='18px' />
         <Column>
           <StyledText surface='dark' type='subhead'>{selectedGroup.name}</StyledText>
-          <StyledText type='caption' customColor='rgba(255, 255, 255, 0.625)'>{selectedGroup.description}</StyledText>
+          <StyledText type='caption' customColor='rgba(255, 255, 255, 0.625)'>{
+            GroupUtils.getUserCountString(selectedGroup.userCount)
+          }</StyledText>
         </Column>
         <Flexible />
         <IconButton

@@ -8,7 +8,7 @@ const CustomScrollbars: React.FC<any> = ({ onScroll, forwardedRef, style, childr
     } else {
       forwardedRef(null);
     }
-  }, []);
+  }, [forwardedRef]);
 
   return (
     <Scrollbars

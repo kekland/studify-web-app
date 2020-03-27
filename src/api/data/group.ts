@@ -8,6 +8,7 @@ export interface IGroup extends IGroupMinimal {
   updated: Date;
 
   messages: IMessageSocket[];
+  isLoaded: boolean;
 }
 
 export interface IGroupMinimal {
@@ -21,13 +22,13 @@ export interface IGroupMinimal {
 
 export const GroupUtils = {
   getShortName: (name: string) => {
-    if(!name) return ''
-    if(name.length === 0) return ''
+    if (!name) return ''
+    if (name.length === 0) return ''
 
     const words = name.split(' ')
 
     let shortName = ''
-    if(words.length > 1) {
+    if (words.length > 1) {
       shortName = words[0].charAt(0) + words[1].charAt(0)
     }
     else {
@@ -35,5 +36,11 @@ export const GroupUtils = {
     }
 
     return shortName.toUpperCase()
+  },
+  getUserCountString: (userCount: number) => {
+    let suffix = 'members'
+    if (userCount === 1) suffix = 'member'
+
+    return `${userCount} ${suffix}`
   }
 }

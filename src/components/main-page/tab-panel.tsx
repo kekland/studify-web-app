@@ -15,7 +15,7 @@ export interface ITabPanelProps {
 }
 
 export const TabPanel: React.FC<ITabPanelProps> = (props) => {
-  const groups = useSelector((state: RootState) => state.main.groups)
+  const {groups, selectedGroup} = useSelector((state: RootState) => state.main)
 
   return (
     <Column mainAxisSize='max' crossAxisSize='max'>
@@ -34,7 +34,7 @@ export const TabPanel: React.FC<ITabPanelProps> = (props) => {
                   style={style}>
                   <GroupHorizontal
                     group={groups[index]}
-                    selected={false}
+                    selected={groups[index] === selectedGroup}
                     padding='12px'
                     onTap={() => store.dispatch(selectGroup(groups[index]))} />
                 </div>

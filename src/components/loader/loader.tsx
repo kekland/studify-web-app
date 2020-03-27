@@ -31,7 +31,7 @@ export const Loader: React.FC<ILoaderProps> = (props) => {
         bottom: 0,
       }} >
         <Center>
-          <ReactLoader type='ball-pulse' active />
+          <ReactLoader type='ball-scale-multiple' active />
         </Center>
       </div>
     </div>
