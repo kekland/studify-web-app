@@ -15,18 +15,24 @@ import { useModal } from '../../components/modal/modal-hook';
 export const MainPage: React.FC = ((props) => {
   const auth = useSelector((state: RootState) => state.auth)
   const createGroupModal = useModal(false)
+  const selectedGroup = useSelector((state: RootState) => state.main.selectedGroup)
 
   if (!auth.user) return <Redirect to='/auth' />
+
+  let appBarStyle: React.CSSProperties = {}
+  if (selectedGroup) {
+    appBarStyle = { backgroundColor: `var(--color-group-${selectedGroup.colorId})` }
+  }
 
   return (
     <div className='main-page'>
       <ModalCreateGroup
         isOpen={createGroupModal.isOpen}
         onClose={createGroupModal.close} />
-      <div className='app-bar-main'>
+      <div className='app-bar app-bar-main' style={appBarStyle}>
         <AppBarMain />
       </div>
-      <div className='app-bar-group'>
+      <div className='app-bar app-bar-group' style={appBarStyle}>
         <GroupAppBar />
       </div>
       <div className='tab-panel'>

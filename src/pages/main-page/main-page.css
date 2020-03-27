@@ -12,14 +12,17 @@
     "user main";
 }
 
+.app-bar {
+  transition: background-color 0.15s ease-in-out;
+  background-color: var(--color-primary);
+}
+
 .app-bar-main {
   grid-area: header;
-  background-color: var(--color-group-1);
 }
 
 .app-bar-group {
   grid-area: header-group;
-  background-color: var(--color-group-1);
 }
 
 

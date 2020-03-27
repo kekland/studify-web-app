@@ -11,52 +11,58 @@ import { setAuth } from '../../state/auth'
 import { store } from '../../state/store'
 import { useHistory } from 'react-router-dom'
 import { setGroups } from '../../state/main'
+import { Loader } from '../../components/loader/loader'
 
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
   const history = useHistory()
+  const [isLoading, setLoading] = useState(false)
   const [isSignInShown, setIsSignInShown] = useState(true)
 
   const signIn = async (data: ISignInFormData) => {
+    setLoading(true)
     api.use(alert, async () => {
       const result = await api.signIn(data)
       store.dispatch(setAuth(result))
       store.dispatch(setGroups(result.user.groups))
       history.replace('/main')
-    })
+    }, () => setLoading(false))
   }
 
   const signUp = async (data: ISignUpFormData) => {
+    setLoading(true)
     api.use(alert, async () => {
       const result = await api.signUp(data)
       store.dispatch(setAuth(result))
       store.dispatch(setGroups(result.user.groups))
       history.replace('/main')
-    })
+    }, () => setLoading(false))
   }
 
   return (
     <div className='host'>
-      <div className='surface' style={{ position: 'relative' }}>
-        <div style={{ position: 'absolute' }}>
-          <AppLogoHorizontal />
+      <Loader isLoading={isLoading}>
+        <div className='surface' style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute' }}>
+            <AppLogoHorizontal />
+          </div>
+          <Center>
+            {
+              isSignInShown ?
+                <SignInForm onSubmit={signIn} /> :
+                <SignUpForm onSubmit={signUp}
+                  onBackTap={() => setIsSignInShown(true)} />
+            }
+          </Center>
+          <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }}>
+            <FlatButton width='100%' height='48px'
+              label={isSignInShown ? 'Create an account' : 'Already have an account?'}
+              onTap={() => setIsSignInShown(!isSignInShown)} />
+          </div>
         </div>
-        <Center>
-          {
-            isSignInShown ?
-              <SignInForm onSubmit={signIn} /> :
-              <SignUpForm onSubmit={signUp}
-                onBackTap={() => setIsSignInShown(true)} />
-          }
-        </Center>
-        <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }}>
-          <FlatButton width='100%' height='48px'
-            label={isSignInShown ? 'Create an account' : 'Already have an account?'}
-            onTap={() => setIsSignInShown(!isSignInShown)} />
+        <div className='decoration'>
         </div>
-      </div>
-      <div className='decoration'>
-      </div>
+      </Loader>
     </div>
   )
 }

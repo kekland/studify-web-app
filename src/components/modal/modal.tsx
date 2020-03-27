@@ -5,9 +5,11 @@ import { Surface } from '../surface/surface'
 import { IconButton } from '../button/button'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './modal.css'
+import { Loader } from '../loader/loader'
 
 export interface IModalProps {
   isOpen: boolean;
+  isLoading?: boolean;
   onClose: () => void;
 }
 
@@ -41,7 +43,6 @@ export const Modal: React.FC<IModalProps> = (props) => {
     <Center>
       <Surface style={{
         borderRadius: '24px',
-        padding: '36px',
         border: 0,
         boxShadow: '0 12px 24px rgba(0, 0, 0, 0.16)',
         minWidth: '35vw',
@@ -50,16 +51,20 @@ export const Modal: React.FC<IModalProps> = (props) => {
         maxHeight: '70vh',
         position: 'relative'
       }}>
-        <div style={{
-          position: 'absolute',
-          right: '24px',
-          top: '24px',
-        }}>
-          <IconButton icon={faTimes}
-            size='48px'
-            onTap={props.onClose} />
-        </div>
-        {props.children}
+        <Loader isLoading={props.isLoading ?? false} borderRadius='24px'>
+          <div style={{
+            position: 'absolute',
+            right: '24px',
+            top: '24px',
+          }}>
+            <IconButton icon={faTimes}
+              size='48px'
+              onTap={props.onClose} />
+          </div>
+          <div style={{ padding: '36px' }}>
+            {props.children}
+          </div>
+        </Loader>
       </Surface>
     </Center>
   </ReactModal>)
