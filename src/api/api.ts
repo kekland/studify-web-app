@@ -90,7 +90,7 @@ export const api = {
         )
 
         const messages = response.body.messages as IMessageSocket[]
-        return { id: group.id, messages }
+        return { id: group.id, messages: messages.reverse() }
       })
     },
     attach: async (
@@ -119,7 +119,7 @@ export const api = {
 
       api.socket?.emit('sendMessage', { ...data, idempotencyId })
       return {
-        id: 'loading',
+        id: idempotencyId,
         groupId: data.groupId,
         body: data.body,
         attachments: data.attachments,

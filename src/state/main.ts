@@ -36,16 +36,21 @@ const mainSlice = createSlice({
       const group = state.groups.find(group => group.id === action.payload.id)
 
       if (!group) return
-      group.messages = [...group.messages, ...action.payload.messages]
-      group.hasMore = group.messages.length === api.messageLimit
+      group.messages = [ ...action.payload.messages, ...group.messages]
+      group.hasMore = action.payload.messages.length === api.messageLimit
+      
+      if (state?.selectedGroup?.id === group.id) {
+        state.selectedGroup = group
+      }
     },
     addGroupMessage(state, action: PayloadAction<IMessageSocket>) {
       const group = state.groups.find(group => group.id === action.payload.groupId)
 
       if (!group) return
-      group.messages = [action.payload, ...group.messages]
+      group.messages.push(action.payload)
+      
       if (state?.selectedGroup?.id === group.id) {
-        state.selectedGroup.messages = group.messages
+        state.selectedGroup = group
       }
     },
     replaceGroupMessageByIdempotency(state, action: PayloadAction<IMessageSocket>) {
@@ -57,7 +62,7 @@ const mainSlice = createSlice({
       group.messages[index] = action.payload
 
       if (state?.selectedGroup?.id === group.id) {
-        state.selectedGroup.messages = group.messages
+        state.selectedGroup = group
       }
     }
   },

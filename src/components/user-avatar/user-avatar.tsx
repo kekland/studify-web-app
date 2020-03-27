@@ -23,3 +23,17 @@ export const UserAvatar: React.FC<UserAvatarProps> = (props) => {
     </div>
   )
 }
+
+export interface UserAvatarSkeletonProps {
+  size: string;
+}
+
+export const UserAvatarSkeleton: React.FC<UserAvatarSkeletonProps> = (props) => {
+  return (
+    <div style={{
+      width: props.size, height: props.size,
+      borderRadius: '999px',
+      backgroundColor: 'var(--color-surface)'
+    }} />
+  )
+}

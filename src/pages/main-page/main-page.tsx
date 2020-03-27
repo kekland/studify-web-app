@@ -101,7 +101,7 @@ export const MainPage: React.FC = ((props) => {
       </div>
       <div className='message-panel'>
         <Column mainAxisSize='max'>
-          <Flexible style={{ width: '100%' }}>
+          <Flexible style={{ width: '100%', height: '100%' }}>
             <MessagePanel />
           </Flexible>
           <div style={{ padding: '12px', width: '100%' }}>

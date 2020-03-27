@@ -80,3 +80,36 @@ export const StyledText: React.FC<ITextProps> = (props) => {
     </span>
   )
 }
+
+export const StyledTextSkeleton: React.FC<ITextProps & { width: string, skeletonColor?: string }> = (props) => {
+  let fontSize = '16px'
+
+  if (props.type) {
+    if (props.type === 'body') {
+      fontSize = '16px'
+    }
+    else if (props.type === 'heading') {
+      fontSize = '24px'
+    }
+    else if (props.type === 'subhead') {
+      fontSize = '20px'
+    }
+    else if (props.type === 'button') {
+      fontSize = '16px'
+    }
+    else if (props.type === 'caption') {
+      fontSize = '14px'
+    }
+  }
+
+  fontSize = props.fontSize ?? fontSize
+
+  return (
+    <div style={{
+      height: fontSize,
+      width: props.width,
+      borderRadius: '4px',
+      backgroundColor: props.skeletonColor ?? 'var(--color-text-disabled)'
+    }} />
+  )
+}
