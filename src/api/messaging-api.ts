@@ -2,7 +2,7 @@ import request from 'superagent'
 import { IGroupMinimal, IGroup } from './data/group'
 import { api } from './api'
 import { IMessageSocket, ISendMessageFormData, ISentMessage } from './data/message'
-import { IUserMinimal, IUserOwner } from './data/user'
+import { IUserMinimal } from './data/user'
 import { uuid } from 'uuidv4'
 import { IPaginatedQuery } from './data/utils'
 

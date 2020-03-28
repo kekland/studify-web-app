@@ -58,10 +58,18 @@ const groupsSlice = createSlice({
       else
         delete group.typingUsers[action.payload.data.user.id]
     },
+    incrementNotificationCount: (state, action: PayloadAction<GroupPayload<undefined>>) => {
+      const group = state.groups[action.payload.id]
+      group.unreadMessages += 1
+    },
+    clearNotifications: (state, action: PayloadAction<GroupPayload<undefined>>) => {
+      const group = state.groups[action.payload.id]
+      group.unreadMessages = 0
+    },
   }
 })
 
 export const { setGroups, pushGroup, removeGroup, pushGroupMessages,
   pushNewGroupMessage, replaceGroupMessageById, replaceGroupMessageByIdempotency,
-  setUserTyping, setGroup } = groupsSlice.actions
+  setUserTyping, setGroup, incrementNotificationCount, clearNotifications } = groupsSlice.actions
 export default groupsSlice.reducer

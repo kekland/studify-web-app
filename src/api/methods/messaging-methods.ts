@@ -2,7 +2,7 @@ import { api } from '../api'
 import { methods } from './methods'
 import { IGroupExtended, IGroupMinimal } from '../data/group'
 import { store } from '../../state/store'
-import { pushGroupMessages, pushNewGroupMessage, replaceGroupMessageByIdempotency, setUserTyping, setGroup } from '../../state/groups'
+import { pushGroupMessages, pushNewGroupMessage, replaceGroupMessageByIdempotency, setUserTyping, setGroup, incrementNotificationCount } from '../../state/groups'
 import { ISendMessageFormData, ISentMessage, IMessageSocket } from '../data/message'
 import { IUserMinimal } from '../data/user'
 
@@ -24,6 +24,7 @@ export const messagingMethods = {
   },
   onNewGroupMessage: (message: IMessageSocket) => {
     store.dispatch(pushNewGroupMessage({ id: message.groupId, data: message }))
+    store.dispatch(incrementNotificationCount({ id: message.groupId, data: undefined }))
   },
   onUserTypingStatusUpdated: (data: { user: IUserMinimal, status: boolean, groupId: string }) => {
     store.dispatch(setUserTyping({ id: data.groupId, data: data }))

@@ -89,4 +89,9 @@ export const groupApi = {
       return result
     })
   },
+  setAsRead: async (group: IGroupMinimal) => {
+    return api.requestWrapper(async () => {
+      await api.setHeader(request.post(`${api.url}/group/${group.id}/setRead`))
+    })
+  }
 }

@@ -9,7 +9,7 @@ const notificationsSlice = createSlice({
   reducers: {
     setNotifications: (state, action: PayloadAction<INotification[]>) => {
       state.notifications = action.payload
-    }
+    },
   }
 })
 
