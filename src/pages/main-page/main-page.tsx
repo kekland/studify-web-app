@@ -17,8 +17,13 @@ import { setGroupMessages, addGroupMessage, replaceGroupMessageByIdempotency, on
 import { IGroup } from '../../api/data/group';
 import { MessagePanel } from '../../components/message-panel/message-panel';
 import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
+import { useScreenSize } from '../../hooks/hooks';
+import { Drawer } from '../../components/drawer/drawer';
+import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
 
 export const MainPage: React.FC = ((props) => {
+  const isMobile = useScreenSize(768)
+
   const alert = useAlert()
   const [isLoading, setLoading] = useState(false)
 
@@ -58,12 +63,12 @@ export const MainPage: React.FC = ((props) => {
         onMessageSent: (message) => {
           store.dispatch(replaceGroupMessageByIdempotency(message))
         },
-        onUserTypingStatusUpdated: ({user, status, groupId}) => {
-          if(status) {
-            store.dispatch(onUserStartedTyping({user, groupId}))
+        onUserTypingStatusUpdated: ({ user, status, groupId }) => {
+          if (status) {
+            store.dispatch(onUserStartedTyping({ user, groupId }))
           }
           else {
-            store.dispatch(onUserStoppedTyping({user, groupId}))
+            store.dispatch(onUserStoppedTyping({ user, groupId }))
           }
         }
       })
@@ -89,31 +94,46 @@ export const MainPage: React.FC = ((props) => {
   }
 
   return (
-    <div className='main-page'>
+    <div className={isMobile ? 'main-page-mobile' : 'main-page-desktop'}>
+      <MainPageDrawer
+        onCreateGroup={createGroupModal.open}
+        onSearchGroup={searchGroupModal.open}
+        onUserTap={() => { }}
+        onUserTapSettings={() => { }}
+        user={auth.user} />
       <ModalCreateGroup
         isOpen={createGroupModal.isOpen}
         onClose={createGroupModal.close} />
       <ModalSearchGroup
         isOpen={searchGroupModal.isOpen}
         onClose={searchGroupModal.close} />
-      <div className='app-bar app-bar-main' style={appBarStyle}>
-        <AppBarMain />
+      <div className='app-bar app-bar-main hidden-on-mobile' style={appBarStyle}>
+        {
+          isMobile ? <div /> :
+            <AppBarMain />
+        }
       </div>
       <div className='app-bar app-bar-group' style={appBarStyle}>
         <GroupAppBar />
       </div>
-      <div className='tab-panel'>
-        <TabPanel
-          onCreateNewGroup={createGroupModal.open}
-          onSearchGroups={searchGroupModal.open}
-        />
+      <div className='tab-panel hidden-on-mobile'>
+        {
+          isMobile ? <div /> :
+            <TabPanel
+              onCreateNewGroup={createGroupModal.open}
+              onSearchGroups={searchGroupModal.open}
+            />
+        }
       </div>
-      <div className='user-panel'>
-        <UserOwnerComponent
-          onTap={() => { }}
-          onTapSettings={() => { }}
-          user={auth.user}
-          padding='12px' />
+      <div className='user-panel hidden-on-mobile'>
+        {
+          isMobile ? <div /> :
+            <UserOwnerComponent
+              onTap={() => { }}
+              onTapSettings={() => { }}
+              user={auth.user}
+              padding='12px' />
+        }
       </div>
       <div className='message-panel'>
         <Column mainAxisSize='max'>

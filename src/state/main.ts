@@ -7,6 +7,7 @@ import { IUserMinimal } from '../api/data/user'
 export interface IMainSliceState {
   groups: IGroup[];
   selectedGroup?: IGroup;
+  isDrawerOpen: boolean,
 }
 
 const mainSlice = createSlice({
@@ -14,6 +15,7 @@ const mainSlice = createSlice({
   initialState: {
     groups: [],
     selectedGroup: undefined,
+    isDrawerOpen: true,
   } as IMainSliceState,
   reducers: {
     setGroups(state, action: PayloadAction<IGroup[]>) {
@@ -98,7 +100,7 @@ const mainSlice = createSlice({
 
       let userIndex = state.groups[groupIndex].typingUsers.findIndex(user => user.id === action.payload.user.id)
 
-      if(userIndex === -1) return
+      if (userIndex === -1) return
 
       state.groups[groupIndex].typingUsers.splice(userIndex)
 
@@ -106,6 +108,9 @@ const mainSlice = createSlice({
         state.selectedGroup.typingUsers = state.groups[groupIndex].typingUsers
       }
     },
+    setDrawer(state, action: PayloadAction<boolean>) {
+      state.isDrawerOpen = action.payload
+    }
   },
 })
 
@@ -121,5 +126,7 @@ export const {
   leaveGroup,
   onUserStartedTyping,
   onUserStoppedTyping,
+  setDrawer,
+
 } = mainSlice.actions
 export default mainSlice.reducer

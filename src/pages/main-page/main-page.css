@@ -1,15 +1,33 @@
-.main-page {
+.main-page-desktop {
   width: 100vw;
   height: 100vh;
   
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 350px 1fr;
   grid-template-rows: 64px 1fr 64px;
 
   grid-template-areas:
     "header header-group"
     "tab main"
     "user main";
+}
+
+.main-page-mobile {
+  width: 100vw;
+  height: 100vh;
+  
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 80px 1fr 64px;
+
+  grid-template-areas:
+    "header-group"
+    "main"
+    "main";
+}
+
+.main-page-mobile > .hidden-on-mobile {
+  display: none;
 }
 
 .app-bar {

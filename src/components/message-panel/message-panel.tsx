@@ -26,7 +26,19 @@ export const MessagePanel: React.FC = () => {
 
   const [loading, setLoading] = useState(false)
 
-  if (!selectedGroup) return <div />
+  if (!selectedGroup) {
+    return (
+      <Center>
+        <Column crossAxisAlignment='center'>
+          <FontAwesomeIcon icon={faCommentSlash} color='var(--color-text-muted' size='3x' />
+          <SizedBox flexSize='24px' />
+          <StyledText fontWeight={700} color='muted'>No group selected</StyledText>
+          <SizedBox flexSize='4px' />
+          <StyledText color='muted'>Select a group in the drawer</StyledText>
+        </Column>
+      </Center>
+    )
+  }
 
   const loadMessages = async () => {
     api.use(alert, async () => {
