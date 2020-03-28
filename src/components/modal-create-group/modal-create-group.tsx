@@ -8,10 +8,7 @@ import { faUsers, faQuoteLeft, IconName } from '@fortawesome/free-solid-svg-icon
 import { GroupAvatarSelector } from '../group-avatar-selector/group-avatar-selector'
 import { RaisedButton } from '../button/button'
 import { useForm } from 'react-hook-form'
-import { api } from '../../api/api'
-import { useAlert } from 'react-alert'
-import { store } from '../../state/store'
-import { addGroup, selectGroup } from '../../state/main'
+import { methods } from '../../api/methods/methods'
 
 export interface ICreateGroupFormData {
   name: string;
@@ -31,8 +28,6 @@ export interface IModalCreateGroupProps {
 }
 
 export const ModalCreateGroup: React.FC<IModalCreateGroupProps> = (props) => {
-  const alert = useAlert()
-
   const { handleSubmit, errors, register } = useForm<ICreateGroupFormData>()
   const [loading, setLoading] = useState(false)
 
@@ -41,24 +36,13 @@ export const ModalCreateGroup: React.FC<IModalCreateGroupProps> = (props) => {
   const [icon, setIcon] = useState<IconName>('language')
 
   const onSubmit = async (data: ICreateGroupFormData) => {
-    const groupData: ICreateGroupData = {
+    setLoading(true)
+    await methods.group.create({
       ...data,
       colorId,
       icon,
-    }
-
-    setLoading(true)
-
-    api.use(alert, async () => {
-      const group = await api.group.create(groupData)
-
-      store.dispatch(addGroup(group))
-      store.dispatch(selectGroup(group))
-
-      alert.success('Group successfully created')
-
-      props.onClose()
-    }, () => setLoading(false))
+    })
+    setLoading(false)
   }
 
   return (

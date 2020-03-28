@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
-import { IGroup, IGroupMinimal, GroupUtils } from '../../api/data/group'
+import { IGroupMinimal, GroupUtils, IGroupExtended } from '../../api/data/group'
 import { SizedBox } from '../sized-box/sized-box'
 import { Row, Column, Flexible } from '../flex/flex'
 import { GroupAvatar } from '../group-avatar/group-avatar'
 import { StyledText } from '../text/text'
 import { Loader } from '../loader/loader'
 import { useSelector } from 'react-redux'
-import { RootState, store } from '../../state/store'
+import { RootState } from '../../state/store'
 import { RaisedButton } from '../button/button'
-import { api } from '../../api/api'
-import { useAlert } from 'react-alert'
-import { joinGroup, leaveGroup } from '../../state/main'
+import { methods } from '../../api/methods/methods'
 
 export interface IGroupHorizontalProps {
   selected: boolean;
   onTap: () => void;
-  group: IGroup;
+  group: IGroupExtended;
   padding?: string;
 }
 
@@ -26,12 +24,12 @@ export const GroupHorizontal: React.FC<IGroupHorizontalProps> = (props) => {
     <SizedBox className={className} padding={props.padding} onTap={props.group.isLoaded ? props.onTap : undefined}>
       <Row crossAxisAlignment='center'>
         <Loader isLoading={!props.group.isLoaded} width='56px' height='56px' borderRadius='16px'>
-          <GroupAvatar name={props.group.name} colorId={props.group.colorId} icon={props.group.icon} size="56px" />
+          <GroupAvatar name={props.group.data.name} colorId={props.group.data.colorId} icon={props.group.data.icon} size="56px" />
         </Loader>
         <SizedBox width={props.padding} />
         <Column>
-          <StyledText type='body' fontWeight={500}>{props.group.name}</StyledText>
-          <StyledText type='caption'>{props.group.description}</StyledText>
+          <StyledText type='body' fontWeight={500}>{props.group.data.name}</StyledText>
+          <StyledText type='caption'>{props.group.data.description}</StyledText>
         </Column>
       </Row>
     </SizedBox>
@@ -44,28 +42,22 @@ export interface IGroupVerticalProps {
 }
 
 export const GroupVertical: React.FC<IGroupVerticalProps> = (props) => {
-  const alert = useAlert()
   const [loading, setLoading] = useState(false)
   const user = useSelector((state: RootState) => state.auth.user)
 
   const isJoined = user?.groups.findIndex(group => group.id === props.group.id) !== -1
   const isAuthor = props.group.creator.id === user!.id
 
-  const onJoin = () => {
-    api.use(alert, async () => {
-      setLoading(true)
-      const group = await api.group.join(props.group)
-      store.dispatch(joinGroup(group))
-    }, () => setLoading(false))
+  const onJoin = async () => {
+    setLoading(true)
+    await methods.group.join(props.group)
+    setLoading(false)
   }
 
-  const onLeave = () => {
-    console.log('leaving')
-    api.use(alert, async () => {
-      setLoading(true)
-      const group = await api.group.leave(props.group)
-      store.dispatch(leaveGroup(group))
-    }, () => setLoading(false))
+  const onLeave = async () => {
+    setLoading(true)
+    await methods.group.leave(props.group)
+    setLoading(false)
   }
 
   return (

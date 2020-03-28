@@ -5,7 +5,9 @@ import { SizedBox } from '../sized-box/sized-box'
 import { Row } from '../flex/flex'
 import { Center } from '../center/center'
 
-export const TypingStatusPanel: React.FC<{ typingUsers: IUserMinimal[] }> = ({ typingUsers }) => {
+export const TypingStatusPanel: React.FC<{ typingUsers: { [key: string]: IUserMinimal } }> = (props) => {
+  let typingUsers = Object.values(props.typingUsers)
+
   let someoneTyping = typingUsers.length > 0
   let usernames = ''
   typingUsers.forEach(user => usernames += user.username + ',')
@@ -18,7 +20,7 @@ export const TypingStatusPanel: React.FC<{ typingUsers: IUserMinimal[] }> = ({ t
       <SizedBox height='48px' padding='12px' style={{
         borderRadius: '12px',
         backgroundColor: 'var(--color-surface)',
-        opacity: someoneTyping? '1' : '0',
+        opacity: someoneTyping ? '1' : '0',
         transform: someoneTyping ? 'translate(0, 0)' : 'translate(0, -10px)',
         transition: 'opacity 150ms ease-in-out, transform 150ms ease-in-out',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.075)'

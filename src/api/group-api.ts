@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { ICreateGroupFormData } from '../components/modal-create-group/modal-create-group'
+import { ICreateGroupData } from '../components/modal-create-group/modal-create-group'
 import { api } from './api'
 import { IGroup, IGroupMinimal, IGroupExtended } from './data/group'
 import { IMessageSocket } from './data/message'
@@ -27,7 +27,7 @@ export const groupApi = {
       unreadMessages: data?.unreadMessages ?? 0,
     } as IGroupExtended
   },
-  create: async (data: ICreateGroupFormData) => {
+  create: async (data: ICreateGroupData) => {
     return api.requestWrapper(async () => {
       const response = await api.setHeader(request.post(`${api.url}/group/create`).send(data))
 

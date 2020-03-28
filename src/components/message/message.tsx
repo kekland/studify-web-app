@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { IMessageSocket } from '../../api/data/message'
+import { IMessageSocket, ISentMessage } from '../../api/data/message'
 import { Row, Column } from '../flex/flex'
 import { UserAvatar } from '../user-avatar/user-avatar'
 import { SizedBox } from '../sized-box/sized-box'
@@ -7,7 +7,7 @@ import { StyledText } from '../text/text'
 import { prettifyDate } from '../../api/pretty-date'
 
 export interface IMessageProps {
-  message: IMessageSocket;
+  message: IMessageSocket | ISentMessage;
   padding: string;
   fromSelf: boolean;
   measure?: () => void;
@@ -23,7 +23,7 @@ export const Message: React.FC<IMessageProps> = ({ message, padding, fromSelf, m
       <SizedBox width='100%' padding={padding}>
         <Column mainAxisSize='min' crossAxisSize='max' crossAxisAlignment='flex-end'>
           <SizedBox className='transition-background' padding='12px' style={{
-            backgroundColor: message.loading ?
+            backgroundColor: (message as ISentMessage).loading ?
               `var(--color-surface)` :
               `var(--color-surface-primary)`,
             borderRadius: '12px',

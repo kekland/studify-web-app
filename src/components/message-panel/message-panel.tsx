@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState, store } from '../../state/store'
+import { RootState } from '../../state/store'
 import './message-panel.css'
 import {
   AutoSizer
 } from 'react-virtualized'
 import { Message } from '../message/message'
-import { useAlert } from 'react-alert'
-import { api } from '../../api/api'
-import { addGroupMessages } from '../../state/main'
 import { Loader } from '../loader/loader'
 import { Center } from '../center/center'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,11 +15,12 @@ import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
 import Infinite from 'react-infinite'
 import { TypingStatusPanel } from './typing-status-panel'
+import { useSelectedGroup } from '../../hooks/hooks'
+import { methods } from '../../api/methods/methods'
 
 export const MessagePanel: React.FC = () => {
-  const alert = useAlert()
   const user = useSelector((state: RootState) => state.auth.user)
-  const selectedGroup = useSelector((state: RootState) => state.main.selectedGroup)
+  const selectedGroup = useSelectedGroup()
 
   const [loading, setLoading] = useState(false)
 
@@ -41,13 +39,9 @@ export const MessagePanel: React.FC = () => {
   }
 
   const loadMessages = async () => {
-    api.use(alert, async () => {
-      console.log('loading!')
-      setLoading(true)
-      const result = await api.messaging.loadMessages(selectedGroup, messages.length)
-      store.dispatch(addGroupMessages(result))
-      setLoading(false)
-    })
+    setLoading(true)
+    await methods.messaging.loadMoreMessages(selectedGroup)
+    setLoading(false)
   }
 
   const messages = selectedGroup.messages
@@ -76,7 +70,7 @@ export const MessagePanel: React.FC = () => {
             <div style={{ width, height }}>
               <Infinite
                 className='infinite-scroll'
-                key={selectedGroup.id}
+                key={selectedGroup.data.id}
                 displayBottomUpwards
                 elementHeight={88}
                 containerHeight={height}

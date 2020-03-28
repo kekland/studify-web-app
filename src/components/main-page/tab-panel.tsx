@@ -9,6 +9,7 @@ import { selectGroup } from '../../state/main'
 import { FixedSizeList } from 'react-window'
 import { AutoSizer } from 'react-virtualized'
 import { CustomScrollbarsVirtualList } from '../smart-list/smart-list'
+import { useSelectedGroup } from '../../hooks/hooks'
 
 export interface ITabPanelProps {
   onCreateNewGroup: () => void;
@@ -16,7 +17,10 @@ export interface ITabPanelProps {
 }
 
 export const TabPanel: React.FC<ITabPanelProps> = (props) => {
-  const {groups, selectedGroup} = useSelector((state: RootState) => state.main)
+  const { groups } = useSelector((state: RootState) => state.groups)
+  const selectedGroup = useSelectedGroup()
+
+  const ids = Object.keys(groups)
 
   return (
     <Column mainAxisSize='max' crossAxisSize='max'>
@@ -25,7 +29,7 @@ export const TabPanel: React.FC<ITabPanelProps> = (props) => {
           {({ height, width }) => (
             <FixedSizeList
               outerElementType={CustomScrollbarsVirtualList}
-              itemCount={groups.length}
+              itemCount={ids.length}
               itemSize={80}
               width={width}
               height={height}
@@ -34,10 +38,10 @@ export const TabPanel: React.FC<ITabPanelProps> = (props) => {
                 <div
                   style={style}>
                   <GroupHorizontal
-                    group={groups[index]}
-                    selected={groups[index] === selectedGroup}
+                    group={groups[ids[index]]}
+                    selected={groups[ids[index]].data.id === selectedGroup?.data.id}
                     padding='12px'
-                    onTap={() => store.dispatch(selectGroup(groups[index]))} />
+                    onTap={() => store.dispatch(selectGroup(groups[ids[index]].data))} />
                 </div>
               }
             </FixedSizeList>

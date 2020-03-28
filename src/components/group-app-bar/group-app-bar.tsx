@@ -5,16 +5,15 @@ import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
 import { IconButton } from '../button/button'
 import { faInfoCircle, faFolderOpen, faBars } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from 'react-redux'
-import { RootState, store } from '../../state/store'
+import { store } from '../../state/store'
 import { GroupUtils } from '../../api/data/group'
-import { useScreenSize } from '../../hooks/hooks'
+import { useScreenSize, useSelectedGroup } from '../../hooks/hooks'
 import { AppLogoHorizontal } from '../app-logo/app-logo'
 import { setDrawer } from '../../state/main'
 
 export const GroupAppBar: React.FC = () => {
   const isMobile = useScreenSize(768)
-  const selectedGroup = useSelector((state: RootState) => state.main.selectedGroup)
+  const selectedGroup = useSelectedGroup()
 
   const openDrawer = () => {
     store.dispatch(setDrawer(true))
@@ -31,15 +30,15 @@ export const GroupAppBar: React.FC = () => {
           </SizedBox>
         }
         {
-          !isMobile && (<FontAwesomeIcon icon={selectedGroup.icon} color='rgba(255, 255, 255, 0.625)' size='2x' />)
+          !isMobile && (<FontAwesomeIcon icon={selectedGroup.data.icon} color='rgba(255, 255, 255, 0.625)' size='2x' />)
         }
         {
           !isMobile && (<SizedBox width='18px' />)
         }
         <Column>
-          <StyledText surface='dark' type='subhead' fontSize={isMobile ? '16px' : '20px'}>{selectedGroup.name}</StyledText>
+          <StyledText surface='dark' type='subhead' fontSize={isMobile ? '16px' : '20px'}>{selectedGroup.data.name}</StyledText>
           <StyledText type='caption' customColor='rgba(255, 255, 255, 0.625)'>{
-            GroupUtils.getUserCountString(selectedGroup.userCount)
+            GroupUtils.getUserCountString(selectedGroup.data.userCount)
           }</StyledText>
         </Column>
         <Flexible />
