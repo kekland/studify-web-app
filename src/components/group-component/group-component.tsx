@@ -85,8 +85,8 @@ export const GroupVertical: React.FC<IGroupVerticalProps> = (props) => {
           </StyledText>
           <SizedBox flexSize={props.padding} />
           {
-            isJoined ? <RaisedButton label='Leave' style='danger' width='100%' onTap={onLeave} disabled={loading || isAuthor} /> :
-              <RaisedButton label='Join' style='success' width='100%' onTap={onJoin} disabled={loading} />
+            isJoined ? <RaisedButton label='Leave' color='danger' width='100%' onTap={onLeave} disabled={loading || isAuthor} /> :
+              <RaisedButton label='Join' color='success' width='100%' onTap={onJoin} disabled={loading} />
           }
 
         </Column>

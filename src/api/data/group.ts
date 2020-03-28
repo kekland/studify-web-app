@@ -1,4 +1,4 @@
-import { IUser, IUserMinimal } from "./user";
+import { IUserMinimal } from "./user";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { IMessageSocket } from "./message";
 
@@ -7,6 +7,7 @@ export interface IGroup extends IGroupMinimal {
   updated: Date;
 
   messages: IMessageSocket[];
+  typingUsers: IUserMinimal;
   isLoaded: boolean;
   hasMore: boolean;
 }

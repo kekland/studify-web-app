@@ -4,7 +4,7 @@ import { Surface } from '../surface/surface'
 import { StyledText } from '../text/text'
 import { Column, Row } from '../flex/flex'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInfo, IconDefinition, faCheckCircle, faInfoCircle, faExclamationCircle, faCross, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { IconDefinition, faCheckCircle, faInfoCircle, faExclamationCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { SizedBox } from '../sized-box/sized-box'
 import { IconButton } from '../button/button'
 

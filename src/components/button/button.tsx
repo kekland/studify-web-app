@@ -44,13 +44,13 @@ export const IconButton: React.FC<IButtonProps & IIconButtonProps> = (props) => 
 
 export interface IRaisedButtonProps {
   label: string;
-  style?: 'primary' | 'success' | 'warning' | 'danger';
+  color?: 'primary' | 'success' | 'warning' | 'danger';
   width?: string;
   height?: string;
 }
 
 export const RaisedButton: React.FC<IButtonProps & IRaisedButtonProps> = (props) => {
-  let style: string = props.style ?? 'primary'
+  let style: string = props.color ?? 'primary'
   let className: string = props.disabled ? 'disabled' : 'tappable'
   let textColor: 'primary' | 'disabled' = props.disabled ? 'disabled' : 'primary';
   if (props.disabled) style = 'control'

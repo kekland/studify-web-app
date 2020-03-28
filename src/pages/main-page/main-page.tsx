@@ -86,7 +86,7 @@ export const MainPage: React.FC = ((props) => {
         isOpen={createGroupModal.isOpen}
         onClose={createGroupModal.close} />
       <ModalSearchGroup
-        isOpen={true}
+        isOpen={searchGroupModal.isOpen}
         onClose={searchGroupModal.close} />
       <div className='app-bar app-bar-main' style={appBarStyle}>
         <AppBarMain />

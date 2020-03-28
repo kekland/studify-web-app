@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Modal } from '../modal/modal'
 import { StyledText } from '../text/text'
-import { InputField } from '../input-field/input-field'
-import { Column, Row } from '../flex/flex'
 import { SizedBox } from '../sized-box/sized-box'
-import { faUsers, faQuoteLeft, IconName } from '@fortawesome/free-solid-svg-icons'
-import { GroupAvatarSelector } from '../group-avatar-selector/group-avatar-selector'
-import { RaisedButton } from '../button/button'
-import { useForm } from 'react-hook-form'
 import { api } from '../../api/api'
 import { useAlert } from 'react-alert'
-import { store } from '../../state/store'
-import { addGroup, selectGroup } from '../../state/main'
 import { IGroupMinimal } from '../../api/data/group'
 import Scrollbars from 'react-custom-scrollbars'
 import { GroupVertical } from '../group-component/group-component'
+import { Row } from '../flex/flex'
 
 export interface IModalSearchGroupProps {
   isOpen: boolean;

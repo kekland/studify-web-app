@@ -92,6 +92,8 @@ export const api = {
       return api.requestWrapper(async () => {
         const response = await api.setHeader(request.post(`${api.url}/group/${data.id}/join`))
 
+        await api.messaging.updateRooms()
+
         const result = response.body.group as IGroup
         const messages = await api.messaging.loadMessages(result, 0)
 
@@ -105,6 +107,8 @@ export const api = {
     leave: async (data: IGroupMinimal) => {
       return api.requestWrapper(async () => {
         const response = await api.setHeader(request.post(`${api.url}/group/${data.id}/leave`))
+
+        await api.messaging.updateRooms()
 
         const result = response.body.group as IGroup
         return result

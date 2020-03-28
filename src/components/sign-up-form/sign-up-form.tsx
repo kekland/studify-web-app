@@ -76,7 +76,7 @@ return (
       <SizedBox height='24px' />
       <RaisedButton width='100%'
         label='Register'
-        style='primary'
+        color='primary'
         type='submit'
         disabled={Object.keys(errors).length > 0} />
     </form>

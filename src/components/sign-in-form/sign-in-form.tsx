@@ -3,7 +3,7 @@ import { Column } from '../flex/flex'
 import { SizedBox } from '../sized-box/sized-box'
 import { StyledText } from '../text/text'
 import { InputField } from '../input-field/input-field'
-import { faAt, faLock, faUser, faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { RaisedButton } from '../button/button'
 import { useForm } from 'react-hook-form'
 
