@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IUserOwner } from '../api/data/user'
-import { joinGroup, leaveGroup } from './main'
 
 export interface IUserSliceState {
   user?: IUserOwner;

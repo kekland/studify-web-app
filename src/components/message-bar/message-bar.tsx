@@ -4,19 +4,16 @@ import { IconButton } from '../button/button'
 import { faPaperclip, faShare } from '@fortawesome/free-solid-svg-icons'
 import { InputFieldTransparent } from '../input-field/input-field'
 import { SizedBox } from '../sized-box/sized-box'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../state/store'
 import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
+import { useSelectedGroup } from '../../hooks/hooks'
+import { methods } from '../../api/methods/methods'
 
-export interface IMessageBarProps {
-  onSend: (message: string) => void;
-}
-
-export const MessageBar: React.FC<IMessageBarProps> = (props) => {
+export const MessageBar: React.FC = (props) => {
   const alert = useAlert()
-  const selectedGroup = useSelector((state: RootState) => state.main.selectedGroup)
+  const selectedGroup = useSelectedGroup()
   const inputRef = createRef<HTMLInputElement>()
+
   const [message, setMessage] = useState('')
   const [timer, setTimer] = useState<number>(-1)
   const [isTyping, setTyping] = useState<boolean>(false)
@@ -24,15 +21,18 @@ export const MessageBar: React.FC<IMessageBarProps> = (props) => {
   const sendTypingStatus = (status: boolean) => {
     api.use(alert, async () => {
       if (selectedGroup)
-        await api.messaging.updateTypingStatus(selectedGroup, status)
+        await api.messaging.updateTypingStatus(selectedGroup.data, status)
     })
   }
 
   const sendMessage = () => {
+    if (!selectedGroup)
+      return
     if (inputRef.current)
       inputRef.current.value = ""
 
-    props.onSend(message)
+    methods.messaging.sendMessage(selectedGroup, { body: message })
+    setMessage('')
   }
 
   const onMessageChanged = (body: string) => {
@@ -64,7 +64,7 @@ export const MessageBar: React.FC<IMessageBarProps> = (props) => {
                 width='100%'
                 height='48px'
                 ref={inputRef}
-                placeholder={`Message in ${selectedGroup.name}`}
+                placeholder={`Message in ${selectedGroup.data.name}`}
                 onChanged={onMessageChanged} />
             </Flexible>
             <SizedBox width="6px" />

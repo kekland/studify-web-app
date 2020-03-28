@@ -5,19 +5,16 @@ import { UserOwnerComponent } from '../../components/user-component/user-compone
 import { MessageBar } from '../../components/message-bar/message-bar';
 import { Column, Flexible } from '../../components/flex/flex';
 import { GroupAppBar } from '../../components/group-app-bar/group-app-bar';
-import { RootState, store } from '../../state/store';
+import { RootState } from '../../state/store';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { TabPanel } from '../../components/main-page/tab-panel';
 import { ModalCreateGroup } from '../../components/modal-create-group/modal-create-group';
 import { useModal } from '../../components/modal/modal-hook';
-import { api } from '../../api/api';
 import { useAlert } from 'react-alert';
-import { setGroupMessages, addGroupMessage, replaceGroupMessageByIdempotency, onUserStartedTyping, onUserStoppedTyping } from '../../state/main';
-import { IGroup } from '../../api/data/group';
 import { MessagePanel } from '../../components/message-panel/message-panel';
 import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
-import { useScreenSize } from '../../hooks/hooks';
+import { useScreenSize, useSelectedGroup } from '../../hooks/hooks';
 import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
 
 export const MainPage: React.FC = ((props) => {
@@ -27,7 +24,8 @@ export const MainPage: React.FC = ((props) => {
   const [isLoading, setLoading] = useState(false)
 
   const auth = useSelector((state: RootState) => state.auth)
-  const { groups, selectedGroup } = useSelector((state: RootState) => state.main)
+  const groups = useSelector((state: RootState) => state.groups.groups)
+  const selectedGroup = useSelectedGroup()
 
   const createGroupModal = useModal(false)
   const searchGroupModal = useModal(false)
@@ -38,60 +36,8 @@ export const MainPage: React.FC = ((props) => {
 
   let appBarStyle: React.CSSProperties = {}
   if (selectedGroup) {
-    appBarStyle = { backgroundColor: `var(--color-group-${selectedGroup.colorId})` }
+    appBarStyle = { backgroundColor: `var(--color-group-${selectedGroup.data.colorId})` }
   }
-
-  const loadGroupMessages = async (group: IGroup) => {
-    api.use(alert, async () => {
-      const result = await api.messaging.loadMessages(group, 0)
-      store.dispatch(setGroupMessages(result))
-    })
-  }
-
-  const loadGroups = async () => {
-    setLoading(true)
-    for (const group of groups) {
-      if (!group.isLoaded)
-        await loadGroupMessages(group)
-    }
-    api.use(alert, async () => {
-      api.messaging.attach({
-        onNewGroupMessage: (message) => {
-          store.dispatch(addGroupMessage(message))
-        },
-        onMessageSent: (message) => {
-          store.dispatch(replaceGroupMessageByIdempotency(message))
-        },
-        onUserTypingStatusUpdated: ({ user, status, groupId }) => {
-          if (status) {
-            store.dispatch(onUserStartedTyping({ user, groupId }))
-          }
-          else {
-            store.dispatch(onUserStoppedTyping({ user, groupId }))
-          }
-        }
-      })
-    })
-  }
-
-  const sendMessage = async (body: string) => {
-    api.use(alert, async () => {
-      const message = await api.messaging.sendMessage(user, {
-        groupId: selectedGroup?.id as string,
-        body: body,
-        attachments: undefined,
-      })
-
-      console.log('Sent message, dispatched')
-
-      store.dispatch(addGroupMessage(message))
-    })
-  }
-
-  if (!isLoading) {
-    loadGroups()
-  }
-
   return (
     <div className={isMobile ? 'main-page-mobile' : 'main-page-desktop'}>
       <MainPageDrawer
@@ -140,7 +86,7 @@ export const MainPage: React.FC = ((props) => {
             <MessagePanel />
           </Flexible>
           <div style={{ padding: '12px', width: '100%' }}>
-            <MessageBar onSend={sendMessage} />
+            <MessageBar />
           </div>
         </Column>
 
