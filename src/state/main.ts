@@ -15,7 +15,7 @@ const mainSlice = createSlice({
   initialState: {
     groups: [],
     selectedGroup: undefined,
-    isDrawerOpen: true,
+    isDrawerOpen: (window.screen.width < 768),
   } as IMainSliceState,
   reducers: {
     setGroups(state, action: PayloadAction<IGroup[]>) {
