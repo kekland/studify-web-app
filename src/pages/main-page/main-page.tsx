@@ -27,9 +27,17 @@ export const MainPage: React.FC = ((props) => {
   const searchGroupModal = useModal(false)
 
   useEffect(() => {
-    methods.initializeSocket()
-    return methods.closeSocket
-  }, [])
+    const loadGroups = async () => {
+      await methods.group.setInitializationData()
+      await methods.group.loadDataOnInitialization()
+    }
+
+    if (auth.user) {
+      methods.initializeSocket()
+      loadGroups()
+      return methods.closeSocket
+    }
+  }, [auth])
 
   if (!auth.user) return <Redirect to='/auth' />
 

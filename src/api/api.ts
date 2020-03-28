@@ -8,8 +8,8 @@ import { store } from "../state/store";
 import { IPaginatedQuery, CanBeNull } from "./data/utils";
 
 export const api = {
-  url: 'https://studify-server.herokuapp.com',
-  socketUrl: 'https://studify-server.herokuapp.com',
+  url: 'http://localhost:8080/api',
+  socketUrl: 'http://localhost:8080',
   paginationLimit: 20,
   socket: undefined as CanBeNull<SocketIOClient.Socket>,
 

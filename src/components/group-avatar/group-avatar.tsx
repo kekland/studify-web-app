@@ -10,6 +10,7 @@ export interface IGroupAvatarProps {
   colorId: number;
   icon: IconName;
   size: string;
+  unreadMessages?: number;
 }
 
 export const GroupAvatar: React.FC<IGroupAvatarProps> = (props) => {
@@ -37,13 +38,29 @@ export const GroupAvatar: React.FC<IGroupAvatarProps> = (props) => {
         bottom: '4px',
       }}>
         <StyledText type='body' fontWeight={700} surface='dark' textAlign='end' unselectable style={{
-          backgroundColor: props.name.length > 0? `var(--color-group-${props.colorId})` : 'transparent',
+          backgroundColor: props.name.length > 0 ? `var(--color-group-${props.colorId})` : 'transparent',
           padding: '2px',
           borderRadius: '6px',
         }}>
           {GroupUtils.getShortName(props.name)}
         </StyledText>
       </div>
+
+      {
+        (props.unreadMessages && props.unreadMessages > 0) ? (<div style={{
+          width: '24px',
+          height: '24px',
+          position: 'absolute',
+          right: '-4px',
+          top: '-4px',
+          borderRadius: '12px',
+          backgroundColor: 'var(--color-primary)'
+        }}>
+          <Center>
+            <StyledText fontWeight={500} surface='dark' type='caption' color='primary'>{props.unreadMessages}</StyledText>
+          </Center>
+        </div>) : (<div />)
+      }
     </div >
   )
 }

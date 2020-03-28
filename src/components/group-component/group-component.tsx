@@ -24,7 +24,10 @@ export const GroupHorizontal: React.FC<IGroupHorizontalProps> = (props) => {
     <SizedBox className={className} padding={props.padding} onTap={props.group.isLoaded ? props.onTap : undefined}>
       <Row crossAxisAlignment='center'>
         <Loader isLoading={!props.group.isLoaded} width='56px' height='56px' borderRadius='16px'>
-          <GroupAvatar name={props.group.data.name} colorId={props.group.data.colorId} icon={props.group.data.icon} size="56px" />
+          <GroupAvatar name={props.group.data.name}
+            colorId={props.group.data.colorId}
+            icon={props.group.data.icon} size="56px"
+            unreadMessages={props.group.unreadMessages} />
         </Loader>
         <SizedBox width={props.padding} />
         <Column>
@@ -44,8 +47,9 @@ export interface IGroupVerticalProps {
 export const GroupVertical: React.FC<IGroupVerticalProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const user = useSelector((state: RootState) => state.auth.user)
+  const { groups } = useSelector((state: RootState) => state.groups)
 
-  const isJoined = user?.groups.findIndex(group => group.id === props.group.id) !== -1
+  const isJoined = groups[props.group.id] != null
   const isAuthor = props.group.creator.id === user!.id
 
   const onJoin = async () => {

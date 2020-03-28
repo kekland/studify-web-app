@@ -11,10 +11,11 @@ export const notificationMethods = {
       await api.notifications.setNotificationsAsRead(notifications.map(n => n.id))
     })
   },
-  setGroupAsRead: (group: IGroupExtended) => {
+  setGroupAsRead: (group: IGroupExtended | string) => {
     return methods.methodWrapper(async () => {
-      await api.group.setAsRead(group.data)
-      store.dispatch(clearNotifications({ id: group.data.id, data: undefined }))
+      const id = (typeof group === 'string') ? group : group.data.id
+      await api.group.setAsRead(id)
+      store.dispatch(clearNotifications({ id, data: undefined }))
     })
   },
 }

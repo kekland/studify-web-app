@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../state/store'
 import './message-panel.css'
@@ -20,9 +20,15 @@ import { methods } from '../../api/methods/methods'
 
 export const MessagePanel: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user)
+  const selectedGroupId = useSelector((state: RootState) => state.main.selectedGroupId)
   const selectedGroup = useSelectedGroup()
 
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (selectedGroupId)
+      methods.notification.setGroupAsRead(selectedGroupId)
+  }, [selectedGroupId])
 
   if (!selectedGroup) {
     return (

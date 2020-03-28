@@ -5,6 +5,7 @@ import { IMessageSocket, ISendMessageFormData, ISentMessage } from './data/messa
 import { IUserMinimal } from './data/user'
 import { uuid } from 'uuidv4'
 import { IPaginatedQuery } from './data/utils'
+import io from 'socket.io-client'
 
 export const messagingApi = {
   /* @deprecated */
