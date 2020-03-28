@@ -5,13 +5,13 @@ import { groupApi } from "./group-api";
 import { messagingApi } from "./messaging-api";
 import { notificationsApi } from "./notifications-api";
 import { store } from "../state/store";
-import { IPaginatedQuery } from "./data/utils";
+import { IPaginatedQuery, CanBeNull } from "./data/utils";
 
 export const api = {
   url: 'https://studify-server.herokuapp.com',
   socketUrl: 'https://studify-server.herokuapp.com',
   paginationLimit: 20,
-  socket: undefined as (undefined | SocketIOClient.Socket),
+  socket: undefined as CanBeNull<SocketIOClient.Socket>,
 
   use: async (alert: AlertManager, method: () => Promise<void>, afterMethod?: () => void) => {
     try {
@@ -39,7 +39,7 @@ export const api = {
   getUser: () => {
     return store.getState().auth.user
   },
-  
+
   getToken: () => {
     return store.getState().auth.token
   },

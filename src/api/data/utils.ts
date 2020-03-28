@@ -4,3 +4,5 @@ export interface IPaginatedQuery {
   skip: number;
   limit?: number;
 }
+
+export type CanBeNull<T> = undefined | T

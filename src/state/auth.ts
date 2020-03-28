@@ -19,15 +19,6 @@ const authSlice = createSlice({
       state.token = action.payload.token
     }
   },
-  extraReducers: builder => {
-    builder.addCase(joinGroup, (state, action) => {
-      state.user!.groups.push(action.payload)
-    })
-    builder.addCase(leaveGroup, (state, action) => {
-      const index = state.user!.groups.findIndex(group => group.id === action.payload.id)
-      state.user!.groups.splice(index)
-    })
-  }
 })
 
 export const { setAuth } = authSlice.actions

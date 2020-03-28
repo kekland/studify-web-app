@@ -27,7 +27,7 @@ export const authApi = {
       const result = {
         user: response.body.user as IUserOwner,
         token: response.body.token,
-        notifications: [],
+        notifications: [] as INotification[],
       }
 
       authApi.saveToken()
@@ -47,13 +47,16 @@ export const authApi = {
       return result
     })
   },
-  saveToken: async (_token?: string) => {
+  clearToken: () => {
+    localStorage.removeItem('token')
+  },
+  saveToken: (_token?: string) => {
     let token = _token ?? api.getToken()
 
     if (token)
       localStorage.setItem('token', token)
   },
-  getToken: async () => {
+  getToken: () => {
     return localStorage.getItem('token')
   }
 }
