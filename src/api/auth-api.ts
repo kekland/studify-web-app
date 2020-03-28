@@ -16,9 +16,7 @@ export const authApi = {
         notifications: response.body.notifications as INotification[],
       }
 
-      api.token = result.token
       authApi.saveToken()
-
       return result
     })
   },
@@ -32,16 +30,12 @@ export const authApi = {
         notifications: [],
       }
 
-      api.token = result.token
       authApi.saveToken()
-
       return result
     })
   },
   signInWithToken: async (token: string) => {
     return api.requestWrapper(async () => {
-      api.token = token
-
       const response = await api.setHeader(request.post(`${api.url}/auth/signInWithToken`))
 
       const result = {
@@ -50,12 +44,14 @@ export const authApi = {
       }
 
       authApi.saveToken()
-
       return result
     })
   },
-  saveToken: async (token?: string) => {
-    localStorage.setItem('token', token ?? api.token)
+  saveToken: async (_token?: string) => {
+    let token = _token ?? api.getToken()
+
+    if (token)
+      localStorage.setItem('token', token)
   },
   getToken: async () => {
     return localStorage.getItem('token')

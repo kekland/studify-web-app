@@ -4,14 +4,13 @@ import { api } from './api'
 import { IMessageSocket, ISendMessageFormData } from './data/message'
 import { IUserMinimal, IUserOwner } from './data/user'
 import { uuid } from 'uuidv4'
+import { IPaginatedQuery } from './data/utils'
 
 export const messagingApi = {
-  loadMessages: async (group: IGroupMinimal, skip: number) => {
+  /* @deprecated */
+  loadMessages: async (group: IGroupMinimal, query: IPaginatedQuery) => {
     return api.requestWrapper(async () => {
-      const response = await api.setHeader(
-        request.get(`${api.url}/group/${group.id}/messages`)
-          .query({ skip, limit: api.messageLimit })
-      )
+      const response = await api.setHeader(request.get(`${api.url}/group/${group.id}/messages`).query(api.normalizeQuery(query)))
 
       const messages = response.body.messages as IMessageSocket[]
       return { id: group.id, messages: messages.reverse() }
@@ -22,8 +21,9 @@ export const messagingApi = {
       onNewGroupMessage: (message: IMessageSocket) => void,
       onMessageSent: (message: IMessageSocket) => void,
       onUserTypingStatusUpdated: (data: { user: IUserMinimal, status: boolean, groupId: string }) => void,
+      onGroupChange: (data: IGroupMinimal) => void,
     }) => {
-    api.socket = io(api.socketUrl, { query: { token: api.token } })
+    api.socket = io(api.socketUrl, { query: { token: api.getToken() } })
 
     api.socket.on('onNewGroupMessage', (data: { message: IMessageSocket }) => {
       callbacks.onNewGroupMessage(data.message)
@@ -35,6 +35,7 @@ export const messagingApi = {
     })
 
     api.socket.on('onUserTypingStatusUpdated', callbacks.onUserTypingStatusUpdated)
+    api.socket.on('onGroupChange', callbacks.onGroupChange)
 
     api.socket.connect()
   },

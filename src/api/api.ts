@@ -1,13 +1,5 @@
-import { ISignInFormData } from "../components/sign-in-form/sign-in-form";
 import request from 'superagent'
-import { IUserOwner, IUserMinimal } from "./data/user";
-import { ISignUpFormData } from "../components/sign-up-form/sign-up-form";
 import { AlertManager } from "react-alert";
-import { IGroup, IGroupMinimal } from "./data/group";
-import { ICreateGroupFormData } from "../components/modal-create-group/modal-create-group";
-import { IMessageSocket, ISendMessageFormData } from "./data/message";
-import io from 'socket.io-client'
-import { uuid } from 'uuidv4'
 import { authApi } from "./auth-api";
 import { groupApi } from "./group-api";
 import { messagingApi } from "./messaging-api";
@@ -18,7 +10,6 @@ import { IPaginatedQuery } from "./data/utils";
 export const api = {
   url: 'https://studify-server.herokuapp.com',
   socketUrl: 'https://studify-server.herokuapp.com',
-  token: '',
   paginationLimit: 20,
   socket: undefined as (undefined | SocketIOClient.Socket),
 
@@ -48,6 +39,10 @@ export const api = {
   getUser: () => {
     return store.getState().auth.user
   },
+  
+  getToken: () => {
+    return store.getState().auth.token
+  },
 
   normalizeQuery: (query: IPaginatedQuery) => {
     return {
@@ -61,7 +56,7 @@ export const api = {
   },
 
   setHeader: (req: request.SuperAgentRequest) => {
-    req.set('Authorization', `Bearer ${api.token}`)
+    req.set('Authorization', `Bearer ${api.getToken()}`)
     return req
   },
 
