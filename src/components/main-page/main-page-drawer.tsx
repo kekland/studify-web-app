@@ -28,7 +28,7 @@ export const MainPageDrawer: React.FC<IMainPageDrawerProps> = (props) => {
     <Drawer isOpen={isOpen} onClose={close} width='350px'>
       <Column mainAxisSize='max' crossAxisSize='max'>
         <div style={{
-          flexBasis: '80px',
+          flexBasis: '64px',
           width: '100%',
           backgroundColor: 'var(--color-primary)'
         }}>

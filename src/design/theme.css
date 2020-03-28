@@ -1,11 +1,17 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: 'Roboto';
   margin: 0;
 
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  width: 100%;
+  height: 100%;
 
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   --color-canvas-light: #E7EEF4;
   --color-surface-light: #FDFDFD;
@@ -59,7 +65,7 @@ body {
 
 .root {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 body::-webkit-scrollbar {

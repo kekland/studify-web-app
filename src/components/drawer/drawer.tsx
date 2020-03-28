@@ -21,7 +21,7 @@ export const Drawer: React.FC<IDrawerProps> = ({ isOpen, width, children, onClos
       }} onClick={onClose}>
       <div style={{
         width: '100vw',
-        height: '100vh',
+        height: '100%',
         position: 'absolute',
         left: 0,
         top: 0,

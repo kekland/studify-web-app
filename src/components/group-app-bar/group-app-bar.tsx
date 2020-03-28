@@ -30,10 +30,14 @@ export const GroupAppBar: React.FC = () => {
             <IconButton icon={faBars} iconSize='lg' size='48px' surface='dark' onTap={openDrawer} />
           </SizedBox>
         }
-        <FontAwesomeIcon icon={selectedGroup.icon} color='rgba(255, 255, 255, 0.625)' size='2x' />
-        <SizedBox width='18px' />
+        {
+          !isMobile && (<FontAwesomeIcon icon={selectedGroup.icon} color='rgba(255, 255, 255, 0.625)' size='2x' />)
+        }
+        {
+          !isMobile && (<SizedBox width='18px' />)
+        }
         <Column>
-          <StyledText surface='dark' type='subhead'>{selectedGroup.name}</StyledText>
+          <StyledText surface='dark' type='subhead' fontSize={isMobile ? '16px' : '20px'}>{selectedGroup.name}</StyledText>
           <StyledText type='caption' customColor='rgba(255, 255, 255, 0.625)'>{
             GroupUtils.getUserCountString(selectedGroup.userCount)
           }</StyledText>
@@ -57,7 +61,7 @@ export const GroupAppBar: React.FC = () => {
     )
   }
   else {
-    return isMobile? (<Row mainAxisSize='max' crossAxisSize='max' crossAxisAlignment='center'>
+    return isMobile ? (<Row mainAxisSize='max' crossAxisSize='max' crossAxisAlignment='center'>
       <SizedBox width='12px' />
       <SizedBox width='56px'>
         <IconButton icon={faBars} iconSize='lg' size='48px' surface='dark' onTap={openDrawer} />
