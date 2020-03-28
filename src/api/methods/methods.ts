@@ -3,6 +3,8 @@ import { authMethods } from "./auth-methods"
 import { CanBeNull } from "../data/utils"
 import { AlertManager } from "react-alert"
 import { groupMethods } from "./group-methods"
+import { messagingMethods } from "./messaging-methods"
+import { notificationMethods } from "./notification-methods"
 
 // Methods control the redux state in `src/state/store.ts`
 
@@ -11,6 +13,8 @@ export const methods = {
   api: api,
   auth: authMethods,
   group: groupMethods,
+  messaging: messagingMethods,
+  notification: notificationMethods,
   methodWrapper: async <T>(method: () => Promise<any>, afterMethod?: () => void): Promise<void> => {
     try {
       await method()

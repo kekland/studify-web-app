@@ -1,9 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import auth from './auth'
 import main from './main'
+import groups from './groups'
 import notifications from './notifications'
 
-const rootReducer = combineReducers({ auth, main, notifications })
+const rootReducer = combineReducers({ auth, main, groups, notifications })
 
 const store = configureStore({
   reducer: rootReducer,

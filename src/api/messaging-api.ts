@@ -1,7 +1,7 @@
 import request from 'superagent'
 import { IGroupMinimal, IGroup } from './data/group'
 import { api } from './api'
-import { IMessageSocket, ISendMessageFormData } from './data/message'
+import { IMessageSocket, ISendMessageFormData, ISentMessage } from './data/message'
 import { IUserMinimal, IUserOwner } from './data/user'
 import { uuid } from 'uuidv4'
 import { IPaginatedQuery } from './data/utils'
@@ -19,7 +19,7 @@ export const messagingApi = {
   attach: async (
     callbacks: {
       onNewGroupMessage: (message: IMessageSocket) => void,
-      onMessageSent: (message: IMessageSocket) => void,
+      onMessageSent: (message: ISentMessage) => void,
       onUserTypingStatusUpdated: (data: { user: IUserMinimal, status: boolean, groupId: string }) => void,
       onGroupChange: (data: IGroupMinimal) => void,
     }) => {
@@ -30,7 +30,7 @@ export const messagingApi = {
     })
 
     api.socket.on('onMessageSent', (data: { message: IMessageSocket, idempotencyId: string }) => {
-      let message = { ...data.message, idempotencyId: data.idempotencyId, loading: false }
+      let message = { ...data.message, idempotencyId: data.idempotencyId, loading: false } as ISentMessage
       callbacks.onMessageSent(message)
     })
 
@@ -42,20 +42,23 @@ export const messagingApi = {
   updateRooms: async () => {
     api.socket?.emit('updateRooms')
   },
-  sendMessage: async (user: IUserOwner, data: ISendMessageFormData) => {
+  sendMessage: async (groupId: string, data: ISendMessageFormData) => {
+    const user = api.getUser()
+    if (!user) throw Error('No user login')
+
     const idempotencyId = uuid()
 
-    api.socket?.emit('sendMessage', { ...data, idempotencyId })
+    api.socket?.emit('sendMessage', { ...data, groupId, idempotencyId })
     return {
       id: idempotencyId,
-      groupId: data.groupId,
+      groupId: groupId,
       body: data.body,
       attachments: data.attachments,
       created: new Date().toISOString(),
       idempotencyId,
       loading: true,
       user,
-    } as IMessageSocket
+    } as ISentMessage
   },
   updateTypingStatus: async (group: IGroup, status: boolean) => {
     api.socket?.emit('updateTypingStatus', { room: group.id, status })

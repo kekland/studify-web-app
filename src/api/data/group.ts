@@ -3,16 +3,20 @@ import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { IMessageSocket } from "./message";
 import { DateOrString } from "./utils";
 
-export interface IGroup extends IGroupMinimal {
-  created: DateOrString;
-  updated: DateOrString;
+export interface IGroupExtended {
+  data: IGroup;
 
   messages: IMessageSocket[];
-  typingUsers: IUserMinimal[];
+  typingUsers: {[key: string]: IUserMinimal};
   isLoaded: boolean;
   hasMore: boolean;
 
   unreadMessages: number;
+}
+
+export interface IGroup extends IGroupMinimal {
+  created: DateOrString;
+  updated: DateOrString;
 }
 
 export interface IGroupMinimal {
