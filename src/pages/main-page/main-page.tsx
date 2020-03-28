@@ -18,7 +18,6 @@ import { IGroup } from '../../api/data/group';
 import { MessagePanel } from '../../components/message-panel/message-panel';
 import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
 import { useScreenSize } from '../../hooks/hooks';
-import { Drawer } from '../../components/drawer/drawer';
 import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
 
 export const MainPage: React.FC = ((props) => {

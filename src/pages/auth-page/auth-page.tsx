@@ -12,8 +12,10 @@ import { store } from '../../state/store'
 import { useHistory } from 'react-router-dom'
 import { setGroups } from '../../state/main'
 import { Loader } from '../../components/loader/loader'
+import { useScreenSize } from '../../hooks/hooks'
 
 export const AuthPage: React.FC = (props) => {
+  const isMobile = useScreenSize(500)
   const alert = useAlert()
   const history = useHistory()
   const [isLoading, setLoading] = useState(false)
@@ -42,7 +44,7 @@ export const AuthPage: React.FC = (props) => {
   return (
     <div className='host'>
       <Loader isLoading={isLoading}>
-        <div className='surface' style={{ position: 'relative' }}>
+        <div className={`surface surface-${isMobile? 'mobile' : 'desktop'}`} style={{ position: 'relative' }}>
           <div style={{ position: 'absolute' }}>
             <AppLogoHorizontal />
           </div>
