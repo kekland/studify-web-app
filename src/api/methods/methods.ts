@@ -27,5 +27,14 @@ export const methods = {
       if (afterMethod)
         afterMethod()
     }
+  },
+  initialize: (alert: AlertManager) => {
+    methods.alert = alert
+  },
+  initializeSocket: () => {
+    api.messaging.attach(messagingMethods)
+  },
+  closeSocket: () => {
+    api.messaging.closeSocket()
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import './main-page.css';
 import { AppBarMain } from '../../components/main-page/app-bar-main';
 import { UserOwnerComponent } from '../../components/user-component/user-component';
@@ -11,28 +11,27 @@ import { Redirect } from 'react-router-dom';
 import { TabPanel } from '../../components/main-page/tab-panel';
 import { ModalCreateGroup } from '../../components/modal-create-group/modal-create-group';
 import { useModal } from '../../components/modal/modal-hook';
-import { useAlert } from 'react-alert';
 import { MessagePanel } from '../../components/message-panel/message-panel';
 import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
 import { useScreenSize, useSelectedGroup } from '../../hooks/hooks';
 import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
+import { methods } from '../../api/methods/methods';
 
 export const MainPage: React.FC = ((props) => {
   const isMobile = useScreenSize(768)
 
-  const alert = useAlert()
-  const [isLoading, setLoading] = useState(false)
-
   const auth = useSelector((state: RootState) => state.auth)
-  const groups = useSelector((state: RootState) => state.groups.groups)
   const selectedGroup = useSelectedGroup()
 
   const createGroupModal = useModal(false)
   const searchGroupModal = useModal(false)
 
-  if (!auth.user) return <Redirect to='/auth' />
+  useEffect(() => {
+    methods.initializeSocket()
+    return methods.closeSocket
+  }, [])
 
-  const user = auth.user
+  if (!auth.user) return <Redirect to='/auth' />
 
   let appBarStyle: React.CSSProperties = {}
   if (selectedGroup) {

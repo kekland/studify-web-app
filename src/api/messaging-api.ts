@@ -39,6 +39,10 @@ export const messagingApi = {
 
     api.socket.connect()
   },
+  closeSocket: async () => {
+    if (api.socket)
+      api.socket.disconnect()
+  },
   updateRooms: async () => {
     api.socket?.emit('updateRooms')
   },
