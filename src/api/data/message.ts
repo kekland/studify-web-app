@@ -1,5 +1,6 @@
 import { IUserMinimal } from "./user";
 import { IGroupMinimal } from "./group";
+import { DateOrString } from "./utils";
 
 export interface IMessage extends IMessageSocket {
   group: IGroupMinimal;
@@ -10,7 +11,7 @@ export interface IMessage extends IMessageSocket {
 export interface IMessageSocket extends IMessageMinimal {
   groupId: string;
   user: IUserMinimal;
-  created: Date | string;
+  created: DateOrString;
   idempotencyId?: string;
   loading?: boolean;
 }

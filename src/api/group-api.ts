@@ -2,18 +2,37 @@ import request from 'superagent'
 import { ICreateGroupFormData } from '../components/modal-create-group/modal-create-group'
 import { api } from './api'
 import { IGroup, IGroupMinimal } from './data/group'
+import { IMessageSocket } from './data/message'
+import { DateOrString, IPaginatedQuery } from './data/utils'
+import { IUserMinimal } from './data/user'
+
+interface IGroupLoadDataResponse {
+  group: IGroup, lastMessages: IMessageSocket[], unreadMessages: number, mutedUntil: DateOrString
+}
 
 export const groupApi = {
+  initializeGroup: (group: IGroup,
+    data?: {
+      lastMessages?: IMessageSocket[],
+      typingUsers?: IUserMinimal[],
+      isLoaded?: boolean,
+      hasMore?: boolean,
+      unreadMessages?: number,
+    }): IGroup => {
+    return {
+      ...group,
+      messages: data?.lastMessages ?? [],
+      typingUsers: data?.typingUsers ?? [],
+      isLoaded: data?.isLoaded ?? true,
+      hasMore: data?.hasMore ?? api.hasMore(data?.lastMessages),
+      unreadMessages: data?.unreadMessages ?? 0,
+    }
+  },
   create: async (data: ICreateGroupFormData) => {
     return api.requestWrapper(async () => {
       const response = await api.setHeader(request.post(`${api.url}/group/create`).send(data))
 
-      const result = response.body as IGroup
-      result.messages = []
-      result.typingUsers = []
-      result.isLoaded = true
-      result.hasMore = false
-
+      const result = groupApi.initializeGroup(response.body as IGroup, { hasMore: false, isLoaded: true })
       await api.messaging.updateRooms()
 
       return result
@@ -34,14 +53,9 @@ export const groupApi = {
       await api.messaging.updateRooms()
 
       const result = response.body.group as IGroup
-      const messages = await api.messaging.loadMessages(result, 0)
+      const initData = await groupApi.loadData(result)
 
-      result.messages = messages.messages
-      result.isLoaded = true
-      result.hasMore = messages.messages.length === api.messageLimit
-      result.typingUsers = []
-
-      return result
+      return groupApi.initializeGroup(result, initData)
     })
   },
   leave: async (data: IGroupMinimal) => {
@@ -51,6 +65,28 @@ export const groupApi = {
       await api.messaging.updateRooms()
 
       const result = response.body.group as IGroup
+      return result
+    })
+  },
+  loadAllData: async () => {
+    return api.requestWrapper(async () => {
+      const response = await api.setHeader(request.get(`${api.url}/group/loadAllData`))
+      const result = response.body.data as IGroupLoadDataResponse[]
+      return result
+    })
+  },
+  loadData: async (group: IGroupMinimal) => {
+    return api.requestWrapper(async () => {
+      const response = await api.setHeader(request.get(`${api.url}/group/${group.id}/loadData`))
+      const result = response.body.data as IGroupLoadDataResponse
+      return result
+    })
+  },
+  getUsers: async (group: IGroupMinimal, query: IPaginatedQuery) => {
+    return api.requestWrapper(async () => {
+      const response = await api.setHeader(request.get(`${api.url}/group/${group.id}/users`).query(api.normalizeQuery(query)))
+
+      const result = response.body.users as IUserMinimal[]
       return result
     })
   },

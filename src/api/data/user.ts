@@ -1,4 +1,5 @@
 import { IGroup } from "./group";
+import { DateOrString } from "./utils";
 
 export interface IUserOwner extends IUser {
   groups: IGroup[]
@@ -6,8 +7,8 @@ export interface IUserOwner extends IUser {
 }
 
 export interface IUser extends IUserMinimal {
-  created: Date;
-  updated: Date;
+  created: DateOrString;
+  updated: DateOrString;
 }
 
 export interface IUserMinimal {

@@ -1,15 +1,18 @@
 import { IUserMinimal } from "./user";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { IMessageSocket } from "./message";
+import { DateOrString } from "./utils";
 
 export interface IGroup extends IGroupMinimal {
-  created: Date;
-  updated: Date;
+  created: DateOrString;
+  updated: DateOrString;
 
   messages: IMessageSocket[];
   typingUsers: IUserMinimal[];
   isLoaded: boolean;
   hasMore: boolean;
+
+  unreadMessages: number;
 }
 
 export interface IGroupMinimal {
@@ -44,5 +47,5 @@ export const GroupUtils = {
     if (userCount === 1) suffix = 'member'
 
     return `${userCount} ${suffix}`
-  }
+  },
 }
