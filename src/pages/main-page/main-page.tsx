@@ -13,7 +13,7 @@ import { ModalCreateGroup } from '../../components/modal-create-group/modal-crea
 import { useModal } from '../../components/modal/modal-hook';
 import { api } from '../../api/api';
 import { useAlert } from 'react-alert';
-import { setGroupMessages, addGroupMessage, replaceGroupMessageByIdempotency } from '../../state/main';
+import { setGroupMessages, addGroupMessage, replaceGroupMessageByIdempotency, onUserStartedTyping, onUserStoppedTyping } from '../../state/main';
 import { IGroup } from '../../api/data/group';
 import { MessagePanel } from '../../components/message-panel/message-panel';
 import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
@@ -58,6 +58,14 @@ export const MainPage: React.FC = ((props) => {
         onMessageSent: (message) => {
           store.dispatch(replaceGroupMessageByIdempotency(message))
         },
+        onUserTypingStatusUpdated: ({user, status, groupId}) => {
+          if(status) {
+            store.dispatch(onUserStartedTyping({user, groupId}))
+          }
+          else {
+            store.dispatch(onUserStoppedTyping({user, groupId}))
+          }
+        }
       })
     })
   }

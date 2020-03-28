@@ -7,7 +7,7 @@ export interface IGroup extends IGroupMinimal {
   updated: Date;
 
   messages: IMessageSocket[];
-  typingUsers: IUserMinimal;
+  typingUsers: IUserMinimal[];
   isLoaded: boolean;
   hasMore: boolean;
 }

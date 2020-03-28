@@ -1,6 +1,6 @@
 import { ISignInFormData } from "../components/sign-in-form/sign-in-form";
 import request from 'superagent'
-import { IUserOwner } from "./data/user";
+import { IUserOwner, IUserMinimal } from "./data/user";
 import { ISignUpFormData } from "../components/sign-up-form/sign-up-form";
 import { AlertManager } from "react-alert";
 import { IGroup, IGroupMinimal } from "./data/group";
@@ -74,6 +74,7 @@ export const api = {
 
         const result = response.body as IGroup
         result.messages = []
+        result.typingUsers = []
         result.isLoaded = true
         result.hasMore = false
 
@@ -100,6 +101,7 @@ export const api = {
         result.messages = messages.messages
         result.isLoaded = true
         result.hasMore = messages.messages.length === api.messageLimit
+        result.typingUsers = []
 
         return result
       })
@@ -130,7 +132,8 @@ export const api = {
     attach: async (
       callbacks: {
         onNewGroupMessage: (message: IMessageSocket) => void,
-        onMessageSent: (message: IMessageSocket) => void
+        onMessageSent: (message: IMessageSocket) => void,
+        onUserTypingStatusUpdated: (data: { user: IUserMinimal, status: boolean, groupId: string }) => void,
       }) => {
       api.socket = io(api.socketUrl, { query: { token: api.token } })
 
@@ -142,6 +145,8 @@ export const api = {
         let message = { ...data.message, idempotencyId: data.idempotencyId, loading: false }
         callbacks.onMessageSent(message)
       })
+
+      api.socket.on('onUserTypingStatusUpdated', callbacks.onUserTypingStatusUpdated)
 
       api.socket.connect()
     },
@@ -162,6 +167,9 @@ export const api = {
         loading: true,
         user,
       } as IMessageSocket
-    }
+    },
+    updateTypingStatus: async (group: IGroup, status: boolean) => {
+      api.socket?.emit('updateTypingStatus', { room: group.id, status })
+    },
   },
 }

@@ -17,6 +17,7 @@ import { Column } from '../flex/flex'
 import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
 import Infinite from 'react-infinite'
+import { TypingStatusPanel } from './typing-status-panel'
 
 export const MessagePanel: React.FC = () => {
   const alert = useAlert()
@@ -55,7 +56,7 @@ export const MessagePanel: React.FC = () => {
     )
   }
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       <AutoSizer>
         {({ width, height }) => {
           if (height === 0) return <div />
@@ -84,6 +85,14 @@ export const MessagePanel: React.FC = () => {
           )
         }}
       </AutoSizer>
+      <div style={{
+        position: 'absolute',
+        left: 0,
+        right: '16px',
+        top: 0,
+      }}>
+        <TypingStatusPanel typingUsers={selectedGroup.typingUsers} />
+      </div>
     </div >
   )
 }
