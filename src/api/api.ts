@@ -10,8 +10,8 @@ import io from 'socket.io-client'
 import { uuid } from 'uuidv4'
 
 export const api = {
-  url: 'http://localhost:8080',
-  socketUrl: 'http://localhost:5005',
+  url: 'https://studify-server.herokuapp.com',
+  socketUrl: 'https://studify-server.herokuapp.com',
   token: '',
   messageLimit: 20,
   socket: undefined as undefined | SocketIOClient.Socket,
@@ -77,6 +77,8 @@ export const api = {
         result.typingUsers = []
         result.isLoaded = true
         result.hasMore = false
+
+        await api.messaging.updateRooms()
 
         return result
       })

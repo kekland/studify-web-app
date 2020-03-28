@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from 'react'
+import React, { useState, createRef } from 'react'
 import { Row, Flexible } from '../flex/flex'
 import { IconButton } from '../button/button'
 import { faPaperclip, faShare } from '@fortawesome/free-solid-svg-icons'
