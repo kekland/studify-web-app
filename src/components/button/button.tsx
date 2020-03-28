@@ -62,6 +62,7 @@ export const RaisedButton: React.FC<IButtonProps & IRaisedButtonProps> = (props)
       borderRadius: '12px',
       backgroundColor: `var(--color-${style})`
     }} disabled={props.disabled}
+      onClick={props.onTap}
       type={props.type ?? 'button'}>
       <Center>
         <StyledText surface='dark' type='button' color={textColor}>

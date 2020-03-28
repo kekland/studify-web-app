@@ -12,6 +12,7 @@ import { CustomScrollbarsVirtualList } from '../smart-list/smart-list'
 
 export interface ITabPanelProps {
   onCreateNewGroup: () => void;
+  onSearchGroups: () => void;
 }
 
 export const TabPanel: React.FC<ITabPanelProps> = (props) => {
@@ -54,9 +55,7 @@ export const TabPanel: React.FC<ITabPanelProps> = (props) => {
         padding='12px'
         iconWidth='56px'
         label='Search for groups'
-        onTap={() => {
-
-        }} />
+        onTap={props.onSearchGroups} />
     </Column>
   )
 }

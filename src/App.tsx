@@ -19,7 +19,7 @@ const App = () => {
       timeout={3500}
       transition='scale'
       containerStyle={{ pointerEvents: 'auto', zIndex: 0 }}>
-      <div id='app' className='root root-dark'>
+      <div id='app' className='root root-light'>
         <Router>
           <AnimatedSwitch
             atEnter={{ opacity: 0 }}

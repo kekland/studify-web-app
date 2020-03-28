@@ -16,13 +16,17 @@ import { useAlert } from 'react-alert';
 import { setGroupMessages, addGroupMessage, replaceGroupMessageByIdempotency } from '../../state/main';
 import { IGroup } from '../../api/data/group';
 import { MessagePanel } from '../../components/message-panel/message-panel';
+import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
 
 export const MainPage: React.FC = ((props) => {
   const alert = useAlert()
   const [isLoading, setLoading] = useState(false)
+
   const auth = useSelector((state: RootState) => state.auth)
-  const createGroupModal = useModal(false)
   const { groups, selectedGroup } = useSelector((state: RootState) => state.main)
+
+  const createGroupModal = useModal(false)
+  const searchGroupModal = useModal(false)
 
   if (!auth.user) return <Redirect to='/auth' />
 
@@ -81,6 +85,9 @@ export const MainPage: React.FC = ((props) => {
       <ModalCreateGroup
         isOpen={createGroupModal.isOpen}
         onClose={createGroupModal.close} />
+      <ModalSearchGroup
+        isOpen={true}
+        onClose={searchGroupModal.close} />
       <div className='app-bar app-bar-main' style={appBarStyle}>
         <AppBarMain />
       </div>
@@ -90,6 +97,7 @@ export const MainPage: React.FC = ((props) => {
       <div className='tab-panel'>
         <TabPanel
           onCreateNewGroup={createGroupModal.open}
+          onSearchGroups={searchGroupModal.open}
         />
       </div>
       <div className='user-panel'>

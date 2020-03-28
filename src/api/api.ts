@@ -79,7 +79,37 @@ export const api = {
 
         return result
       })
-    }
+    },
+    getAll: async () => {
+      return api.requestWrapper(async () => {
+        const response = await api.setHeader(request.get(`${api.url}/group/all`))
+
+        const result = response.body.groups as IGroupMinimal[]
+        return result
+      })
+    },
+    join: async (data: IGroupMinimal) => {
+      return api.requestWrapper(async () => {
+        const response = await api.setHeader(request.post(`${api.url}/group/${data.id}/join`))
+
+        const result = response.body.group as IGroup
+        const messages = await api.messaging.loadMessages(result, 0)
+
+        result.messages = messages.messages
+        result.isLoaded = true
+        result.hasMore = messages.messages.length === api.messageLimit
+
+        return result
+      })
+    },
+    leave: async (data: IGroupMinimal) => {
+      return api.requestWrapper(async () => {
+        const response = await api.setHeader(request.post(`${api.url}/group/${data.id}/leave`))
+
+        const result = response.body.group as IGroup
+        return result
+      })
+    },
   },
   messaging: {
     loadMessages: async (group: IGroupMinimal, skip: number) => {
