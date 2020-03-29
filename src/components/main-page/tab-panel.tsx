@@ -7,7 +7,6 @@ import { ListItemButton } from '../list-item-button/list-item-button'
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { selectGroup } from '../../state/main'
 import { useSelectedGroup } from '../../hooks/hooks'
-import Scrollbars from 'react-custom-scrollbars'
 import { List } from '../list/list'
 
 export interface ITabPanelProps {

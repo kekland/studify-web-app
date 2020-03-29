@@ -47,7 +47,6 @@ export const InfiniteLoadingList: React.FC<IInfiniteLoadingListProps> = (props) 
   }, [props.scrollTo])
 
   useEffect(() => {
-    console.log('prev', previousScroll)
     if (ref.current)
       ref.current.scrollTop(ref.current.getScrollHeight() - previousScroll.height + previousScroll.top)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,7 +54,6 @@ export const InfiniteLoadingList: React.FC<IInfiniteLoadingListProps> = (props) 
 
   const onScroll = (e: any) => {
     const offsetFromBottom = e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight
-    console.log(e.target.scrollTop)
 
     setPreviousScroll({ height: e.target.scrollHeight, top: e.target.scrollTop })
     if (offsetFromBottom === 0 && props.onBottomReached) props.onBottomReached()

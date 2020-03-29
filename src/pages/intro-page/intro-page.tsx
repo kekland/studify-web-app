@@ -23,7 +23,6 @@ export const IntroPage: React.FC = () => {
     }
     const token = methods.api.auth.getToken()
 
-    console.log(token)
     if (token) trySignIn()
     else history.push('/auth')
   // eslint-disable-next-line react-hooks/exhaustive-deps

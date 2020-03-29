@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { IMessageSocket, ISentMessage } from '../../api/data/message'
 import { Row, Column } from '../flex/flex'
 import { UserAvatar } from '../user-avatar/user-avatar'

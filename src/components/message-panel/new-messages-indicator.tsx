@@ -1,6 +1,5 @@
 import React from 'react'
 import { Center } from '../center/center'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { StyledText } from '../text/text'
 import { IconButton } from '../button/button'

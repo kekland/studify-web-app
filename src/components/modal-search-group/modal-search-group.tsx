@@ -24,7 +24,6 @@ export const ModalSearchGroup: React.FC<IModalSearchGroupProps> = (props) => {
       setLoading(true)
       const groups = await api.group.getAll()
       setGroups(groups)
-      console.log(groups)
       setLoading(false)
     })
   }, [alert])
