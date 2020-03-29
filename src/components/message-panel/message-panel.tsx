@@ -42,7 +42,7 @@ export const MessagePanel: React.FC = () => {
   }
 
   const loadMessages = async () => {
-    if (selectedGroup.hasMore) {
+    if (selectedGroup.hasMore && !loading) {
       setLoading(true)
       await methods.messaging.loadMoreMessages(selectedGroup)
       setLoading(false)
@@ -50,7 +50,7 @@ export const MessagePanel: React.FC = () => {
   }
 
   const handleOnScrollBottom = async () => {
-    if (selectedGroupId)
+    if (selectedGroupId && selectedGroup.unreadMessages > 0)
       methods.notification.setGroupAsRead(selectedGroupId)
   }
 
@@ -76,10 +76,11 @@ export const MessagePanel: React.FC = () => {
       <div style={{ width: '100%', height: '100%' }}>
         <InfiniteLoadingList
           isLoading={false}
-          loaderBuilder={() => <Loader isLoading={true} height='88px' width='100%' />}
+          loaderBuilder={() => <Loader key='loader' isLoading={true} height='88px' width='100%' />}
           onTopReached={loadMessages}
           onBottomReached={handleOnScrollBottom}
           fromBottom={true}
+          hasMore={selectedGroup.hasMore}
         >
           {
             messages.map(message => <Message

@@ -12,8 +12,8 @@ export const messagingMethods = {
       const result = await api.messaging.loadMessages(group.data, { skip: group.messages.length })
       store.dispatch(pushGroupMessages({ id: result.id, data: result.messages }))
 
-      if(result.messages.length === 0)
-      store.dispatch(markAsNoMore({id: result.id, data: undefined}))
+      if (result.messages.length < api.paginationLimit)
+        store.dispatch(markAsNoMore({ id: result.id, data: undefined }))
     })
   },
   sendMessage: (group: IGroupExtended, data: ISendMessageFormData) => {
