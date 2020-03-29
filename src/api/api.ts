@@ -55,8 +55,8 @@ export const api = {
     return (array?.length ?? 0) === api.paginationLimit
   },
 
-  setHeader: (req: request.SuperAgentRequest) => {
-    req.set('Authorization', `Bearer ${api.getToken()}`)
+  setHeader: (req: request.SuperAgentRequest, token?: string) => {
+    req.set('Authorization', `Bearer ${token ?? api.getToken()}`)
     return req
   },
 

@@ -36,7 +36,8 @@ export const authApi = {
   },
   signInWithToken: async (token: string) => {
     return api.requestWrapper(async () => {
-      const response = await api.setHeader(request.post(`${api.url}/auth/signInWithToken`))
+      console.log(token)
+      const response = await api.setHeader(request.post(`${api.url}/auth/signInWithToken`), token)
 
       const result = {
         user: response.body.user as IUserOwner,

@@ -12,6 +12,9 @@ import { Loader } from '../../components/loader/loader'
 import { useScreenSize } from '../../hooks/hooks'
 import { useSelector } from 'react-redux'
 import { methods } from '../../api/methods/methods'
+import { Flexible, Column } from '../../components/flex/flex'
+import Scrollbars from 'react-custom-scrollbars'
+import { SizedBox } from '../../components/sized-box/sized-box'
 
 export const AuthPage: React.FC = (props) => {
   const alert = useAlert()
@@ -42,27 +45,26 @@ export const AuthPage: React.FC = (props) => {
   return (
     <div className='host'>
       <Loader isLoading={isLoading}>
-        <div className={`surface surface-${isMobile ? 'mobile' : 'desktop'}`} style={{ position: 'relative' }}>
-          <div style={{ position: 'absolute' }}>
+        <div className={`surface surface-${isMobile ? 'mobile' : 'desktop'}`}>
+          <Column mainAxisSize='max'>
             <AppLogoHorizontal />
-          </div>
-          <Center>
-            {
-              isSignInShown ?
-                <SignInForm onSubmit={signIn} /> :
-                <SignUpForm onSubmit={signUp}
-                  onBackTap={() => setIsSignInShown(true)} />
+            <SizedBox flexSize='24px' />
+            <Flexible />
+            {isSignInShown ?
+              <SignInForm onSubmit={signIn} /> :
+              <SignUpForm onSubmit={signUp}
+                onBackTap={() => setIsSignInShown(true)} />
             }
-          </Center>
-          <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }}>
+            <Flexible />
+            <SizedBox flexSize='24px' />
             <FlatButton width='100%' height='48px'
               label={isSignInShown ? 'Create an account' : 'Already have an account?'}
               onTap={() => setIsSignInShown(!isSignInShown)} />
-          </div>
+          </Column>
         </div>
         <div className='decoration'>
         </div>
       </Loader>
-    </div>
+    </div >
   )
 }

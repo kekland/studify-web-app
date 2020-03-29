@@ -16,8 +16,10 @@ import { ModalSearchGroup } from '../../components/modal-search-group/modal-sear
 import { useScreenSize, useSelectedGroup } from '../../hooks/hooks';
 import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
 import { methods } from '../../api/methods/methods';
+import { useAlert } from 'react-alert';
 
 export const MainPage: React.FC = ((props) => {
+  const alert = useAlert()
   const isMobile = useScreenSize(768)
 
   const auth = useSelector((state: RootState) => state.auth)
@@ -38,6 +40,10 @@ export const MainPage: React.FC = ((props) => {
       return methods.closeSocket
     }
   }, [auth])
+  
+  useEffect(() => {
+    methods.initialize(alert)
+  }, [alert])
 
   if (!auth.user) return <Redirect to='/auth' />
 
