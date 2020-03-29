@@ -26,6 +26,8 @@ export const messagingApi = {
     }) => {
     api.socket = io(api.socketUrl, { query: { token: api.getToken() } })
 
+    api.socket.on('connect', () => console.log('connected'))
+
     api.socket.on('onNewGroupMessage', (data: { message: IMessageSocket }) => {
       callbacks.onNewGroupMessage(data.message)
     })
@@ -43,6 +45,8 @@ export const messagingApi = {
   closeSocket: async () => {
     if (api.socket)
       api.socket.disconnect()
+    console.log('socket disconnect')
+    api.socket = undefined
   },
   updateRooms: async () => {
     api.socket?.emit('updateRooms')

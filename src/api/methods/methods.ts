@@ -32,6 +32,7 @@ export const methods = {
     methods.alert = alert
   },
   initializeSocket: () => {
+    console.log('socket init')
     api.messaging.attach(messagingMethods)
   },
   closeSocket: () => {

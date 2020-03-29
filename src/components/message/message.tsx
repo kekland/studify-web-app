@@ -48,7 +48,7 @@ export const Message: React.FC<IMessageProps> = ({ message, padding, fromSelf, m
           <Row crossAxisAlignment='flex-end'>
             <StyledText fontWeight={500}>{message.user.username}</StyledText>
             <SizedBox width='6px' />
-            <StyledText type='caption'>Today at 12:03AM</StyledText>
+            <StyledText type='caption'>{prettifyDate(message.created)}</StyledText>
           </Row>
           <SizedBox height='6px' />
           <SizedBox padding='12px' style={{

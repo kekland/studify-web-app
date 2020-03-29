@@ -22,7 +22,7 @@ export const MainPage: React.FC = ((props) => {
   const alert = useAlert()
   const isMobile = useScreenSize(768)
 
-  const auth = useSelector((state: RootState) => state.auth)
+  const user = useSelector((state: RootState) => state.auth.user)
   const selectedGroup = useSelectedGroup()
 
   const createGroupModal = useModal(false)
@@ -34,18 +34,19 @@ export const MainPage: React.FC = ((props) => {
       await methods.group.loadDataOnInitialization()
     }
 
-    if (auth.user) {
+    if (user && !methods.api.socket) {
       methods.initializeSocket()
       loadGroups()
-      return methods.closeSocket
+      return () => methods.closeSocket()
     }
-  }, [auth])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   useEffect(() => {
     methods.initialize(alert)
   }, [alert])
 
-  if (!auth.user) return <Redirect to='/' />
+  if (!user) return <Redirect to='/' />
 
   let appBarStyle: React.CSSProperties = {}
   if (selectedGroup) {
@@ -58,7 +59,7 @@ export const MainPage: React.FC = ((props) => {
         onSearchGroup={searchGroupModal.open}
         onUserTap={() => { }}
         onUserTapSettings={() => { }}
-        user={auth.user} />
+        user={user} />
       <ModalCreateGroup
         isOpen={createGroupModal.isOpen}
         onClose={createGroupModal.close} />
@@ -89,7 +90,7 @@ export const MainPage: React.FC = ((props) => {
             <UserOwnerComponent
               onTap={() => { }}
               onTapSettings={() => { }}
-              user={auth.user}
+              user={user}
               padding='12px' />
         }
       </div>

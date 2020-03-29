@@ -17,6 +17,9 @@ import Infinite from 'react-infinite'
 import { TypingStatusPanel } from './typing-status-panel'
 import { useSelectedGroup } from '../../hooks/hooks'
 import { methods } from '../../api/methods/methods'
+import Measure from 'react-measure'
+import { InfiniteScrollAutoMeasure } from '../infinite-scroll-auto-measure/infinite-scroll-auto-measure'
+import { IMessageSocket } from '../../api/data/message'
 
 export const MessagePanel: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user)
@@ -50,6 +53,11 @@ export const MessagePanel: React.FC = () => {
     setLoading(false)
   }
 
+  const handleOnScrollBottom = async () => {
+    if (selectedGroupId)
+      methods.notification.setGroupAsRead(selectedGroupId)
+  }
+
   const messages = selectedGroup.messages
 
   let itemCount = messages.length
@@ -74,7 +82,7 @@ export const MessagePanel: React.FC = () => {
           if (height === 0) return <div />
           return (
             <div style={{ width, height }}>
-              <Infinite
+              <InfiniteScrollAutoMeasure<IMessageSocket>
                 className='infinite-scroll'
                 key={selectedGroup.data.id}
                 displayBottomUpwards
@@ -83,16 +91,14 @@ export const MessagePanel: React.FC = () => {
                 loadingSpinnerDelegate={<Loader isLoading={true} height='88px' />}
                 isInfiniteLoading={loading}
                 infiniteLoadBeginEdgeOffset={selectedGroup.hasMore ? 250 : undefined}
-                onInfiniteLoad={loadMessages}>
-                {
-                  messages.map((message) => <Message
-                    key={message.id}
-                    message={message}
-                    padding='12px'
-                    fromSelf={message.user.id === user?.id}
-                  />)
-                }
-              </Infinite>
+                onInfiniteLoad={loadMessages}
+                items={messages}
+                elementBuilder={(message) => (<Message
+                  key={message.id}
+                  message={message}
+                  padding='12px'
+                  fromSelf={message.user.id === user?.id}
+                />)} />
             </div>
           )
         }}
