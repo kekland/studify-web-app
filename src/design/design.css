@@ -25,6 +25,31 @@ input, textarea {
   transition: all 0.15s ease-in-out;
 }
 
+select {
+  background-color: var(--color-control);
+  border-radius: 12px;
+  appearance: none;
+  border: 0;
+
+  font-size: 16px;
+  color: var(--color-text-primary);
+
+  transition: all 0.15s ease-in-out;
+  padding: 12px;
+
+  width: 100%;
+}
+
+select:focus {
+  outline: 0;
+}
+
+select > option {
+  transition: background-color 150ms ease-in-out;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
 button {
   transition: all 0.15s ease-in-out;
   border: 0;  

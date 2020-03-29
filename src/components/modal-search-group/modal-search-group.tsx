@@ -30,9 +30,9 @@ export const ModalSearchGroup: React.FC<IModalProps> = (props) => {
       <SizedBox height='24px' />
       <InputField placeholder='Search' width='100%' icon={faSearch} />
       <SizedBox height='24px' />
-      <Wrap style={{justifyContent: 'space-between', minWidth: '225px'}}>
+      <Wrap style={{ justifyContent: 'space-between', minWidth: '225px' }}>
         {
-          groups.map((group) => <div style={{ marginBottom: '16px' }}>
+          groups.map((group) => <div key={group.id} style={{ marginBottom: '16px' }}>
             <GroupVertical group={group} padding='12px' height='220px' />
           </div>)
         }

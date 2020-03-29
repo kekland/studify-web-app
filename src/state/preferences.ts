@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { methods } from "../api/methods/methods";
 
 const preferencesSlice = createSlice({
   name: 'preferences',
@@ -9,9 +10,13 @@ const preferencesSlice = createSlice({
   reducers: {
     setTheme(state, action: PayloadAction<string>) {
       state.theme = action.payload
+      
+      methods.savePrefs(state)
     },
     setNotifications(state, action: PayloadAction<boolean>) {
       state.notifications = action.payload
+
+      methods.savePrefs(state)
     }
   }
 })

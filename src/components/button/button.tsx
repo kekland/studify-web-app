@@ -32,6 +32,7 @@ export const IconButton: React.FC<IButtonProps & IIconButtonProps> = (props) => 
       width: props.size,
       height: props.size,
       borderRadius: '999px',
+      backgroundColor: 'transparent',
     }} disabled={props.disabled}
       onClick={props.onTap}
       type={props.type ?? 'button'}>

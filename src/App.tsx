@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './design/theme.css'
 import './design/index.css'
 import './design/design.css'
@@ -12,8 +12,12 @@ import { AnimatedSwitch } from 'react-router-transition'
 import { hot } from 'react-hot-loader/root'
 import { useSelector } from 'react-redux';
 import { RootState } from './state/store';
+import { methods } from './api/methods/methods';
 
 const App = () => {
+  useEffect(() => {
+    methods.loadPrefs()
+  }, [])
   const theme = useSelector((state: RootState) => state.preferences.theme)
 
   return (
