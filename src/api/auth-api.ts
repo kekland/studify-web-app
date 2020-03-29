@@ -45,6 +45,8 @@ export const authApi = {
 
       authApi.saveToken(token)
       return result
+    }, () => {
+      api.auth.clearToken()
     })
   },
   clearToken: () => {

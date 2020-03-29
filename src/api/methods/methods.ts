@@ -18,13 +18,14 @@ export const methods = {
   group: groupMethods,
   messaging: messagingMethods,
   notification: notificationMethods,
-  methodWrapper: async <T>(method: () => Promise<any>, afterMethod?: () => void): Promise<void> => {
+  methodWrapper: async <T>(method: () => Promise<any>, afterMethod?: () => void, onError?: () => void): Promise<void> => {
     try {
       await method()
       if (afterMethod)
         afterMethod()
     }
     catch (e) {
+      if(onError) onError()
       if (methods.alert)
         methods.alert.error(e.message ?? JSON.stringify(e))
     }

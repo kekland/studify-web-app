@@ -18,6 +18,7 @@ import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
 import { ModalSettings } from '../../components/modal-settings/modal-settings'
 import { methods } from '../../api/methods/methods';
 import { useAlert } from 'react-alert';
+import { DrawerGroupInfo } from '../../components/drawer-group-info/drawer-group-info';
 
 export const MainPage: React.FC = ((props) => {
   const alert = useAlert()
@@ -29,6 +30,7 @@ export const MainPage: React.FC = ((props) => {
   const createGroupModal = useModal(false)
   const searchGroupModal = useModal(false)
   const settingsModal = useModal(false)
+  const groupInfoDrawer = useModal(false)
 
   useEffect(() => {
     const loadGroups = async () => {
@@ -65,6 +67,7 @@ export const MainPage: React.FC = ((props) => {
       <ModalCreateGroup {...createGroupModal} />
       <ModalSearchGroup {...searchGroupModal} />
       <ModalSettings {...settingsModal} />
+      <DrawerGroupInfo {...groupInfoDrawer} width='320px' left={false} />
       <div className='app-bar app-bar-main hidden-on-mobile' style={appBarStyle}>
         {
           isMobile ? <div /> :
@@ -72,7 +75,9 @@ export const MainPage: React.FC = ((props) => {
         }
       </div>
       <div className='app-bar app-bar-group' style={appBarStyle}>
-        <GroupAppBar />
+        <GroupAppBar
+          onTapInfo={groupInfoDrawer.open}
+          onTapFiles={() => { }} />
       </div>
       <div className='tab-panel hidden-on-mobile'>
         {

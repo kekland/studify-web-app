@@ -7,6 +7,7 @@ import { notificationsApi } from "./notifications-api";
 import { store } from "../state/store";
 import { IPaginatedQuery, CanBeNull } from "./data/utils";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const urlLocal = {
   url: 'http://localhost:8080/api',
   socketUrl: 'http://localhost:8080'
@@ -36,11 +37,12 @@ export const api = {
     }
   },
 
-  requestWrapper: async <T>(method: () => Promise<T>): Promise<T> => {
+  requestWrapper: async <T>(method: () => Promise<T>, onError?: () => void): Promise<T> => {
     try {
       return await method()
     }
     catch (e) {
+      if(onError) onError()
       if (e?.response?.body) throw e.response.body
       throw e
     }

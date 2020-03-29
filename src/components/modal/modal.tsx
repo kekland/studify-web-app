@@ -78,7 +78,7 @@ export const Modal: React.FC<IModalProps & IModalLoadingProps> = (props) => {
               onTap={props.onClose} />
           </div>
           <div style={{ padding: '36px' }}>
-            {props.children}
+            {props.isOpen ? props.children : <div />}
           </div>
         </Loader>
       </Surface>

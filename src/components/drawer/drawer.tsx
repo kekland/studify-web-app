@@ -3,10 +3,12 @@ import React from 'react'
 export interface IDrawerProps {
   isOpen: boolean;
   width: string;
+  left?: boolean;
   onClose: () => void;
 }
 
-export const Drawer: React.FC<IDrawerProps> = ({ isOpen, width, children, onClose }) => {
+export const Drawer: React.FC<IDrawerProps> = ({ isOpen, width, children, onClose, left }) => {
+  const onLeft = left ?? true
   return (
     <div
       key='drawer'
@@ -34,13 +36,13 @@ export const Drawer: React.FC<IDrawerProps> = ({ isOpen, width, children, onClos
       }} />
       <div style={{
         position: 'absolute',
-        left: 0,
+        left: onLeft ? 0 : `calc(100vw - ${width})`,
         top: 0,
         bottom: 0,
-        right: `calc(100vw - ${width})`,
+        right: onLeft ? `calc(100vw - ${width})` : 0,
         backgroundColor: 'var(--color-surface)',
         zIndex: 1000,
-        transform: isOpen ? 'translate(0, 0)' : `translate(-${width}, 0)`,
+        transform: isOpen ? 'translate(0, 0)' : `translate(${onLeft ? '-' : ''}${width}, 0)`,
         transition: 'transform 250ms ease-in-out',
       }}>
         {children}

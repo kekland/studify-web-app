@@ -11,7 +11,12 @@ import { useScreenSize, useSelectedGroup } from '../../hooks/hooks'
 import { AppLogoHorizontal } from '../app-logo/app-logo'
 import { setDrawer } from '../../state/main'
 
-export const GroupAppBar: React.FC = () => {
+export interface IGroupAppBarProps {
+  onTapInfo: () => void;
+  onTapFiles: () => void;
+}
+
+export const GroupAppBar: React.FC<IGroupAppBarProps> = (props) => {
   const isMobile = useScreenSize(768)
   const selectedGroup = useSelectedGroup()
 
@@ -47,6 +52,7 @@ export const GroupAppBar: React.FC = () => {
           icon={faFolderOpen}
           surface='dark'
           iconSize='lg'
+          disabled={true}
           onTap={() => { }} />
         <SizedBox width='12px' />
         <IconButton
@@ -54,7 +60,7 @@ export const GroupAppBar: React.FC = () => {
           icon={faInfoCircle}
           surface='dark'
           iconSize='lg'
-          onTap={() => { }} />
+          onTap={props.onTapInfo} />
         <SizedBox width='12px' />
       </Row>
     )

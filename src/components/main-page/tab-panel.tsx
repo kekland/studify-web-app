@@ -8,6 +8,7 @@ import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { selectGroup } from '../../state/main'
 import { useSelectedGroup } from '../../hooks/hooks'
 import { List } from '../list/list'
+import { StyledText } from '../text/text'
 
 export interface ITabPanelProps {
   onCreateNewGroup: () => void;
@@ -22,6 +23,14 @@ export const TabPanel: React.FC<ITabPanelProps> = (props) => {
 
   return (
     <Column mainAxisSize='max' crossAxisSize='max'>
+      <StyledText type='caption' fontWeight={500} style={{ margin: '12px 0px 0px 12px' }}>FRIENDS</StyledText>
+      <ListItemButton
+        icon={faSearch}
+        padding='12px'
+        iconWidth='56px'
+        label='Search (coming soon)'
+        onTap={() => { }} />
+      <StyledText type='caption' fontWeight={500} style={{ margin: '12px 0px 0px 12px' }}>GROUPS</StyledText>
       <Flexible style={{ width: '100%' }}>
         <List>
           {
