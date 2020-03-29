@@ -10,8 +10,5 @@ const store = configureStore({
   reducer: rootReducer,
 })
 
-
-store.subscribe(() => console.log(store.getState()))
-
 export type RootState = ReturnType<typeof rootReducer>
 export { store }

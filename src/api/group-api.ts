@@ -25,7 +25,7 @@ export const groupApi = {
       data: group,
       messages: data?.lastMessages ?? [],
       typingUsers: {},
-      isLoaded: data?.isLoaded ?? true,
+      isLoaded: data?.isLoaded ?? false,
       hasMore: data?.hasMore ?? api.hasMore(data?.lastMessages),
       unreadMessages: data?.unreadMessages ?? 0,
     } as IGroupExtended

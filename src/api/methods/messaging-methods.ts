@@ -5,6 +5,7 @@ import { store } from '../../state/store'
 import { pushGroupMessages, pushNewGroupMessage, replaceGroupMessageByIdempotency, setUserTyping, setGroup, incrementNotificationCount, markAsNoMore } from '../../state/groups'
 import { ISendMessageFormData, ISentMessage, IMessageSocket } from '../data/message'
 import { IUserMinimal } from '../data/user'
+import { notificationSound } from '../../components/notification/notification';
 
 export const messagingMethods = {
   loadMoreMessages: (group: IGroupExtended) => {
@@ -28,6 +29,7 @@ export const messagingMethods = {
   onNewGroupMessage: (message: IMessageSocket) => {
     store.dispatch(pushNewGroupMessage({ id: message.groupId, data: message }))
     store.dispatch(incrementNotificationCount({ id: message.groupId, data: undefined }))
+    notificationSound.play()
   },
   onUserTypingStatusUpdated: (data: { user: IUserMinimal, status: boolean, groupId: string }) => {
     store.dispatch(setUserTyping({ id: data.groupId, data: data }))

@@ -23,7 +23,7 @@ export const groupMethods = {
   loadDataOnInitialization: () => {
     return methods.methodWrapper(async () => {
       const result = await api.group.loadAllData()
-      const groups = result.map((v) => api.group.initializeGroup(v.group, v))
+      const groups = result.map((v) => api.group.initializeGroup(v.group, { ...v, isLoaded: true }))
 
       store.dispatch(setGroups(groupMethods.convertGroupsToMappedType(groups)))
     })
