@@ -2,24 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../state/store'
 import './message-panel.css'
-import {
-  AutoSizer
-} from 'react-virtualized'
-import { Message } from '../message/message'
-import { Loader } from '../loader/loader'
 import { Center } from '../center/center'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentSlash } from '@fortawesome/free-solid-svg-icons'
-import { Column } from '../flex/flex'
+import { Column, Flexible } from '../flex/flex'
 import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
-import Infinite from 'react-infinite'
 import { TypingStatusPanel } from './typing-status-panel'
 import { useSelectedGroup } from '../../hooks/hooks'
 import { methods } from '../../api/methods/methods'
-import Measure from 'react-measure'
-import { InfiniteScrollAutoMeasure } from '../infinite-scroll-auto-measure/infinite-scroll-auto-measure'
-import { IMessageSocket } from '../../api/data/message'
+import { InfiniteLoadingList } from '../list/list'
+import { Message } from '../message/message'
+import { Loader } from '../loader/loader'
 
 export const MessagePanel: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user)
@@ -48,9 +42,11 @@ export const MessagePanel: React.FC = () => {
   }
 
   const loadMessages = async () => {
-    setLoading(true)
-    await methods.messaging.loadMoreMessages(selectedGroup)
-    setLoading(false)
+    if (selectedGroup.hasMore) {
+      setLoading(true)
+      await methods.messaging.loadMoreMessages(selectedGroup)
+      setLoading(false)
+    }
   }
 
   const handleOnScrollBottom = async () => {
@@ -77,32 +73,23 @@ export const MessagePanel: React.FC = () => {
   }
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      <AutoSizer>
-        {({ width, height }) => {
-          if (height === 0) return <div />
-          return (
-            <div style={{ width, height }}>
-              <InfiniteScrollAutoMeasure<IMessageSocket>
-                className='infinite-scroll'
-                key={selectedGroup.data.id}
-                displayBottomUpwards
-                elementHeight={88}
-                containerHeight={height}
-                loadingSpinnerDelegate={<Loader isLoading={true} height='88px' />}
-                isInfiniteLoading={loading}
-                infiniteLoadBeginEdgeOffset={selectedGroup.hasMore ? 250 : undefined}
-                onInfiniteLoad={loadMessages}
-                items={messages}
-                elementBuilder={(message) => (<Message
-                  key={message.id}
-                  message={message}
-                  padding='12px'
-                  fromSelf={message.user.id === user?.id}
-                />)} />
-            </div>
-          )
-        }}
-      </AutoSizer>
+      <div style={{ width: '100%', height: '100%' }}>
+        <InfiniteLoadingList
+          isLoading={false}
+          loaderBuilder={() => <Loader isLoading={true} height='88px' width='100%' />}
+          onTopReached={loadMessages}
+          onBottomReached={handleOnScrollBottom}
+          fromBottom={true}
+        >
+          {
+            messages.map(message => <Message
+              key={message.id}
+              message={message}
+              padding='12px'
+              fromSelf={message.user.id === user?.id} />)
+          }
+        </InfiniteLoadingList>
+      </div>
       <div style={{
         position: 'absolute',
         left: 0,

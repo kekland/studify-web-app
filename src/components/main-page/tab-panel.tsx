@@ -6,10 +6,9 @@ import { GroupHorizontal } from '../group-component/group-component'
 import { ListItemButton } from '../list-item-button/list-item-button'
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { selectGroup } from '../../state/main'
-import { FixedSizeList } from 'react-window'
-import { AutoSizer } from 'react-virtualized'
-import { CustomScrollbarsVirtualList } from '../smart-list/smart-list'
 import { useSelectedGroup } from '../../hooks/hooks'
+import Scrollbars from 'react-custom-scrollbars'
+import { List } from '../list/list'
 
 export interface ITabPanelProps {
   onCreateNewGroup: () => void;
@@ -17,36 +16,26 @@ export interface ITabPanelProps {
 }
 
 export const TabPanel: React.FC<ITabPanelProps> = (props) => {
-  const { groups } = useSelector((state: RootState) => state.groups)
+  const selector = useSelector((state: RootState) => state.groups)
   const selectedGroup = useSelectedGroup()
 
-  const ids = Object.keys(groups)
+  const entries = Object.entries(selector.groups)
 
   return (
     <Column mainAxisSize='max' crossAxisSize='max'>
       <Flexible style={{ width: '100%' }}>
-        <AutoSizer>
-          {({ height, width }) => (
-            <FixedSizeList
-              outerElementType={CustomScrollbarsVirtualList}
-              itemCount={ids.length}
-              itemSize={80}
-              width={width}
-              height={height}
-            >
-              {({ style, index }) =>
-                <div
-                  style={style}>
-                  <GroupHorizontal
-                    group={groups[ids[index]]}
-                    selected={groups[ids[index]].data.id === selectedGroup?.data.id}
-                    padding='12px'
-                    onTap={() => store.dispatch(selectGroup(groups[ids[index]].data))} />
-                </div>
-              }
-            </FixedSizeList>
-          )}
-        </AutoSizer>
+        <List>
+          {
+            entries.map(([id, group]) => (
+              <GroupHorizontal
+                key={id}
+                group={group}
+                selected={group.data.id === selectedGroup?.data.id}
+                padding='12px'
+                onTap={() => store.dispatch(selectGroup(group.data))} />
+            ))
+          }
+        </List>
       </Flexible>
       <ListItemButton
         icon={faPlus}

@@ -2,7 +2,7 @@ import { api } from '../api'
 import { methods } from './methods'
 import { IGroupExtended, IGroupMinimal } from '../data/group'
 import { store } from '../../state/store'
-import { pushGroupMessages, pushNewGroupMessage, replaceGroupMessageByIdempotency, setUserTyping, setGroup, incrementNotificationCount } from '../../state/groups'
+import { pushGroupMessages, pushNewGroupMessage, replaceGroupMessageByIdempotency, setUserTyping, setGroup, incrementNotificationCount, markAsNoMore } from '../../state/groups'
 import { ISendMessageFormData, ISentMessage, IMessageSocket } from '../data/message'
 import { IUserMinimal } from '../data/user'
 
@@ -11,6 +11,9 @@ export const messagingMethods = {
     return methods.methodWrapper(async () => {
       const result = await api.messaging.loadMessages(group.data, { skip: group.messages.length })
       store.dispatch(pushGroupMessages({ id: result.id, data: result.messages }))
+
+      if(result.messages.length === 0)
+      store.dispatch(markAsNoMore({id: result.id, data: undefined}))
     })
   },
   sendMessage: (group: IGroupExtended, data: ISendMessageFormData) => {

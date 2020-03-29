@@ -66,10 +66,14 @@ const groupsSlice = createSlice({
       const group = state.groups[action.payload.id]
       group.unreadMessages = 0
     },
+    markAsNoMore: (state, action: PayloadAction<GroupPayload<undefined>>) => {
+      const group = state.groups[action.payload.id]
+      group.hasMore = false
+    }
   }
 })
 
 export const { setGroups, pushGroup, removeGroup, pushGroupMessages,
   pushNewGroupMessage, replaceGroupMessageById, replaceGroupMessageByIdempotency,
-  setUserTyping, setGroup, incrementNotificationCount, clearNotifications } = groupsSlice.actions
+  setUserTyping, setGroup, incrementNotificationCount, clearNotifications, markAsNoMore } = groupsSlice.actions
 export default groupsSlice.reducer

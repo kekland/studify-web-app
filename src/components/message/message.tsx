@@ -10,14 +10,9 @@ export interface IMessageProps {
   message: IMessageSocket | ISentMessage;
   padding: string;
   fromSelf: boolean;
-  measure?: () => void;
 }
 
-export const Message: React.FC<IMessageProps> = ({ message, padding, fromSelf, measure }) => {
-  useEffect(() => {
-    if (measure) measure()
-  }, [measure])
-
+export const Message: React.FC<IMessageProps> = ({ message, padding, fromSelf }) => {
   if (fromSelf) {
     return (
       <SizedBox width='100%' padding={padding}>
