@@ -3,7 +3,7 @@ import { methods } from './methods'
 import { store } from '../../state/store'
 import { setGroups, MappedGroups, pushGroup, removeGroup } from '../../state/groups'
 import { IGroupMinimal, IGroupExtended } from '../data/group'
-import { ICreateGroupFormData, ICreateGroupData } from '../../components/modal-create-group/modal-create-group'
+import { ICreateGroupData } from '../../components/modal-create-group/modal-create-group'
 
 export const groupMethods = {
   convertGroupsToMappedType: (groups: IGroupExtended[]) => {
@@ -28,12 +28,12 @@ export const groupMethods = {
       store.dispatch(setGroups(groupMethods.convertGroupsToMappedType(groups)))
     })
   },
-  create: (data: ICreateGroupData) => {
+  create: (data: ICreateGroupData, afterMethod?: () => void) => {
     return methods.methodWrapper(async () => {
       const result = await api.group.create(data)
 
       store.dispatch(pushGroup(result))
-    })
+    }, afterMethod)
   },
   join: (data: IGroupMinimal) => {
     return methods.methodWrapper(async () => {

@@ -18,14 +18,12 @@ export const methods = {
   methodWrapper: async <T>(method: () => Promise<any>, afterMethod?: () => void): Promise<void> => {
     try {
       await method()
+      if (afterMethod)
+        afterMethod()
     }
     catch (e) {
       if (methods.alert)
         methods.alert.error(e.message ?? JSON.stringify(e))
-    }
-    finally {
-      if (afterMethod)
-        afterMethod()
     }
   },
   initialize: (alert: AlertManager) => {

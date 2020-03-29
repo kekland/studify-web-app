@@ -41,7 +41,7 @@ export const ModalCreateGroup: React.FC<IModalCreateGroupProps> = (props) => {
       ...data,
       colorId,
       icon,
-    })
+    }, props.onClose)
     setLoading(false)
   }
 
