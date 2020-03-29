@@ -57,9 +57,13 @@ export const Column: React.FC<IFlexProps> = (props) => {
   )
 }
 
-export const Wrap: React.FC = (props) => {
+export interface IWrapProps {
+  style?: React.CSSProperties;
+}
+
+export const Wrap: React.FC<IWrapProps> = (props) => {
   return (
-    <div className='wrap'>
+    <div className='wrap' style={props.style}>
       {props.children}
     </div>
   )

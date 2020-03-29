@@ -42,6 +42,7 @@ export const GroupHorizontal: React.FC<IGroupHorizontalProps> = (props) => {
 export interface IGroupVerticalProps {
   group: IGroupMinimal;
   padding?: string;
+  height?: string;
 }
 
 export const GroupVertical: React.FC<IGroupVerticalProps> = (props) => {
@@ -65,9 +66,9 @@ export const GroupVertical: React.FC<IGroupVerticalProps> = (props) => {
   }
 
   return (
-    <Loader isLoading={loading} borderRadius='12px' width='225px' height='100%'>
+    <Loader isLoading={loading} borderRadius='12px' width='225px' height={props.height ?? '100%'}>
       <SizedBox padding={props.padding} width='225px' height='100%'
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.075)', borderRadius: '12px' }}>
+        style={{ backgroundColor: 'var(--color-control)', borderRadius: '12px' }}>
         <Column crossAxisAlignment='center' mainAxisSize='max'>
           <GroupAvatar name={props.group.name} colorId={props.group.colorId} icon={props.group.icon} size="56px" />
           <SizedBox flexSize={props.padding} />

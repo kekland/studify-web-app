@@ -6,6 +6,7 @@ import { IconButton } from '../button/button'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './modal.css'
 import { Loader } from '../loader/loader'
+import { useScreenSize } from '../../hooks/hooks'
 
 export interface IModalProps {
   isOpen: boolean;
@@ -14,6 +15,8 @@ export interface IModalProps {
 }
 
 export const Modal: React.FC<IModalProps> = (props) => {
+  const isMobile = useScreenSize(1000)
+
   return (<ReactModal
     ariaHideApp={false}
     isOpen={props.isOpen}
@@ -28,16 +31,21 @@ export const Modal: React.FC<IModalProps> = (props) => {
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
       },
       content: {
         position: 'absolute',
-        top: '40px',
-        left: '40px',
-        right: '40px',
-        bottom: '40px',
         backgroundColor: 'transparent',
         border: 0,
-        padding: '20px',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        width: '100%',
+        height: '100%',
       }
     }}>
     <Center>
@@ -47,9 +55,11 @@ export const Modal: React.FC<IModalProps> = (props) => {
         boxShadow: '0 12px 24px rgba(0, 0, 0, 0.16)',
         minWidth: '35vw',
         minHeight: '30vh',
-        maxWidth: '60vw',
-        maxHeight: '70vh',
-        position: 'relative'
+        maxWidth: isMobile ? '90vw' : '60vw',
+        maxHeight: isMobile ? '90vh' : '70vh',
+        position: 'relative',
+        overflowX: 'hidden',
+        overflowY: 'auto',
       }}>
         <Loader isLoading={props.isLoading ?? false} borderRadius='24px'>
           <div style={{

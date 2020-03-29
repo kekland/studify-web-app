@@ -31,6 +31,7 @@ const GroupColorSelector: React.FC<IGroupSelector<number>> = (props) => {
             height: '36px',
             marginLeft: '4px',
             marginRight: '4px',
+            marginBottom: '4px',
             border: props.selected === color ? '4px solid rgba(255, 255, 255, 0.2)' : undefined,
           }} />)
       }
@@ -88,7 +89,7 @@ export const GroupAvatarSelector: React.FC<IGroupAvatarSelectorProps> = (props) 
             <StyledText type='caption'>Choose a color</StyledText>
             <SizedBox height='4px' />
             <GroupColorSelector selected={props.color} onSelected={props.onColorChanged} />
-            <SizedBox height='12px' />
+            <SizedBox height='8px' />
             <StyledText type='caption'>Choose an icon</StyledText>
             <GroupIconSelector selected={props.icon} onSelected={props.onIconChanged} />
           </Column>

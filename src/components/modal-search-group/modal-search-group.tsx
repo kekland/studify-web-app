@@ -7,7 +7,9 @@ import { useAlert } from 'react-alert'
 import { IGroupMinimal } from '../../api/data/group'
 import Scrollbars from 'react-custom-scrollbars'
 import { GroupVertical } from '../group-component/group-component'
-import { Row } from '../flex/flex'
+import { Row, Wrap } from '../flex/flex'
+import { InputField } from '../input-field/input-field'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export interface IModalSearchGroupProps {
   isOpen: boolean;
@@ -32,23 +34,15 @@ export const ModalSearchGroup: React.FC<IModalSearchGroupProps> = (props) => {
     <Modal isOpen={props.isOpen} isLoading={loading} onClose={props.onClose}>
       <StyledText type='heading'>Search for groups</StyledText>
       <SizedBox height='24px' />
-      <SizedBox width='100%' height='275px'>
-        <Scrollbars autoHide>
-          <Row crossAxisSize='max'>
-            {
-              groups.map((group) => (
-                <div
-                  style={{ marginRight: '16px', height: '100%' }}
-                  key={group.id}>
-                  <GroupVertical
-                    group={group}
-                    padding='16px' />
-                </div>
-              ))
-            }
-          </Row>
-        </Scrollbars>
-      </SizedBox>
+      <InputField placeholder='Search' width='100%' icon={faSearch} />
+      <SizedBox height='24px' />
+      <Wrap style={{justifyContent: 'space-between', minWidth: '225px'}}>
+        {
+          groups.map((group) => <div style={{ marginBottom: '16px' }}>
+            <GroupVertical group={group} padding='12px' height='220px' />
+          </div>)
+        }
+      </Wrap>
     </Modal>
   )
 }
