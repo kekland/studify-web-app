@@ -15,6 +15,7 @@ import { MessagePanel } from '../../components/message-panel/message-panel';
 import { ModalSearchGroup } from '../../components/modal-search-group/modal-search-group';
 import { useScreenSize, useSelectedGroup } from '../../hooks/hooks';
 import { MainPageDrawer } from '../../components/main-page/main-page-drawer';
+import { ModalSettings } from '../../components/modal-settings/modal-settings'
 import { methods } from '../../api/methods/methods';
 import { useAlert } from 'react-alert';
 
@@ -27,6 +28,7 @@ export const MainPage: React.FC = ((props) => {
 
   const createGroupModal = useModal(false)
   const searchGroupModal = useModal(false)
+  const settingsModal = useModal(false)
 
   useEffect(() => {
     const loadGroups = async () => {
@@ -39,9 +41,9 @@ export const MainPage: React.FC = ((props) => {
       loadGroups()
       return () => methods.closeSocket()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+
   useEffect(() => {
     methods.initialize(alert)
   }, [alert])
@@ -58,14 +60,11 @@ export const MainPage: React.FC = ((props) => {
         onCreateGroup={createGroupModal.open}
         onSearchGroup={searchGroupModal.open}
         onUserTap={() => { }}
-        onUserTapSettings={() => { }}
+        onUserTapSettings={settingsModal.open}
         user={user} />
-      <ModalCreateGroup
-        isOpen={createGroupModal.isOpen}
-        onClose={createGroupModal.close} />
-      <ModalSearchGroup
-        isOpen={searchGroupModal.isOpen}
-        onClose={searchGroupModal.close} />
+      <ModalCreateGroup {...createGroupModal} />
+      <ModalSearchGroup {...searchGroupModal} />
+      <ModalSettings {...settingsModal} />
       <div className='app-bar app-bar-main hidden-on-mobile' style={appBarStyle}>
         {
           isMobile ? <div /> :
@@ -89,7 +88,7 @@ export const MainPage: React.FC = ((props) => {
           isMobile ? <div /> :
             <UserOwnerComponent
               onTap={() => { }}
-              onTapSettings={() => { }}
+              onTapSettings={settingsModal.open}
               user={user}
               padding='12px' />
         }

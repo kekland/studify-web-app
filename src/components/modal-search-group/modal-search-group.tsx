@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal } from '../modal/modal'
+import { Modal, IModalProps } from '../modal/modal'
 import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
 import { api } from '../../api/api'
@@ -10,12 +10,7 @@ import { Wrap } from '../flex/flex'
 import { InputField } from '../input-field/input-field'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-export interface IModalSearchGroupProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const ModalSearchGroup: React.FC<IModalSearchGroupProps> = (props) => {
+export const ModalSearchGroup: React.FC<IModalProps> = (props) => {
   const alert = useAlert()
   const [loading, setLoading] = useState(false)
   const [groups, setGroups] = useState<IGroupMinimal[]>([])

@@ -10,8 +10,12 @@ import { MainPage } from './pages/main-page/main-page';
 import { IntroPage } from './pages/intro-page/intro-page';
 import { AnimatedSwitch } from 'react-router-transition'
 import { hot } from 'react-hot-loader/root'
+import { useSelector } from 'react-redux';
+import { RootState } from './state/store';
 
 const App = () => {
+  const theme = useSelector((state: RootState) => state.preferences.theme)
+
   return (
     <AlertProvider
       template={AlertTemplate}
@@ -19,7 +23,7 @@ const App = () => {
       timeout={3500}
       transition='scale'
       containerStyle={{ pointerEvents: 'auto', zIndex: 0 }}>
-      <div id='app' className='root root-light'>
+      <div id='app' className={`root root-${theme}`}>
         <Router>
           <AnimatedSwitch
             atEnter={{ opacity: 0 }}

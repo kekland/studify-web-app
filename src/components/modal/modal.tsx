@@ -10,11 +10,14 @@ import { useScreenSize } from '../../hooks/hooks'
 
 export interface IModalProps {
   isOpen: boolean;
-  isLoading?: boolean;
   onClose: () => void;
 }
 
-export const Modal: React.FC<IModalProps> = (props) => {
+interface IModalLoadingProps {
+  isLoading?: boolean;
+}
+
+export const Modal: React.FC<IModalProps & IModalLoadingProps> = (props) => {
   const isMobile = useScreenSize(1000)
 
   return (<ReactModal
@@ -51,13 +54,13 @@ export const Modal: React.FC<IModalProps> = (props) => {
     }}>
     <Center>
       <Surface style={{
-        borderRadius: isMobile? '0px' : '24px',
+        borderRadius: isMobile ? '0px' : '24px',
         border: 0,
         boxShadow: '0 12px 24px rgba(0, 0, 0, 0.16)',
         minWidth: '35vw',
         minHeight: '30vh',
-        width: isMobile? '100%' : undefined,
-        height: isMobile? '100%' : undefined,
+        width: isMobile ? '100%' : undefined,
+        height: isMobile ? '100%' : undefined,
         maxWidth: isMobile ? '100%' : '60vw',
         maxHeight: isMobile ? '100%' : '70vh',
         position: 'relative',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal } from '../modal/modal'
+import { Modal, IModalProps } from '../modal/modal'
 import { StyledText } from '../text/text'
 import { InputField } from '../input-field/input-field'
 import { Column } from '../flex/flex'
@@ -22,12 +22,7 @@ export interface ICreateGroupData {
   icon: string;
 }
 
-export interface IModalCreateGroupProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const ModalCreateGroup: React.FC<IModalCreateGroupProps> = (props) => {
+export const ModalCreateGroup: React.FC<IModalProps> = (props) => {
   const { handleSubmit, errors, register } = useForm<ICreateGroupFormData>()
   const [loading, setLoading] = useState(false)
 
