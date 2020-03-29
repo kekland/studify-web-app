@@ -67,12 +67,13 @@ export const InfiniteLoadingList: React.FC<IInfiniteLoadingListProps> = (props) 
       top: e.target.scrollTop,
       client: e.target.clientHeight,
     })
-    if (offsetFromBottom < 20 && props.onBottomReached) props.onBottomReached()
-    if (e.target.scrollTop < 100 && props.onTopReached) props.onTopReached()
+    if (offsetFromBottom < 50 && props.onBottomReached) props.onBottomReached()
+    if (e.target.scrollTop < 50 && props.onTopReached) props.onTopReached()
   }
 
   return (
-    <Scrollbars key='scrollbar-main' autoHide onScroll={onScroll} ref={ref} className='scrollbar-main'>
+    <Scrollbars key='scrollbar-main'
+      autoHide onScroll={onScroll} ref={ref} className={props.fromBottom ? 'scrollbar-main' : undefined}>
       {props.children}
       <div style={{ height: '12px', flexBasis: '12px' }} />
       {props.hasMore ? props.loaderBuilder() : <div />}

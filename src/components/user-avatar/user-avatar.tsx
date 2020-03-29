@@ -5,12 +5,12 @@ import { Center } from '../center/center'
 export interface UserAvatarProps {
   size: string;
   name: string;
-  onTap: () => void;
+  onTap?: () => void;
 }
 
 export const UserAvatar: React.FC<UserAvatarProps> = (props) => {
   return (
-    <div className='tappable' onClick={props.onTap} style={{
+    <div className={props.onTap ? 'tappable' : undefined} onClick={props.onTap} style={{
       width: props.size, height: props.size,
       borderRadius: '999px',
       backgroundColor: 'var(--color-group-1)'

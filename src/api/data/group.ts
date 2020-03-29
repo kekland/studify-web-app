@@ -8,8 +8,10 @@ export interface IGroupExtended {
 
   messages: IMessageSocket[];
   typingUsers: {[key: string]: IUserMinimal};
+  users: IUserMinimal[];
   isLoaded: boolean;
   hasMore: boolean;
+  hasMoreUsers: boolean;
 
   unreadMessages: number;
 }

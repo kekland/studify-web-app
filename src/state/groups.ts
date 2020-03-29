@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGroup, IGroupExtended, IGroupMinimal } from "../api/data/group";
 import { IMessageSocket, ISentMessage } from "../api/data/message";
 import { IUserMinimal } from "../api/data/user";
+import { api } from "../api/api";
 
 export type MappedGroups = { [key: string]: IGroupExtended }
 export type GroupPayload<T> = { id: string, data: T }
@@ -69,11 +70,24 @@ const groupsSlice = createSlice({
     markAsNoMore: (state, action: PayloadAction<GroupPayload<undefined>>) => {
       const group = state.groups[action.payload.id]
       group.hasMore = false
+    },
+    pushUsers: (state, action: PayloadAction<GroupPayload<IUserMinimal[]>>) => {
+      const group = state.groups[action.payload.id]
+      group.users = [...group.users, ...action.payload.data]
+
+      if (action.payload.data.length < api.paginationLimit) {
+        group.hasMoreUsers = false
+      }
+    },
+    pushUser: (state, action: PayloadAction<GroupPayload<IUserMinimal>>) => {
+      const group = state.groups[action.payload.id]
+      group.users.push(action.payload.data)
     }
   }
 })
 
 export const { setGroups, pushGroup, removeGroup, pushGroupMessages,
   pushNewGroupMessage, replaceGroupMessageById, replaceGroupMessageByIdempotency,
-  setUserTyping, setGroup, incrementNotificationCount, clearNotifications, markAsNoMore } = groupsSlice.actions
+  setUserTyping, setGroup, incrementNotificationCount, clearNotifications, markAsNoMore,
+  pushUsers, pushUser } = groupsSlice.actions
 export default groupsSlice.reducer

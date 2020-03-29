@@ -78,7 +78,7 @@ export const MessagePanel: React.FC = () => {
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       <div style={{ width: '100%', height: '100%' }}>
         <InfiniteLoadingList
-          isLoading={false}
+          isLoading={loading}
           loaderBuilder={() => <Loader key='loader' isLoading={true} height='88px' width='100%' />}
           onTopReached={loadMessages}
           onBottomReached={handleOnScrollBottom}

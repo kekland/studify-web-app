@@ -1,7 +1,7 @@
 import { api } from '../api'
 import { methods } from './methods'
 import { store } from '../../state/store'
-import { setGroups, MappedGroups, pushGroup, removeGroup } from '../../state/groups'
+import { setGroups, MappedGroups, pushGroup, removeGroup, pushUsers } from '../../state/groups'
 import { IGroupMinimal, IGroupExtended } from '../data/group'
 import { ICreateGroupData } from '../../components/modal-create-group/modal-create-group'
 
@@ -49,4 +49,11 @@ export const groupMethods = {
       store.dispatch(removeGroup(group))
     })
   },
+  loadMoreUsers: (group: IGroupExtended) => {
+    return methods.methodWrapper(async () => {
+      const users = await api.group.getUsers(group.data, { skip: group.users.length })
+
+      store.dispatch(pushUsers({ id: group.data.id, data: users }))
+    })
+  }
 }

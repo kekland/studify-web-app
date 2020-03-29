@@ -28,6 +28,8 @@ export const groupApi = {
       isLoaded: data?.isLoaded ?? false,
       hasMore: data?.hasMore ?? api.hasMore(data?.lastMessages),
       unreadMessages: data?.unreadMessages ?? 0,
+      users: [],
+      hasMoreUsers: true,
     } as IGroupExtended
   },
   create: async (data: ICreateGroupData) => {
