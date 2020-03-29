@@ -14,7 +14,7 @@ export const messagingApi = {
       const response = await api.setHeader(request.get(`${api.url}/group/${group.id}/messages`).query(api.normalizeQuery(query)))
 
       const messages = response.body.messages as IMessageSocket[]
-      return { id: group.id, messages: messages.reverse() }
+      return { id: group.id, messages }
     })
   },
   attach: async (

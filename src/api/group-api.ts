@@ -74,7 +74,6 @@ export const groupApi = {
     return api.requestWrapper(async () => {
       const response = await api.setHeader(request.get(`${api.url}/group/loadAllData`))
       const result = response.body.data as IGroupLoadDataResponse[]
-      result.forEach(group => group.lastMessages = group.lastMessages.reverse())
       return result
     })
   },
@@ -82,7 +81,6 @@ export const groupApi = {
     return api.requestWrapper(async () => {
       const response = await api.setHeader(request.get(`${api.url}/group/${group.id}/loadData`))
       const result = response.body as IGroupLoadDataResponse
-      result.lastMessages = result.lastMessages.reverse()
       return result
     })
   },

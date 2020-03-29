@@ -17,7 +17,7 @@ export interface IMessageProps {
 
 export const Message: React.FC<IMessageProps> = ({ message, prevMessage, nextMessage, padding, smallPadding, fromSelf }) => {
   let displayTime = true
-  let messageToUse = fromSelf ? nextMessage : prevMessage
+  let messageToUse = fromSelf ? prevMessage : nextMessage
 
   if (!messageToUse) displayTime = true
   else if (messageToUse.user.id === message.user.id &&

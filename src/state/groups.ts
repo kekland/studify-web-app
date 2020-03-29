@@ -29,12 +29,12 @@ const groupsSlice = createSlice({
     pushGroupMessages: (state, action: PayloadAction<GroupPayload<IMessageSocket[]>>) => {
       const group = state.groups[action.payload.id]
 
-      group.messages = [...action.payload.data, ...group.messages]
+      group.messages = [...group.messages, ...action.payload.data,]
     },
     pushNewGroupMessage: (state, action: PayloadAction<GroupPayload<IMessageSocket>>) => {
       const group = state.groups[action.payload.id]
 
-      group.messages.push(action.payload.data)
+      group.messages.unshift(action.payload.data)
     },
     replaceGroupMessageById: (state, action: PayloadAction<GroupPayload<IMessageSocket>>) => {
       const group = state.groups[action.payload.id]
