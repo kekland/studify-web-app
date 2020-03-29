@@ -46,17 +46,20 @@ export const Modal: React.FC<IModalProps> = (props) => {
         bottom: 0,
         width: '100%',
         height: '100%',
+        padding: 0,
       }
     }}>
     <Center>
       <Surface style={{
-        borderRadius: '24px',
+        borderRadius: isMobile? '0px' : '24px',
         border: 0,
         boxShadow: '0 12px 24px rgba(0, 0, 0, 0.16)',
         minWidth: '35vw',
         minHeight: '30vh',
-        maxWidth: isMobile ? '90vw' : '60vw',
-        maxHeight: isMobile ? '90vh' : '70vh',
+        width: isMobile? '100%' : undefined,
+        height: isMobile? '100%' : undefined,
+        maxWidth: isMobile ? '100%' : '60vw',
+        maxHeight: isMobile ? '100%' : '70vh',
         position: 'relative',
         overflowX: 'hidden',
         overflowY: 'auto',
