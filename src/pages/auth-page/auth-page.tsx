@@ -25,6 +25,7 @@ export const AuthPage: React.FC = (props) => {
 
   useEffect(() => {
     methods.initialize(alert)
+    methods.api.auth.clearToken()
   }, [alert])
 
   if (auth.user)

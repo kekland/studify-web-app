@@ -16,7 +16,7 @@ export const authApi = {
         notifications: response.body.notifications as INotification[],
       }
 
-      authApi.saveToken()
+      authApi.saveToken(result.token)
       return result
     })
   },
@@ -30,13 +30,12 @@ export const authApi = {
         notifications: [] as INotification[],
       }
 
-      authApi.saveToken()
+      authApi.saveToken(result.token)
       return result
     })
   },
   signInWithToken: async (token: string) => {
     return api.requestWrapper(async () => {
-      console.log(token)
       const response = await api.setHeader(request.post(`${api.url}/auth/signInWithToken`), token)
 
       const result = {
@@ -44,7 +43,7 @@ export const authApi = {
         notifications: response.body.notifications as INotification[],
       }
 
-      authApi.saveToken()
+      authApi.saveToken(token)
       return result
     })
   },

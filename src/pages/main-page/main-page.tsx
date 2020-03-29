@@ -45,7 +45,7 @@ export const MainPage: React.FC = ((props) => {
     methods.initialize(alert)
   }, [alert])
 
-  if (!auth.user) return <Redirect to='/auth' />
+  if (!auth.user) return <Redirect to='/' />
 
   let appBarStyle: React.CSSProperties = {}
   if (selectedGroup) {
