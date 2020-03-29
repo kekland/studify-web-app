@@ -38,14 +38,14 @@ export const authMethods = {
       authMethods.dispatchSignInToStore(result)
     })
   },
-  signInWithToken: () => {
+  signInWithToken: (afterMethod?: () => void) => {
     return methods.methodWrapper(async () => {
       const token = api.auth.getToken()
       if (!token) throw Error('No token was provided')
 
       const result = await api.auth.signInWithToken(token)
       authMethods.dispatchSignInToStore({ ...result, token: token })
-    })
+    }, afterMethod)
   },
   signOut: () => {
     return methods.methodWrapper(async () => {

@@ -7,9 +7,19 @@ import { notificationsApi } from "./notifications-api";
 import { store } from "../state/store";
 import { IPaginatedQuery, CanBeNull } from "./data/utils";
 
-export const api = {
+const urlLocal = {
+  url: 'http://localhost:8080/api',
+  socketUrl: 'http://localhost:8080'
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const urlProduction = {
   url: 'http://studify-server.herokuapp.com/api',
   socketUrl: 'http://studify-server.herokuapp.com',
+}
+
+export const api = {
+  ...urlLocal,
   paginationLimit: 20,
   socket: undefined as CanBeNull<SocketIOClient.Socket>,
 

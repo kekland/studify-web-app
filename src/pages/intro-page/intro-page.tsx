@@ -18,14 +18,14 @@ export const IntroPage: React.FC = () => {
 
   useEffect(() => {
     const trySignIn = async () => {
-      await methods.auth.signInWithToken()
-      history.push('/main')
+      await methods.auth.signInWithToken(() => history.push('/main'))
+      history.push('/auth')
     }
     const token = methods.api.auth.getToken()
 
     if (token) trySignIn()
     else history.push('/auth')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
