@@ -13,6 +13,7 @@ export interface IInfiniteLoadingListProps {
   fromBottom?: boolean;
   isLoading: boolean;
   hasMore: boolean;
+  scrollRef?: React.RefObject<Scrollbars>,
   scrollTo?: number;
   loaderBuilder: () => React.ReactElement;
   onTopReached?: () => void;
@@ -24,7 +25,7 @@ export interface IScrollData {
   top: number;
 }
 export const InfiniteLoadingList: React.FC<IInfiniteLoadingListProps> = (props) => {
-  const ref = createRef<Scrollbars>()
+  const ref = props.scrollRef ?? createRef<Scrollbars>()
   const [previousScroll, setPreviousScroll] = useState<IScrollData>({ height: 0, top: 0 })
 
   useEffect(() => {

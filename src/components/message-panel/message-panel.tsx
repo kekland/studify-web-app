@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../state/store'
 import './message-panel.css'
@@ -14,13 +14,14 @@ import { methods } from '../../api/methods/methods'
 import { InfiniteLoadingList } from '../list/list'
 import { Message } from '../message/message'
 import { Loader } from '../loader/loader'
-import { areDatesClose } from '../../api/pretty-date'
 import { NewMessagesIndicator } from './new-messages-indicator'
+import Scrollbars from 'react-custom-scrollbars'
 
 export const MessagePanel: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user)
   const selectedGroupId = useSelector((state: RootState) => state.main.selectedGroupId)
   const selectedGroup = useSelectedGroup()
+  const scrollRef = createRef<Scrollbars>()
 
   const [loading, setLoading] = useState(false)
 
@@ -82,6 +83,7 @@ export const MessagePanel: React.FC = () => {
           onTopReached={loadMessages}
           onBottomReached={handleOnScrollBottom}
           fromBottom={true}
+          scrollRef={scrollRef}
           hasMore={selectedGroup.hasMore}
         >
           {
@@ -109,7 +111,10 @@ export const MessagePanel: React.FC = () => {
         right: '16px',
         bottom: '16px',
       }}>
-        <NewMessagesIndicator unreadMessages={selectedGroup.unreadMessages} onTap={() => { console.log('tap') }} />
+        <NewMessagesIndicator unreadMessages={selectedGroup.unreadMessages} onTap={() => {
+          if (scrollRef.current)
+            scrollRef.current.scrollToBottom()
+        }} />
       </div>
     </div >
   )
