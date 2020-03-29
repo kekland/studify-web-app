@@ -4,7 +4,7 @@ import { RootState } from '../../state/store'
 import './message-panel.css'
 import { Center } from '../center/center'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCommentSlash } from '@fortawesome/free-solid-svg-icons'
+import { faCommentSlash, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { Column, Flexible } from '../flex/flex'
 import { StyledText } from '../text/text'
 import { SizedBox } from '../sized-box/sized-box'
@@ -14,6 +14,8 @@ import { methods } from '../../api/methods/methods'
 import { InfiniteLoadingList } from '../list/list'
 import { Message } from '../message/message'
 import { Loader } from '../loader/loader'
+import { areDatesClose } from '../../api/pretty-date'
+import { NewMessagesIndicator } from './new-messages-indicator'
 
 export const MessagePanel: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user)
@@ -83,10 +85,13 @@ export const MessagePanel: React.FC = () => {
           hasMore={selectedGroup.hasMore}
         >
           {
-            messages.map(message => <Message
+            messages.map((message, i) => <Message
               key={message.id}
               message={message}
               padding='12px'
+              smallPadding='6px'
+              prevMessage={i === 0 ? undefined : messages[i - 1]}
+              nextMessage={i === (messages.length - 1) ? undefined : messages[i + 1]}
               fromSelf={message.user.id === user?.id} />)
           }
         </InfiniteLoadingList>
@@ -98,6 +103,13 @@ export const MessagePanel: React.FC = () => {
         top: 0,
       }}>
         <TypingStatusPanel typingUsers={selectedGroup.typingUsers} />
+      </div>
+      <div style={{
+        position: 'absolute',
+        right: '16px',
+        bottom: '16px',
+      }}>
+        <NewMessagesIndicator unreadMessages={selectedGroup.unreadMessages} onTap={() => { console.log('tap') }} />
       </div>
     </div >
   )

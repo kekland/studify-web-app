@@ -13,6 +13,7 @@ export interface IFlexProps {
   crossAxisAlignment?: IFlexAlignment;
   mainAxisSize?: IFlexSize;
   crossAxisSize?: IFlexSize;
+  style?: React.CSSProperties;
 }
 
 export const Flex: React.FC<IFlexProps & IFlexType> = (props) => {
@@ -33,6 +34,7 @@ export const Flex: React.FC<IFlexProps & IFlexType> = (props) => {
       alignItems: props.crossAxisAlignment ?? 'flex-start',
       width,
       height,
+      ...props.style,
     }}>
       {props.children}
     </div>
@@ -41,11 +43,7 @@ export const Flex: React.FC<IFlexProps & IFlexType> = (props) => {
 
 export const Row: React.FC<IFlexProps> = (props) => {
   return (
-    <Flex type='row'
-      mainAxisAlignment={props.mainAxisAlignment}
-      crossAxisAlignment={props.crossAxisAlignment}
-      mainAxisSize={props.mainAxisSize ?? 'min'}
-      crossAxisSize={props.crossAxisSize ?? 'min'}>
+    <Flex type='row' {...props}>
       {props.children}
     </Flex>
   )
@@ -53,11 +51,7 @@ export const Row: React.FC<IFlexProps> = (props) => {
 
 export const Column: React.FC<IFlexProps> = (props) => {
   return (
-    <Flex type='column'
-      mainAxisAlignment={props.mainAxisAlignment}
-      crossAxisAlignment={props.crossAxisAlignment}
-      mainAxisSize={props.mainAxisSize ?? 'min'}
-      crossAxisSize={props.crossAxisSize ?? 'min'}>
+    <Flex type='column' {...props}>
       {props.children}
     </Flex >
   )

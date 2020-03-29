@@ -14,8 +14,8 @@ export const notificationMethods = {
   setGroupAsRead: (group: IGroupExtended | string) => {
     return methods.methodWrapper(async () => {
       const id = (typeof group === 'string') ? group : group.data.id
-      await api.group.setAsRead(id)
       store.dispatch(clearNotifications({ id, data: undefined }))
+      await api.group.setAsRead(id)
     })
   },
 }

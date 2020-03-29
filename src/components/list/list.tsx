@@ -13,6 +13,7 @@ export interface IInfiniteLoadingListProps {
   fromBottom?: boolean;
   isLoading: boolean;
   hasMore: boolean;
+  scrollTo?: number;
   loaderBuilder: () => React.ReactElement;
   onTopReached?: () => void;
   onBottomReached?: () => void;
@@ -36,6 +37,15 @@ export const InfiniteLoadingList: React.FC<IInfiniteLoadingListProps> = (props) 
   }, [])
 
   useEffect(() => {
+    if (ref.current) {
+      if (props.scrollTo) {
+        ref.current.scrollTop(ref.current.getScrollHeight() - previousScroll.height - props.scrollTo)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.scrollTo])
+
+  useEffect(() => {
     console.log('prev', previousScroll)
     if (ref.current)
       ref.current.scrollTop(ref.current.getScrollHeight() - previousScroll.height + previousScroll.top)
@@ -53,7 +63,8 @@ export const InfiniteLoadingList: React.FC<IInfiniteLoadingListProps> = (props) 
 
   return (
     <Scrollbars key='scrollbar-main' autoHide onScroll={onScroll} ref={ref}>
-      {props.hasMore? props.loaderBuilder() : <div />}
+      {props.hasMore ? props.loaderBuilder() : <div />}
+      <div style={{ height: '12px' }} />
       {props.children}
     </Scrollbars>
   )

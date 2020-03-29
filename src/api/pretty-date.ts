@@ -1,3 +1,5 @@
+import { DateOrString } from "./data/utils";
+
 /// Original author: fengyuanchen
 /// JS source: https://github.com/fengyuanchen/prettydate/blob/master/src/prettydate.js
 
@@ -39,7 +41,7 @@ const defaults = {
   }
 }
 
-export const prettifyDate = (_date: Date | string) => {
+export const prettifyDate = (_date: DateOrString) => {
   let date: Date
   if (typeof _date === 'string') {
     date = new Date(_date)
@@ -72,7 +74,29 @@ export const prettifyDate = (_date: Date | string) => {
                               diff < 2 * year ? messages.year : messages.years.replace("%s", Math.floor(diff / year).toString())
   );
 
+  if (!past) return 'Just now'
+
   prettyDate = prettyDate.replace("%s", past ? defaults.beforeSuffix : defaults.afterSuffix);
 
   return prettyDate
+}
+
+export const areDatesClose = (_date1: DateOrString, _date2: DateOrString) => {
+  let date1, date2: Date
+
+  if (typeof _date1 === 'string')
+    date1 = new Date(_date1)
+  else
+    date1 = _date1
+
+  if (typeof _date2 === 'string')
+    date2 = new Date(_date2)
+  else
+    date2 = _date2
+
+
+
+  let diff = date1.getTime() - date2.getTime()
+
+  return (Math.abs(diff) < 10 * minute)
 }

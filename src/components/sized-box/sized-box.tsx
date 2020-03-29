@@ -15,12 +15,13 @@ export const SizedBox: React.FC<ISizedBoxProps> = (props) => {
   return (
     <div
       className={props.className}
-      style={Object.assign(style, {
+      style={{
         width: props.width,
         height: props.height,
         padding: props.padding,
-        flex: `0 0 ${props.flexSize}`
-      })}
+        flex: `0 0 ${props.flexSize}`,
+        ...style,
+      }}
       onClick={props.onTap}>
       {props.children}
     </div>
