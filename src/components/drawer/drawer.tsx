@@ -45,7 +45,7 @@ export const Drawer: React.FC<IDrawerProps> = ({ isOpen, width, children, onClos
           zIndex: 1000,
           transform: isOpen ? 'translate(0, 0)' : `translate(${onLeft ? '-' : ''}${width}, 0)`,
           transition: 'transform 250ms ease-in-out',
-        }} onClick={(e) => e.stopPropagation()}>
+        }}>
           {children}
         </div>
       </div>
