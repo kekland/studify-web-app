@@ -17,7 +17,6 @@ export const DrawerGroupInfo: React.FC<IDrawerProps> = (props) => {
 
   const loadMore = async () => {
     if (selectedGroup && selectedGroup.hasMoreUsers && !loading && props.isOpen) {
-      console.log('loading')
       setLoading(true)
       await methods.group.loadMoreUsers(selectedGroup)
       setLoading(false)
@@ -47,7 +46,7 @@ export const DrawerGroupInfo: React.FC<IDrawerProps> = (props) => {
         <Flexible style={{ width: '100%' }}>
           <InfiniteLoadingList
             isLoading={loading}
-            hasMore={selectedGroup.hasMore}
+            hasMore={selectedGroup.hasMoreUsers}
             loaderBuilder={() => <Loader isLoading={true} height='88px' width='100%' />}
             onBottomReached={loadMore}
             fromBottom={false}>
