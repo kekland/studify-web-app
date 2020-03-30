@@ -5,7 +5,7 @@ import { UserAvatar } from '../user-avatar/user-avatar'
 import { SizedBox } from '../sized-box/sized-box'
 import { StyledText } from '../text/text'
 import { prettifyDate, areDatesClose } from '../../api/pretty-date'
-import { FileAttachment, FileAttachmentMessage } from '../message-attachments/message-attachments'
+import { FileAttachmentMessage } from '../message-attachments/message-attachments'
 
 export interface IMessageProps {
   message: IMessageSocket | ISentMessage;
