@@ -6,6 +6,7 @@ import { messagingApi } from "./messaging-api";
 import { notificationsApi } from "./notifications-api";
 import { store } from "../state/store";
 import { IPaginatedQuery, CanBeNull } from "./data/utils";
+import { userApi } from './user-api';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const urlLocal = {
@@ -76,4 +77,5 @@ export const api = {
   group: groupApi,
   messaging: messagingApi,
   notifications: notificationsApi,
+  user: userApi,
 }

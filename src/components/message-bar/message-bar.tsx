@@ -45,6 +45,7 @@ export const MessageBar: React.FC = (props) => {
     methods.messaging.sendMessage(selectedGroup, user, { body: message, attachments: { files, replyTo: replyingTo } })
     setMessage('')
     setFiles([])
+    store.dispatch(setReplyingTo(undefined))
   }
 
   const onMessageChanged = (body: string) => {

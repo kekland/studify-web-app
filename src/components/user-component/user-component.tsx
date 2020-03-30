@@ -7,7 +7,7 @@ import { UserAvatar } from '../user-avatar/user-avatar'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from '../button/button'
 import { store } from '../../state/store'
-import { openUserTab } from '../../state/main'
+import { setSelectedUser } from '../../state/main'
 
 export interface IUserOwnerComponentProps {
   user: IUserOwner;
@@ -47,10 +47,10 @@ export const UserComponent: React.FC<IUserComponentProps> = (props) => {
       paddingBottom: props.verticalPadding ?? props.padding,
       paddingLeft: props.padding,
       paddingRight: props.padding,
-    }} className='tappable' onTap={() => store.dispatch(openUserTab(props.user))}>
+    }} className='tappable' onTap={() => store.dispatch(setSelectedUser(props.user))}>
       <Row crossAxisAlignment='center'>
         <UserAvatar name={props.user.username} size="48px" />
-        <SizedBox width={props.padding} />
+        <SizedBox width={props.padding ?? props.verticalPadding} />
         <Column>
           <StyledText type='body' fontWeight={500}>{props.user.username}</StyledText>
           <StyledText type='caption'>{props.user.name}</StyledText>

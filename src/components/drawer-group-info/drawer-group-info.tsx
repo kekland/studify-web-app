@@ -10,7 +10,7 @@ import { methods } from '../../api/methods/methods'
 import { Loader } from '../loader/loader'
 import { UserComponent } from '../user-component/user-component'
 import { store } from '../../state/store'
-import { openUserTab } from '../../state/main'
+import { setSelectedUser } from '../../state/main'
 
 export const DrawerGroupInfo: React.FC<IDrawerProps> = (props) => {
   const selectedGroup = useSelectedGroup()

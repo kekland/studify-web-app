@@ -20,7 +20,7 @@ import { methods } from '../../api/methods/methods';
 import { useAlert } from 'react-alert';
 import { DrawerGroupInfo } from '../../components/drawer-group-info/drawer-group-info';
 import { ModalUser } from '../../components/modal-user/modal-user';
-import { openUserTab } from '../../state/main';
+import { setSelectedUser } from '../../state/main';
 
 export const MainPage: React.FC = ((props) => {
   const alert = useAlert()
@@ -52,8 +52,7 @@ export const MainPage: React.FC = ((props) => {
 
   useEffect(() => {
     if (selectedUser)
-      console.log(selectedUser)
-    userModal.open()
+      userModal.open()
     return () => userModal.close()
   }, [selectedUser, userModal])
 
@@ -72,13 +71,13 @@ export const MainPage: React.FC = ((props) => {
       <MainPageDrawer
         onCreateGroup={createGroupModal.open}
         onSearchGroup={searchGroupModal.open}
-        onUserTap={() => store.dispatch(openUserTab(user))}
+        onUserTap={() => store.dispatch(setSelectedUser(user))}
         onUserTapSettings={settingsModal.open}
         user={user} />
       <ModalCreateGroup {...createGroupModal} />
       <ModalSearchGroup {...searchGroupModal} />
       <ModalSettings {...settingsModal} />
-      <ModalUser {...userModal} />
+      <ModalUser isOpen={selectedUser != null} onClose={() => store.dispatch(setSelectedUser(undefined))} />
       <DrawerGroupInfo {...groupInfoDrawer} width='320px' left={false} />
       <div className='app-bar app-bar-main hidden-on-mobile' style={appBarStyle}>
         {
@@ -104,7 +103,7 @@ export const MainPage: React.FC = ((props) => {
         {
           isMobile ? <div /> :
             <UserOwnerComponent
-              onTap={() => store.dispatch(openUserTab(user))}
+              onTap={() => store.dispatch(setSelectedUser(user))}
               onTapSettings={settingsModal.open}
               user={user}
               padding='12px' />

@@ -21,7 +21,7 @@ const mainSlice = createSlice({
     setDrawer(state, action: PayloadAction<boolean>) {
       state.isDrawerOpen = action.payload
     },
-    openUserTab(state, action: PayloadAction<IUserMinimal>) {
+    setSelectedUser(state, action: PayloadAction<IUserMinimal | undefined>) {
       state.selectedUser = action.payload
     }
   },
@@ -30,6 +30,6 @@ const mainSlice = createSlice({
 export const {
   selectGroup,
   setDrawer,
-  openUserTab,
+  setSelectedUser,
 } = mainSlice.actions
 export default mainSlice.reducer
