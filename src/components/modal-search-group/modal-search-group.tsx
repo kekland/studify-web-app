@@ -11,7 +11,6 @@ import { InputField } from '../input-field/input-field'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Loader } from '../loader/loader'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import Scrollbars from 'react-custom-scrollbars'
 
 export const ModalSearchGroup: React.FC<IModalProps> = (props) => {
   const alert = useAlert()
@@ -79,7 +78,7 @@ export const ModalSearchGroup: React.FC<IModalProps> = (props) => {
                 )
 
                 if ((i + 1) % columns !== 0) {
-                  items.push(<SizedBox flexSize='12px' />)
+                  items.push(<SizedBox flexSize='12px' key={group.id + '-spacer'}/>)
                 }
               }
 
