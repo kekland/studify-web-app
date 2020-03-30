@@ -5,6 +5,7 @@ import { UserAvatar } from '../user-avatar/user-avatar'
 import { SizedBox } from '../sized-box/sized-box'
 import { StyledText } from '../text/text'
 import { prettifyDate, areDatesClose } from '../../api/pretty-date'
+import { FileAttachment, FileAttachmentMessage } from '../message-attachments/message-attachments'
 
 export interface IMessageProps {
   message: IMessageSocket | ISentMessage;
@@ -22,6 +23,24 @@ export const Message: React.FC<IMessageProps> = ({ message, prevMessage, nextMes
   if (!messageToUse) displayTime = true
   else if (messageToUse.user.id === message.user.id &&
     areDatesClose(messageToUse.created, message.created)) displayTime = false
+
+  const fileAttachments = message.attachments.filter(attachment => attachment.type === 'file')
+  const messageContainer = (
+    <Column>
+      <StyledText>
+        {message.body}
+      </StyledText>
+      {
+        fileAttachments.length !== 0? <SizedBox flexSize='12px' /> : <div />
+      }
+      {
+        fileAttachments.map((attachment) => (<FileAttachmentMessage
+          padding='6px 0px 6px 0px'
+          url={attachment.rel}
+          name={attachment.additional?.name} />))
+      }
+    </Column>
+  )
 
   if (fromSelf) {
     return (
@@ -41,9 +60,7 @@ export const Message: React.FC<IMessageProps> = ({ message, prevMessage, nextMes
               wordWrap: 'break-word',
               maxWidth: '100%',
             }}>
-              <StyledText>
-                {message.body}
-              </StyledText>
+              {messageContainer}
             </SizedBox>
             <div style={{ display: displayTime ? 'block' : 'none' }}>
               <SizedBox height='6px' />
@@ -68,7 +85,7 @@ export const Message: React.FC<IMessageProps> = ({ message, prevMessage, nextMes
         <Row mainAxisSize='max'>
           {displayTime ? <UserAvatar name={message.user.username} onTap={() => { }} size='48px' /> : <SizedBox flexSize='48px' />}
           <SizedBox width={padding} flexSize={padding} />
-          <Column mainAxisSize='min' style={{maxWidth: '100%'}}>
+          <Column mainAxisSize='min' style={{ maxWidth: '100%' }}>
             <div style={{ display: displayTime ? 'block' : 'none' }}>
               <Row crossAxisAlignment='flex-end'>
                 <StyledText fontWeight={500}>{message.user.username}</StyledText>
@@ -83,9 +100,7 @@ export const Message: React.FC<IMessageProps> = ({ message, prevMessage, nextMes
               wordWrap: 'break-word',
               maxWidth: '100%',
             }}>
-              <StyledText>
-                {message.body}
-              </StyledText>
+              {messageContainer}
             </SizedBox>
           </Column>
         </Row>

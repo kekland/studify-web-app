@@ -8,13 +8,12 @@ import { faFile, faTimes, faFileWord, faFileImage, faFilePdf, faFilePowerpoint, 
 import { IconButton } from '../button/button'
 
 export interface IFileAttachmentProps {
-  canDelete?: boolean;
   padding?: string;
   file: File;
   onDelete?: () => void;
 }
 
-const extensionToIcon: {[key: string]: IconDefinition} = {
+const extensionToIcon: { [key: string]: IconDefinition } = {
   gif: faFileImage,
   jpeg: faFileImage,
   jpg: faFileImage,
@@ -53,7 +52,7 @@ const extensionToIcon: {[key: string]: IconDefinition} = {
 }
 
 const getIcon = (extension: string) => {
-  if(extension in extensionToIcon) return extensionToIcon[extension]
+  if (extension in extensionToIcon) return extensionToIcon[extension]
   return faFile
 }
 
@@ -79,6 +78,40 @@ export const FileAttachment: React.FC<IFileAttachmentProps> = (props) => {
         </StyledText>
       </Flexible>
     </Row>
+  )
+}
 
+export interface IFileAttachmentMessageProps {
+  padding?: string;
+  url: string;
+  name?: string;
+}
+export const FileAttachmentMessage: React.FC<IFileAttachmentMessageProps> = (props) => {
+  const paths = (props.name ?? props.url).split('.')
+  const extension = paths[paths.length - 1]
+
+  const onClick = () => {
+    window.open(props.url)
+  }
+
+  return (
+    <div className='tappable' style={{ borderRadius: '12px', width: '100%', overflow: 'hidden', whiteSpace: 'nowrap' }}
+      onClick={onClick}>
+      <Row mainAxisSize='max' style={{ padding: props.padding ?? '12px', width: '200px' }} crossAxisAlignment='center'>
+        <div style={{
+          flex: '0 0 48px', width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--color-primary)',
+        }}>
+          <Center>
+            <FontAwesomeIcon icon={getIcon(extension)} size='lg' color='rgba(255, 255, 255, 0.9)' />
+          </Center>
+        </div>
+        <SizedBox flexSize='12px' />
+        <div style={{ flex: '0 0 116px', width: '116px', display: 'block', textOverflow: 'ellipsis' }}>
+          <StyledText fontWeight={500}>
+            {props.name ?? props.url}
+          </StyledText>
+        </div>
+      </Row>
+    </div>
   )
 }

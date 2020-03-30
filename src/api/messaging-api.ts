@@ -2,7 +2,7 @@ import request from 'superagent'
 import { IGroupMinimal, IGroup } from './data/group'
 import { api } from './api'
 import { IMessageSocket, ISendMessageFormData, ISentMessage } from './data/message'
-import { IUserMinimal } from './data/user'
+import { IUserMinimal, IUserOwner } from './data/user'
 import { uuid } from 'uuidv4'
 import { IPaginatedQuery } from './data/utils'
 import io from 'socket.io-client'
@@ -48,23 +48,31 @@ export const messagingApi = {
   updateRooms: async () => {
     api.socket?.emit('updateRooms')
   },
-  sendMessage: async (groupId: string, data: ISendMessageFormData) => {
-    const user = api.getUser()
-    if (!user) throw Error('No user login')
+  sendMessage: async (groupId: string, data: ISendMessageFormData, user: IUserOwner, onPreview: (data: ISentMessage) => void) => {
+    return api.requestWrapper(async () => {
+      const idempotencyId = uuid()
 
-    const idempotencyId = uuid()
+      let req = request.post(`${api.url}/messaging/send`)
+        .field('groupId', groupId)
+        .field('body', data.body)
+        .field('idempotencyId', idempotencyId)
 
-    api.socket?.emit('sendMessage', { ...data, groupId, idempotencyId })
-    return {
-      id: idempotencyId,
-      groupId: groupId,
-      body: data.body,
-      attachments: [],
-      created: new Date().toISOString(),
-      idempotencyId,
-      loading: true,
-      user,
-    } as ISentMessage
+      data.attachments.files.forEach((file, i) => req = req.field(`file-${i}`, file))
+
+      onPreview({
+        id: idempotencyId,
+        loading: true,
+        idempotencyId,
+        attachments: data.attachments.files.map((file) => ({ type: 'file', rel: 'loading', additional: { name: file.name } })),
+        user,
+        body: data.body,
+        created: Date(),
+        groupId,
+      })
+
+      const response = await api.setHeader(req)
+      return { ...response.body.message, idempotencyId: response.body.idempotencyId } as IMessageSocket
+    })
   },
   updateTypingStatus: async (group: IGroup, status: boolean) => {
     api.socket?.emit('updateTypingStatus', { room: group.id, status })

@@ -9,6 +9,8 @@ import { api } from '../../api/api'
 import { useSelectedGroup } from '../../hooks/hooks'
 import { methods } from '../../api/methods/methods'
 import { FileAttachment } from '../message-attachments/message-attachments'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../state/store'
 
 export const MessageBar: React.FC = (props) => {
   const alert = useAlert()
@@ -16,6 +18,7 @@ export const MessageBar: React.FC = (props) => {
   const inputRef = createRef<HTMLInputElement>()
   const fileRef = createRef<HTMLInputElement>()
 
+  const user = useSelector((state: RootState) => state.auth.user)
   const [message, setMessage] = useState('')
   const [timer, setTimer] = useState<number>(-1)
   const [isTyping, setTyping] = useState<boolean>(false)
@@ -31,11 +34,15 @@ export const MessageBar: React.FC = (props) => {
   const sendMessage = () => {
     if (!selectedGroup)
       return
+    if (!user)
+      return
+
     if (inputRef.current)
       inputRef.current.value = ""
 
-    methods.messaging.sendMessage(selectedGroup, { body: message, attachments: { files } })
+    methods.messaging.sendMessage(selectedGroup, user, { body: message, attachments: { files } })
     setMessage('')
+    setFiles([])
   }
 
   const onMessageChanged = (body: string) => {
@@ -61,7 +68,7 @@ export const MessageBar: React.FC = (props) => {
         <form onSubmit={(e) => e.preventDefault()} style={{ width: '100%' }}>
           <Column crossAxisSize='max'>
             <Row crossAxisAlignment='center' mainAxisSize='max'>
-              <IconButton icon={faPaperclip} onTap={() => fileRef.current?.click()} size='64px' iconSize='lg' />
+              <IconButton icon={faPaperclip} onTap={() => fileRef.current?.click()} disabled={files.length >= 5} size='64px' iconSize='lg' />
               <SizedBox width="6px" />
               <Flexible>
                 <InputFieldTransparent
@@ -82,12 +89,12 @@ export const MessageBar: React.FC = (props) => {
             </Row>
             {
               files.map(file =>
-                <FileAttachment padding="0px 12px 12px 0px" file={file}
+                <FileAttachment padding="0px 12px 12px 0px" file={file} key={file.name}
                   onDelete={() => setFiles(files.filter(f => f.name !== file.name))} />)
             }
           </Column>
         </form>
-        <input type='file' style={{ display: 'none' }} ref={fileRef}
+        <input type='file' style={{ display: 'none' }} ref={fileRef} disabled={files.length >= 5}
           onChange={(e) => setFiles([...files, ...Array.from(e.target.files as FileList)])} />
       </SizedBox>
     )

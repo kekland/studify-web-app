@@ -22,7 +22,7 @@ export interface IMessageSocket extends IMessageMinimal {
 export interface IMessageMinimal {
   id: string;
   body: string;
-  attachments?: string[];
+  attachments: { type: 'file' | 'reply', rel: string, additional?: any }[];
 }
 
 export interface ISendMessageFormData {

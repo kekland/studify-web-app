@@ -16,6 +16,7 @@ import { Message } from '../message/message'
 import { Loader } from '../loader/loader'
 import { NewMessagesIndicator } from './new-messages-indicator'
 import Scrollbars from 'react-custom-scrollbars'
+import { IMessageSocket } from '../../api/data/message'
 
 export const MessagePanel: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user)
@@ -74,6 +75,8 @@ export const MessagePanel: React.FC = () => {
       </Center>
     )
   }
+
+  console.log(messages)
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       <div style={{ width: '100%', height: '100%' }}>
