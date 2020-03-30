@@ -1,16 +1,17 @@
 import React, { useState, createRef } from 'react'
 import { Row, Flexible, Column } from '../flex/flex'
 import { IconButton } from '../button/button'
-import { faPaperclip, faShare } from '@fortawesome/free-solid-svg-icons'
+import { faPaperclip, faShare, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { InputFieldTransparent } from '../input-field/input-field'
 import { SizedBox } from '../sized-box/sized-box'
 import { useAlert } from 'react-alert'
 import { api } from '../../api/api'
 import { useSelectedGroup } from '../../hooks/hooks'
 import { methods } from '../../api/methods/methods'
-import { FileAttachment } from '../message-attachments/message-attachments'
+import { FileAttachment, ReplyAttachment } from '../message-attachments/message-attachments'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../state/store'
+import { RootState, store } from '../../state/store'
+import { setReplyingTo } from '../../state/messaging'
 
 export const MessageBar: React.FC = (props) => {
   const alert = useAlert()
@@ -19,6 +20,7 @@ export const MessageBar: React.FC = (props) => {
   const fileRef = createRef<HTMLInputElement>()
 
   const user = useSelector((state: RootState) => state.auth.user)
+  const replyingTo = useSelector((state: RootState) => state.messaging.replyingTo)
   const [message, setMessage] = useState('')
   const [timer, setTimer] = useState<number>(-1)
   const [isTyping, setTyping] = useState<boolean>(false)
@@ -40,7 +42,7 @@ export const MessageBar: React.FC = (props) => {
     if (inputRef.current)
       inputRef.current.value = ""
 
-    methods.messaging.sendMessage(selectedGroup, user, { body: message, attachments: { files } })
+    methods.messaging.sendMessage(selectedGroup, user, { body: message, attachments: { files, replyTo: replyingTo } })
     setMessage('')
     setFiles([])
   }
@@ -67,6 +69,12 @@ export const MessageBar: React.FC = (props) => {
       }}>
         <form onSubmit={(e) => e.preventDefault()} style={{ width: '100%' }}>
           <Column crossAxisSize='max'>
+            {replyingTo ?
+              <Row style={{ padding: '12px', width: '100%' }}>
+                <IconButton icon={faTimes} size='56px' onTap={() => store.dispatch(setReplyingTo(undefined))} />
+                <ReplyAttachment replyingTo={replyingTo} />
+              </Row> :
+              <div />}
             <Row crossAxisAlignment='center' mainAxisSize='max'>
               <IconButton icon={faPaperclip} onTap={() => fileRef.current?.click()} disabled={files.length >= 5} size='64px' iconSize='lg' />
               <SizedBox width="6px" />

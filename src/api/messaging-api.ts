@@ -57,9 +57,11 @@ export const messagingApi = {
         .field('body', data.body)
         .field('idempotencyId', idempotencyId)
 
+      if (data.attachments.replyTo) req = req.field('replyTo', data.attachments.replyTo.id)
+
       data.attachments.files.forEach((file, i) => req = req.field(`file-${i}`, file))
 
-      onPreview({
+      const previewObject = {
         id: idempotencyId,
         loading: true,
         idempotencyId,
@@ -68,7 +70,11 @@ export const messagingApi = {
         body: data.body,
         created: Date(),
         groupId,
-      })
+      } as ISentMessage
+
+      if (data.attachments.replyTo)
+        previewObject.attachments.push({ type: 'reply', rel: data.attachments.replyTo.id, additional: data.attachments.replyTo })
+      onPreview(previewObject)
 
       const response = await api.setHeader(req)
       return { ...response.body.message, idempotencyId: response.body.idempotencyId } as IMessageSocket

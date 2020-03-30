@@ -30,6 +30,16 @@ export const MessagePanel: React.FC = () => {
       methods.notification.setGroupAsRead(selectedGroupId)
   }, [selectedGroupId])
 
+  useEffect(() => {
+    if (selectedGroup && scrollRef.current) {
+      const scrollFromBottom = scrollRef.current.getScrollHeight() -
+        scrollRef.current.getClientHeight() - scrollRef.current.getScrollTop()
+      if (selectedGroup.unreadMessages > 0 && scrollFromBottom < 50) {
+        methods.notification.setGroupAsRead(selectedGroup.data.id)
+      }
+    }
+  }, [selectedGroup, scrollRef])
+
   if (!selectedGroup) {
     return (
       <Center>

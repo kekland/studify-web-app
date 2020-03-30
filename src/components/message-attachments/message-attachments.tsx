@@ -1,11 +1,12 @@
 import React from 'react'
 import { Center } from '../center/center'
 import { StyledText } from '../text/text'
-import { Row, Flexible } from '../flex/flex'
+import { Row, Flexible, Column } from '../flex/flex'
 import { SizedBox } from '../sized-box/sized-box'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faTimes, faFileWord, faFileImage, faFilePdf, faFilePowerpoint, faFileExcel, faFileCsv, faFileAudio, faFileVideo, faFileArchive, faFileCode, faFileAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from '../button/button'
+import { IMessageSocket } from '../../api/data/message'
 
 export interface IFileAttachmentProps {
   padding?: string;
@@ -78,6 +79,23 @@ export const FileAttachment: React.FC<IFileAttachmentProps> = (props) => {
         </StyledText>
       </Flexible>
     </Row>
+  )
+}
+
+export interface IReplyAttachmentProps {
+  replyingTo: IMessageSocket;
+}
+
+export const ReplyAttachment: React.FC<IReplyAttachmentProps> = (props) => {
+  return (
+    <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.075)', borderRadius: '12px', padding: '12px', width: '100%' }}>
+      <Column mainAxisSize='max'>
+        <Row mainAxisSize='max'>
+          <StyledText type='caption' fontWeight={500}>{props.replyingTo.user.username}</StyledText>
+        </Row>
+        <StyledText>{props.replyingTo.body}</StyledText>
+      </Column>
+    </div>
   )
 }
 

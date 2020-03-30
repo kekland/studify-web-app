@@ -34,7 +34,7 @@ export const NewMessagesIndicator: React.FC<INewMessagesIndicatorProps> = (props
         </Center>
       </div>
       <Center>
-        <IconButton icon={faAngleDown} size='36px' iconSize='lg' surface='light' onTap={props.onTap} />
+        <IconButton icon={faAngleDown} size='36px' iconSize='lg' onTap={props.onTap} />
       </Center>
     </div>
   )

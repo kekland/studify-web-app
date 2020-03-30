@@ -29,6 +29,7 @@ export interface ISendMessageFormData {
   body: string;
   attachments: {
     files: File[],
+    replyTo?: IMessageSocket,
   }
 }
 
