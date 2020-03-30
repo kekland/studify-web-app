@@ -9,6 +9,8 @@ import { InfiniteLoadingList } from '../list/list'
 import { methods } from '../../api/methods/methods'
 import { Loader } from '../loader/loader'
 import { UserComponent } from '../user-component/user-component'
+import { store } from '../../state/store'
+import { openUserTab } from '../../state/main'
 
 export const DrawerGroupInfo: React.FC<IDrawerProps> = (props) => {
   const selectedGroup = useSelectedGroup()
@@ -51,7 +53,7 @@ export const DrawerGroupInfo: React.FC<IDrawerProps> = (props) => {
             fromBottom={false}>
             {
               selectedGroup.users.map((user) => (
-                <UserComponent key={user.id} padding='16px' verticalPadding='8px' user={user} onTap={() => { }} />
+                <UserComponent key={user.id} padding='16px' verticalPadding='8px' user={user} />
               ))
             }
           </InfiniteLoadingList>

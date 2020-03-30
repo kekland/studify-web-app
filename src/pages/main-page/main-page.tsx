@@ -5,7 +5,7 @@ import { UserOwnerComponent } from '../../components/user-component/user-compone
 import { MessageBar } from '../../components/message-bar/message-bar';
 import { Column, Flexible } from '../../components/flex/flex';
 import { GroupAppBar } from '../../components/group-app-bar/group-app-bar';
-import { RootState } from '../../state/store';
+import { RootState, store } from '../../state/store';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { TabPanel } from '../../components/main-page/tab-panel';
@@ -19,16 +19,20 @@ import { ModalSettings } from '../../components/modal-settings/modal-settings'
 import { methods } from '../../api/methods/methods';
 import { useAlert } from 'react-alert';
 import { DrawerGroupInfo } from '../../components/drawer-group-info/drawer-group-info';
+import { ModalUser } from '../../components/modal-user/modal-user';
+import { openUserTab } from '../../state/main';
 
 export const MainPage: React.FC = ((props) => {
   const alert = useAlert()
   const isMobile = useScreenSize(768)
 
   const user = useSelector((state: RootState) => state.auth.user)
+  const selectedUser = useSelector((state: RootState) => state.main.selectedUser)
   const selectedGroup = useSelectedGroup()
 
   const createGroupModal = useModal(false)
   const searchGroupModal = useModal(false)
+  const userModal = useModal(false)
   const settingsModal = useModal(false)
   const groupInfoDrawer = useModal(false)
 
@@ -47,6 +51,13 @@ export const MainPage: React.FC = ((props) => {
   }, [])
 
   useEffect(() => {
+    if (selectedUser)
+      console.log(selectedUser)
+    userModal.open()
+    return () => userModal.close()
+  }, [selectedUser, userModal])
+
+  useEffect(() => {
     methods.initialize(alert)
   }, [alert])
 
@@ -61,12 +72,13 @@ export const MainPage: React.FC = ((props) => {
       <MainPageDrawer
         onCreateGroup={createGroupModal.open}
         onSearchGroup={searchGroupModal.open}
-        onUserTap={() => { }}
+        onUserTap={() => store.dispatch(openUserTab(user))}
         onUserTapSettings={settingsModal.open}
         user={user} />
       <ModalCreateGroup {...createGroupModal} />
       <ModalSearchGroup {...searchGroupModal} />
       <ModalSettings {...settingsModal} />
+      <ModalUser {...userModal} />
       <DrawerGroupInfo {...groupInfoDrawer} width='320px' left={false} />
       <div className='app-bar app-bar-main hidden-on-mobile' style={appBarStyle}>
         {
@@ -92,7 +104,7 @@ export const MainPage: React.FC = ((props) => {
         {
           isMobile ? <div /> :
             <UserOwnerComponent
-              onTap={() => { }}
+              onTap={() => store.dispatch(openUserTab(user))}
               onTapSettings={settingsModal.open}
               user={user}
               padding='12px' />

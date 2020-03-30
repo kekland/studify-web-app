@@ -6,6 +6,8 @@ import { StyledText } from '../text/text'
 import { UserAvatar } from '../user-avatar/user-avatar'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from '../button/button'
+import { store } from '../../state/store'
+import { openUserTab } from '../../state/main'
 
 export interface IUserOwnerComponentProps {
   user: IUserOwner;
@@ -34,7 +36,6 @@ export const UserOwnerComponent: React.FC<IUserOwnerComponentProps> = (props) =>
 
 export interface IUserComponentProps {
   user: IUserMinimal;
-  onTap: () => void;
   padding?: string;
   verticalPadding?: string;
 }
@@ -46,7 +47,7 @@ export const UserComponent: React.FC<IUserComponentProps> = (props) => {
       paddingBottom: props.verticalPadding ?? props.padding,
       paddingLeft: props.padding,
       paddingRight: props.padding,
-    }} className='tappable' onTap={props.onTap}>
+    }} className='tappable' onTap={() => store.dispatch(openUserTab(props.user))}>
       <Row crossAxisAlignment='center'>
         <UserAvatar name={props.user.username} size="48px" />
         <SizedBox width={props.padding} />

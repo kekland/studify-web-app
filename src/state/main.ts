@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IGroup } from '../api/data/group'
+import { IUserMinimal } from '../api/data/user'
 
 export interface IMainSliceState {
   selectedGroupId?: string;
   isDrawerOpen: boolean,
+  selectedUser?: IUserMinimal;
 }
 
 const mainSlice = createSlice({
@@ -18,6 +20,9 @@ const mainSlice = createSlice({
     },
     setDrawer(state, action: PayloadAction<boolean>) {
       state.isDrawerOpen = action.payload
+    },
+    openUserTab(state, action: PayloadAction<IUserMinimal>) {
+      state.selectedUser = action.payload
     }
   },
 })
@@ -25,5 +30,6 @@ const mainSlice = createSlice({
 export const {
   selectGroup,
   setDrawer,
+  openUserTab,
 } = mainSlice.actions
 export default mainSlice.reducer

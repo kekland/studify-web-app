@@ -10,6 +10,7 @@ import { IconButton } from '../button/button'
 import { faReply, faBookmark } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../state/store'
 import { setReplyingTo } from '../../state/messaging'
+import { openUserTab } from '../../state/main'
 
 export interface IMessageProps {
   message: IMessageSocket | ISentMessage;
@@ -111,7 +112,7 @@ export const Message: React.FC<IMessageProps> = ({ message, prevMessage, nextMes
         onMouseLeave={() => setHovering(false)}
         onMouseOver={() => setHovering(true)}>
         <Row mainAxisSize='max'>
-          {displayTime ? <UserAvatar name={message.user.username} onTap={() => { }} size='48px' /> : <SizedBox flexSize='48px' />}
+          {displayTime ? <UserAvatar name={message.user.username} onTap={() => store.dispatch(openUserTab(message.user))} size='48px' /> : <SizedBox flexSize='48px' />}
           <SizedBox width={padding} flexSize={padding} />
           <Column mainAxisSize='min' style={{ maxWidth: '100%' }}>
             <div style={{ display: displayTime ? 'block' : 'none' }}>
