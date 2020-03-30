@@ -5,10 +5,9 @@ import { GroupHorizontal } from '../group-component/group-component'
 import { StyledText } from '../text/text'
 import { Column, Flexible } from '../flex/flex'
 import { RaisedButton } from '../button/button'
-import { List, InfiniteLoadingList } from '../list/list'
+import { InfiniteLoadingList } from '../list/list'
 import { methods } from '../../api/methods/methods'
 import { Loader } from '../loader/loader'
-import { UserAvatar } from '../user-avatar/user-avatar'
 import { UserComponent } from '../user-component/user-component'
 
 export const DrawerGroupInfo: React.FC<IDrawerProps> = (props) => {
