@@ -58,7 +58,6 @@ export const ModalSearchGroup: React.FC<IModalProps> = (props) => {
             {({ width, height }) => {
               const minGroupWidth = 200
               let columns = Math.floor(width / minGroupWidth)
-              if (groups.data.length < columns) columns = groups.data.length
 
               const groupWidth = ((width - 12 * (columns - 1)) / columns)
               const groupHeight = '225px'
