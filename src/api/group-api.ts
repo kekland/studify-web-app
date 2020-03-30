@@ -101,9 +101,9 @@ export const groupApi = {
   },
   searchGroups: async (skip: number, query?: string) => {
     return api.requestWrapper(async () => {
-      const response = await api.setHeader(request.post(`${api.url}/group/search`).query({ query, skip, limit: api.paginationLimit }))
+      const response = await api.setHeader(request.get(`${api.url}/group/search`).query({ query, skip, limit: api.paginationLimit }))
 
-      const result = response.body.data as IGroupMinimal[]
+      const result = response.body.groups as IGroup[]
       return result
     })
   }

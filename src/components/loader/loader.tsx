@@ -6,8 +6,9 @@ import { Center } from '../center/center'
 export interface ILoaderProps {
   borderRadius?: string;
   isLoading: boolean;
-  width?: string;
+  width?: string | number;
   height?: string;
+  style?: React.CSSProperties;
 }
 
 export const Loader: React.FC<ILoaderProps> = (props) => {
@@ -16,6 +17,7 @@ export const Loader: React.FC<ILoaderProps> = (props) => {
       width: props.width ?? '100%',
       height: props.height ?? '100%',
       position: 'relative',
+      ...props.style,
     }}>
       {props.children}
       <div style={{

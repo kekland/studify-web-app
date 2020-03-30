@@ -7,6 +7,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './modal.css'
 import { Loader } from '../loader/loader'
 import { useScreenSize } from '../../hooks/hooks'
+import Scrollbars from 'react-custom-scrollbars'
+import AutoSizer from 'react-virtualized-auto-sizer'
 
 export interface IModalProps {
   isOpen: boolean;
@@ -18,7 +20,7 @@ interface IModalLoadingProps {
 }
 
 export const Modal: React.FC<IModalProps & IModalLoadingProps> = (props) => {
-  const isMobile = useScreenSize(1000)
+  const isMobile = useScreenSize(768)
 
   return (<ReactModal
     ariaHideApp={false}
@@ -57,29 +59,36 @@ export const Modal: React.FC<IModalProps & IModalLoadingProps> = (props) => {
         borderRadius: isMobile ? '0px' : '24px',
         border: 0,
         boxShadow: '0 12px 24px rgba(0, 0, 0, 0.16)',
-        minWidth: '35vw',
-        minHeight: '30vh',
-        width: isMobile ? '100%' : undefined,
-        height: isMobile ? '100%' : undefined,
-        maxWidth: isMobile ? '100%' : '60vw',
-        maxHeight: isMobile ? '100%' : '70vh',
+        width: isMobile ? '100%' : '70vh',
+        height: isMobile ? '100%' : '60vw',
         position: 'relative',
         overflowX: 'hidden',
-        overflowY: 'auto',
+        overflowY: 'hidden',
       }}>
-        <Loader isLoading={props.isLoading ?? false} borderRadius='24px'>
+        <Loader isLoading={props.isLoading ?? false} borderRadius='24px' width='100%' height='100%'>
           <div style={{
             position: 'absolute',
             right: '24px',
             top: '24px',
+            zIndex: 101,
           }}>
             <IconButton icon={faTimes}
               size='48px'
               onTap={props.onClose} />
           </div>
-          <div style={{ padding: '36px' }}>
-            {props.isOpen ? props.children : <div />}
-          </div>
+          <AutoSizer>
+            {({ width, height }) =>
+              (<Scrollbars autoHide style={{ width, height }}>
+                <div style={{
+                  padding: '36px',
+                  height: '100%',
+                  overflowY: 'visible',
+                }}>
+                  {props.isOpen ? props.children : <div />}
+                </div>
+              </Scrollbars>
+              )}
+          </AutoSizer>
         </Loader>
       </Surface>
     </Center>
