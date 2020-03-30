@@ -59,7 +59,7 @@ export const messagingApi = {
       id: idempotencyId,
       groupId: groupId,
       body: data.body,
-      attachments: data.attachments,
+      attachments: [],
       created: new Date().toISOString(),
       idempotencyId,
       loading: true,

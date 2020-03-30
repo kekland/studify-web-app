@@ -27,7 +27,9 @@ export interface IMessageMinimal {
 
 export interface ISendMessageFormData {
   body: string;
-  attachments?: string;
+  attachments: {
+    files: File[],
+  }
 }
 
 export const MessageUtils = {
