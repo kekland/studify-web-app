@@ -21,7 +21,7 @@ const urlProduction = {
 }
 
 export const api = {
-  ...urlLocal,
+  ...urlProduction,
   paginationLimit: 20,
   socket: undefined as CanBeNull<SocketIOClient.Socket>,
 
